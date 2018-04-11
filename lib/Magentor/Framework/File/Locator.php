@@ -4,7 +4,7 @@ namespace Magentor\Framework\File;
 
 use Symfony\Component\Finder\Finder;
 
-class Locator
+class Locator implements LocatorInterface
 {
 
     /** @var Finder */
@@ -26,11 +26,22 @@ class Locator
         $this->finder->name($filename)->in($directory);
 
         foreach ($this->finder as $file) {
-            if (!is_readable($file->getRealPath())) {
-                continue;
+            $this->includeFile($file->getRealPath());
+        }
+    }
+
+
+    /**
+     * @param string $filePath
+     */
+    protected function includeFile($filePath)
+    {
+        try {
+            if (!is_readable($filePath)) {
+                return;
             }
 
-            include $file->getRealPath();
-        }
+            include $filePath;
+        } catch (\Exception $e) {}
     }
 }

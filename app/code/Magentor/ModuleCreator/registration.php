@@ -1,5 +1,5 @@
 <?php
 
-use \Magentor\Framework\Component\ComponentRegistrar;
+use \Magentor\Framework\Component\ModuleRegistrar;
 
-ComponentRegistrar::register(ComponentRegistrar::TYPE_MODULE, 'Magentor_ModuleCreator', __DIR__);
+ModuleRegistrar::register(ModuleRegistrar::TYPE_MODULE, 'Magentor_ModuleCreator', __DIR__);

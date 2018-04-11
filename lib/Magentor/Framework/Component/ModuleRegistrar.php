@@ -2,21 +2,20 @@
 
 namespace Magentor\Framework\Component;
 
-class ComponentRegistrar implements ComponentRegistrarInterface
+class ModuleRegistrar implements ModuleRegistrarInterface
 {
 
     /** @var array */
     protected static $paths = [
-        self::TYPE_MODULE => []
+        self::TYPE_MODULE  => [],
     ];
 
 
     /**
-     * @param string $type
-     * @param        $componentName
-     * @param        $path
+     * @param string $componentName
+     * @param string $path
      */
-    public static function register($type = self::TYPE_MODULE, $componentName, $path)
+    public static function register($componentName, $path)
     {
         self::validateType($type);
         self::$paths[$type][$componentName] = str_replace('\\', '/', $path);

@@ -7,10 +7,20 @@ use Magentor\Framework\File\Locator;
 class Application implements ApplicationInterface
 {
 
+    /** @var Locator */
+    protected $locator;
+
+
+    public function __construct()
+    {
+        $this->locator = new Locator();;
+    }
+
+
     public function run()
     {
         $this->initModules();
-        echo "Application Initialized.\n";
+        $this->initCommands();
     }
 
 
@@ -19,11 +29,26 @@ class Application implements ApplicationInterface
      */
     protected function initModules()
     {
-        $dir = ROOT . '/app/code/*/*';
-
-        $locator = new Locator();
-        $locator->loadFiles('registration.php', $dir);
-
+        $this->locator->loadFiles('registration.php', $this->getCodeDirPattern());
         return $this;
+    }
+
+
+    /**
+     * @return $this
+     */
+    protected function initCommands()
+    {
+        $this->locator->loadFiles('commands.php', $this->getCodeDirPattern());
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function getCodeDirPattern()
+    {
+        return CODE_DIR . '/*/*';
     }
 }
