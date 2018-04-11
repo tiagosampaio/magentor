@@ -17,7 +17,7 @@ class Bootstrap
      */
     public function __construct($rootDir, array $initParams)
     {
-        $this->rootDir = $rootDir;
+        $this->rootDir    = $rootDir;
         $this->initParams = $initParams;
     }
 
