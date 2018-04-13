@@ -5,7 +5,7 @@ namespace Magentor\Framework\Component;
 interface ModuleRegistrarInterface extends ComponentRegistrarInterface
 {
 
-    const TYPE_MODULE  = 'module';
+    const TYPE_MODULES  = 'modules';
 
 
     /**
@@ -20,11 +20,5 @@ interface ModuleRegistrarInterface extends ComponentRegistrarInterface
      *
      * @return array
      */
-    public static function getPaths($type);
-
-
-    /**
-     * @param $type
-     */
-    public static function validateType($type);
+    public static function getPaths();
 }

@@ -7,40 +7,25 @@ class ModuleRegistrar implements ModuleRegistrarInterface
 
     /** @var array */
     protected static $paths = [
-        self::TYPE_MODULE  => [],
+        self::TYPE_MODULES => [],
     ];
 
 
     /**
-     * @param string $componentName
+     * @param string $moduleName
      * @param string $path
      */
-    public static function register($componentName, $path)
+    public static function register($moduleName, $path)
     {
-        self::validateType($type);
-        self::$paths[$type][$componentName] = str_replace('\\', '/', $path);
+        self::$paths[self::TYPE_MODULES][$moduleName] = str_replace('\\', '/', $path);
     }
 
 
     /**
-     * @param string $type
-     *
      * @return array
      */
-    public static function getPaths($type)
+    public static function getPaths()
     {
-        self::validateType($type);
-        return self::$paths[$type];
-    }
-
-
-    /**
-     * @param $type
-     */
-    public static function validateType($type)
-    {
-        if (!isset(self::$paths[$type])) {
-            throw new \LogicException("Component type {$type} is not valid.");
-        }
+        return self::$paths[self::TYPE_MODULES];
     }
 }

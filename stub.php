@@ -1,3 +1,4 @@
+#!/bin/env php
 <?php
 
 define('ROOT', __DIR__);
