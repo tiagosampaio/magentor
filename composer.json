@@ -26,9 +26,9 @@
         "psr-4": {
             "Magentor\\Framework\\": "lib/Magentor/Framework/",
             "Magentor\\": "app/code/Magentor/"
-        }
-    },
-    "files": [
-        "app/etc/NonComposerComponentRegistration.php"
-    ]
+        },
+        "files": [
+            "app/etc/functions.php"
+        ]
+    }
 }
