@@ -1,0 +1,7 @@
+{% if (dependencies) %}
+<depends>
+    {% for dependency in dependencies %}
+            <{{ dependency }} />
+    {% endfor %}
+        </depends>
+{% endif %}

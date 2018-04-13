@@ -1,0 +1,12 @@
+{% extends "magento1/module/xml/base.twig" %}
+{% block body %}
+<config>
+    <modules>
+        <{{ vendor }}_{{ module_name }}>
+            <active>true</active>
+            <codePool>local</codePool>
+            {% include 'magento1/module/xml/declaration/depends.twig' %}
+        </{{ vendor }}_{{ module_name }}>
+    </modules>
+</config>
+{% endblock %}
