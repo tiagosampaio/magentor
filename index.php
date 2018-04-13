@@ -1,4 +1,7 @@
 #!/bin/env php
 <?php
 
-require_once __DIR__ . '/app/bootstrap.php';
+define('IS_PHAR', false);
+define('ROOT', __DIR__);
+
+require_once ROOT . '/app/bootstrap.php';

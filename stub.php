@@ -1,11 +1,13 @@
 #!/bin/env php
 <?php
 
-function main($argv)
-{
-    Phar::mapPhar('magentor.phar');
-    require_once 'phar://magentor.phar/app/bootstrap.php';
-}
+$pharName = 'magentor.phar';
 
-main($argv);
+Phar::mapPhar($pharName);
+
+define('IS_PHAR', (bool) Phar::running());
+define('ROOT',    "phar://{$pharName}");
+
+require_once ROOT . '/app/bootstrap.php';
+
 __HALT_COMPILER();

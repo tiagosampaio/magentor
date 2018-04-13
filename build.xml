@@ -11,6 +11,9 @@
                 <include name="app/" />
                 <include name="vendor/" />
                 <include name="lib/" />
+                <exclude name="vendor/bin"/>
+                <exclude name="vendor/phpunit"/>
+                <exclude name="vendor/phing"/>
             </fileset>
         </copy>
     </target>

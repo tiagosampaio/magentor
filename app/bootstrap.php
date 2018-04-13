@@ -5,14 +5,6 @@ error_reporting(E_ALL);
 
 // include_once './etc/functions.php';
 
-define('IS_PHAR', (bool) Phar::running());
-
-if (IS_PHAR) {
-    define('ROOT', 'phar://magentor.phar');
-} else {
-    define('ROOT', dirname(__DIR__));
-}
-
 require_once ROOT . '/app/autoload.php';
 
 \Magentor\Framework\Filesystem\DirectoryRegistrar::register(ROOT);

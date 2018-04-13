@@ -71,11 +71,29 @@ class Application implements ApplicationInterface
 
 
     /**
-     * @return $this
+     * @return $this|bool
      */
     protected function initModules()
     {
-        $this->locator->loadFiles('registration.php', $this->getCodeDirPattern());
+        $modulesFile = DIR_ETC . '/modules.php';
+
+        if (!is_file($modulesFile) && !is_readable($modulesFile)) {
+            return false;
+        }
+
+        $modules = include_once $modulesFile;
+
+        foreach ($modules as $module) {
+            $registrationFile = DIR_CODE . '/' . $module . '/registration.php';
+
+            if (!file_exists($registrationFile) || !is_readable($registrationFile)) {
+                continue;
+            }
+
+            include_once $registrationFile;
+        }
+
+        // $this->locator->loadFiles('registration.php', $this->getCodeDirPattern());
         return $this;
     }
 
@@ -98,19 +116,24 @@ class Application implements ApplicationInterface
     /**
      * @param string $filename
      * @param string $path
+     *
+     * @return $this|bool
      */
     protected function loadCommands($filename, $path)
     {
-        $this->locator->name($filename)->in($path);
+        $file = $path . '/' . $filename;
 
-        /** @var  $file */
-        foreach ($this->locator as $file) {
-            $commands = (array) include $file->getRealPath();
-
-            foreach ($commands as $command) {
-                $this->registerCommand($command);
-            }
+        if (!file_exists($file) || !is_readable($file)) {
+            return false;
         }
+
+        $commands = (array) include_once $file;
+
+        foreach ($commands as $command) {
+            $this->registerCommand($command);
+        }
+
+        return $this;
     }
 
 

@@ -10,9 +10,13 @@ class DirectoryRegistrar
      */
     public static function register($rootDirectory)
     {
-        define('ROOT',     $rootDirectory);
+        if (!defined('ROOT')) {
+            define('ROOT', $rootDirectory);
+        }
+
         define('DIR_LIB',  ROOT . '/lib');
         define('DIR_APP',  ROOT . '/app');
+        define('DIR_ETC',  DIR_APP . '/etc');
         define('DIR_CODE', DIR_APP . '/code');
 
         self::registerMagento();
