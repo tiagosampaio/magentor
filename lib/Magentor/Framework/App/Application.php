@@ -138,6 +138,6 @@ class Application implements ApplicationInterface
      */
     protected function getCodeDirPattern()
     {
-        return CODE_DIR . '/*/*';
+        return DIR_CODE . '/*/*';
     }
 }
