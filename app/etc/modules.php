@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'Magentor/ModuleCreator'
+    'Magentor/ModuleCreator',
+    'Magentor/MagentoInfo',
 ];
