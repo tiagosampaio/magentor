@@ -6,7 +6,4 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/autoload.php';
 
 $bootstrap = \Magentor\Framework\App\Bootstrap::create(ROOT, $_SERVER);
-
-$bootstrap->createApplication()
-    ->initialize()
-    ->run();
+$bootstrap->createApplication()->run();

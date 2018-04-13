@@ -5,34 +5,68 @@ namespace Magentor\Framework\App;
 use Magentor\Framework\File\Locator;
 use Magentor\Framework\Component\ModuleRegistrar;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Application as ConsoleApplication;
 
-class Application extends \Symfony\Component\Console\Application implements ApplicationInterface
+class Application implements ApplicationInterface
 {
 
     /** @var Locator */
     protected $locator;
 
+    /** @var ConsoleApplication */
+    protected $app;
 
-    public function __construct()
+    /** @var self */
+    protected static $instance;
+
+
+    protected function __construct()
     {
         $name    = 'Magentor';
         $version = Version::version();
 
-        parent::__construct($name, $version);
+        $this->app     = new ConsoleApplication($name, $version);
+        $this->locator = new Locator();
+    }
 
-        $this->locator = new Locator();;
+
+    /**
+     * @return Application
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
 
     /**
      * @return $this
      */
-    public function initialize()
+    public function run()
     {
         $this->initModules();
         $this->initCommands();
 
+        try {
+            $this->app->run();
+        } catch (\Exception $e) {
+
+        }
+
         return $this;
+    }
+
+
+    /**
+     * @return ConsoleApplication
+     */
+    public function getConsoleApplication()
+    {
+        return $this->app;
     }
 
 
@@ -93,7 +127,7 @@ class Application extends \Symfony\Component\Console\Application implements Appl
 
         /** @var Command $command */
         $command = new $class();
-        $this->add($command);
+        $this->app->add($command);
 
         return $this;
     }

@@ -15,7 +15,7 @@ class Bootstrap
      * @param string $rootDir
      * @param array  $initParams
      */
-    public function __construct($rootDir, array $initParams)
+    protected function __construct($rootDir, array $initParams)
     {
         $this->rootDir    = $rootDir;
         $this->initParams = $initParams;
@@ -39,7 +39,6 @@ class Bootstrap
      */
     public function createApplication()
     {
-        $application = new Application();
-        return $application;
+        return Application::getInstance();
     }
 }
