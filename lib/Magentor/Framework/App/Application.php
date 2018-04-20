@@ -48,6 +48,7 @@ class Application implements ApplicationInterface
      */
     public function run()
     {
+        $this->initMagento();
         $this->initModules();
         $this->initCommands();
 
@@ -109,6 +110,18 @@ class Application implements ApplicationInterface
             $this->loadCommands('commands.php', $path);
         }
 
+        return $this;
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    protected function initMagento()
+    {
+        $describer = new \Magentor\Framework\Magento\Info\Describer($this);
+        $describer->bootstrap();
+        
         return $this;
     }
 
