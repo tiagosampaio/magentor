@@ -13,8 +13,15 @@ class MagentoPath extends Command
 {
 
     protected $name = 'info:directory';
-
-
+    
+    
+    protected function configure()
+    {
+        $this->setDescription('Displays the Magento\'s current directory.');
+        parent::configure();
+    }
+    
+    
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output

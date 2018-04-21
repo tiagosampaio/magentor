@@ -3,9 +3,7 @@
 namespace Magentor\MagentoInfo\Commands;
 
 use Magentor\Framework\Console\Command\Command;
-use Magentor\Framework\Filesystem\DirectoryRegistrar;
 use Magentor\Framework\Magento\Application;
-use Magentor\Framework\Magento\ApplicationInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,6 +13,13 @@ class MagentoVersion extends Command
 {
 
     protected $name = 'info:version';
+    
+    
+    protected function configure()
+    {
+        $this->setDescription('Displays the Magento\'s version.');
+        parent::configure();
+    }
 
 
     /**
