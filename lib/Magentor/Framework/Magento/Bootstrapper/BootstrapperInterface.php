@@ -55,9 +55,11 @@ interface BootstrapperInterface
     
     
     /**
+     * @param bool|null $secure
+     *
      * @return string
      */
-    public function getBaseUrl();
+    public function getBaseUrl($secure = null);
     
     
     /**
