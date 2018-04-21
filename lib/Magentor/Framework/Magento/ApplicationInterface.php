@@ -44,10 +44,4 @@ interface ApplicationInterface
      * @return Container
      */
     public function exceptionContainer();
-
-
-    /**
-     * @return Operation\CommandInterface
-     */
-    public function operationCommand();
 }

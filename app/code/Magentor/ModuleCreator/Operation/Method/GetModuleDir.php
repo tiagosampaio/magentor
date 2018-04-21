@@ -1,6 +1,6 @@
 <?php
 
-namespace Magentor\Framework\Magento\Operation\Method;
+namespace Magentor\ModuleInfo\Operation\Method;
 
 use Magentor\Framework\Magento\Operation\MethodInitializedAbstract;
 

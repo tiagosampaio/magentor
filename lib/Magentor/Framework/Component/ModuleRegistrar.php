@@ -14,8 +14,9 @@ class ModuleRegistrar implements ModuleRegistrarInterface
     /**
      * @param string $moduleName
      * @param string $path
+     * @param array  $commands
      */
-    public static function register($moduleName, $path)
+    public static function register($moduleName, $path, array $commands = [])
     {
         self::$paths[self::TYPE_MODULES][$moduleName] = str_replace('\\', '/', $path);
     }

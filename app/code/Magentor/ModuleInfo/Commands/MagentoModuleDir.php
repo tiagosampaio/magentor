@@ -1,21 +1,19 @@
 <?php
 
-namespace Magentor\MagentoInfo\Commands;
+namespace Magentor\ModuleInfo\Commands;
 
-use Magentor\Framework\Console\Command\Command;
-use Magentor\Framework\Magento\Application;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class MagentoModuleDir extends Command
+class MagentoModuleDir extends CommandAbstract
 {
 
     protected function configure()
     {
-        $this->setName('info:module:directory')
+        $this->setName('module:directory')
             ->setDescription('Displays the Magento\'s module directory.');
 
         $this->addArgument('module', InputArgument::REQUIRED, 'The module name.', null);

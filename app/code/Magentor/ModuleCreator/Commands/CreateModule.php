@@ -2,13 +2,12 @@
 
 namespace Magentor\ModuleCreator\Commands;
 
-use Magentor\Framework\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class CreateModule extends Command
+class CreateModule extends CommandAbstract
 {
 
     protected $name = 'module:create';
@@ -24,6 +23,11 @@ class CreateModule extends Command
     {
         /** @var QuestionHelper $helper */
         $helper   = $this->getHelper('question');
+
+        
+
+
+
         $question = new Question('Who are you? ');
 
         $name     = $helper->ask($input, $output, $question);

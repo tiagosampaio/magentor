@@ -1,0 +1,35 @@
+<?php
+
+namespace Magentor\MagentoInfo\Commands;
+
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+
+class MagentoStoreConfigGet extends CommandAbstract
+{
+
+    protected function configure()
+    {
+        $this->setName('store:config:get');
+        $this->setDescription('Gets a store configuration from Magento database.');
+        $this->addArgument('config_path', InputArgument::REQUIRED, 'The config path.', null);
+        $this->addArgument('store_id', InputArgument::OPTIONAL, 'Sets the store_id.', null);
+        
+        parent::configure();
+    }
+    
+    
+    /**
+     * @inheritdoc
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $configPath = (string) $input->getArgument('config_path');
+        $storeId    = (int)    $input->getArgument('store_id');
+        
+        $output->writeln($this->magentoCommand()->getStoreConfig($configPath, $storeId));
+    }
+}

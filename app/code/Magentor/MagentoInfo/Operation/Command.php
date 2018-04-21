@@ -1,9 +1,9 @@
 <?php
 
-namespace Magentor\Framework\Magento\Operation;
+namespace Magentor\MagentoInfo\Operation;
 
 
-class Command extends CommandAbstract
+class Command extends \Magentor\Framework\Magento\Operation\CommandAbstract implements CommandInterface
 {
 
     /**
@@ -43,17 +43,6 @@ class Command extends CommandAbstract
     public function getBaseDir()
     {
         return $this->executeCommand(Method\GetBaseDir::class);
-    }
-
-
-    /**
-     * @inheritdoc
-     *
-     * @throws \Exception
-     */
-    public function getModuleDir($name, $type = 'etc')
-    {
-        return $this->executeCommand(Method\GetModuleDir::class, [$name, $type]);
     }
 
 

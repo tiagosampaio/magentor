@@ -2,22 +2,21 @@
 
 namespace Magentor\MagentoInfo\Commands;
 
-use Magentor\Framework\Console\Command\Command;
-use Magentor\Framework\Magento\Application;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class MagentoStoreConfig extends Command
+class MagentoStoreConfigSet extends CommandAbstract
 {
 
     protected function configure()
     {
-        $this->setName('info:store-config');
-        $this->setDescription('Gets a store configuration from Magento database.');
+        $this->setName('store:config:set');
+        $this->setDescription('Sets a store configuration from Magento database.');
         $this->addArgument('config_path', InputArgument::REQUIRED, 'The config path.', null);
+        $this->addArgument('value', InputArgument::REQUIRED, 'The config value.', null);
         $this->addArgument('store_id', InputArgument::OPTIONAL, 'Sets the store_id.', null);
         
         parent::configure();

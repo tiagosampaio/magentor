@@ -93,19 +93,6 @@ class Application implements ApplicationInterface
 
 
     /**
-     * @return Operation\Command
-     */
-    public function operationCommand()
-    {
-        if (!$this->operationCommand) {
-            $this->operationCommand = new Operation\Command($this);
-        }
-
-        return $this->operationCommand;
-    }
-
-
-    /**
      * @return Container
      */
     public function exceptionContainer()

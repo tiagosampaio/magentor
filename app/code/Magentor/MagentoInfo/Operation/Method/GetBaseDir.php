@@ -1,10 +1,10 @@
 <?php
 
-namespace Magentor\Framework\Magento\Operation\Method;
+namespace Magentor\MagentoInfo\Operation\Method;
 
 use Magentor\Framework\Magento\Operation\MethodAbstract;
 
-class GetVersion extends MethodAbstract
+class GetBaseDir extends MethodAbstract
 {
 
     /**
@@ -12,7 +12,7 @@ class GetVersion extends MethodAbstract
      */
     public function executeMagentoOne()
     {
-        return \Mage::getVersion();
+        return \Mage::getBaseDir();
     }
 
 

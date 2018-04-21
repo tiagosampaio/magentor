@@ -2,15 +2,13 @@
 
 namespace Magentor\MagentoInfo\Commands;
 
-use Magentor\Framework\Console\Command\Command;
-use Magentor\Framework\Magento\Application;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class MagentoBaseUrl extends Command
+class MagentoBaseUrl extends CommandAbstract
 {
 
     protected function configure()
