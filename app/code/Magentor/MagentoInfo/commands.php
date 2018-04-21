@@ -6,4 +6,5 @@ return [
     \Magentor\MagentoInfo\Commands\MagentoEdition::class,
     \Magentor\MagentoInfo\Commands\MagentoBaseUrl::class,
     \Magentor\MagentoInfo\Commands\MagentoStoreConfig::class,
+    \Magentor\MagentoInfo\Commands\MagentoIsInstalled::class,
 ];

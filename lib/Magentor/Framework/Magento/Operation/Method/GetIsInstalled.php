@@ -12,7 +12,6 @@ class GetIsInstalled extends MethodAbstract
      */
     public function executeMagentoOne()
     {
-        $this->beforeCall(true);
         return (bool) \Mage::isInstalled();
     }
 

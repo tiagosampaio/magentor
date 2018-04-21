@@ -7,20 +7,21 @@ use Magentor\Framework\Magento\Operation\MethodAbstract;
 class GetBaseUrl extends MethodAbstract
 {
 
+    /** @var bool */
+    protected $initMagento = true;
+
     /**
      * @inheritdoc
      */
     public function executeMagentoOne()
     {
-        $parameters = func_get_args();
+        list($secure) = func_get_args();
 
         try {
-            return \Mage::getStoreConfig($path, $store);
+            return \Mage::getBaseUrl('link', (bool) $secure);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
-        return \Mage::getStoreConfig();
     }
 
 

@@ -34,14 +34,18 @@ abstract class CommandAbstract implements CommandInterface
     protected function executeCommand($class, array $parameters = [])
     {
         if (!class_exists($class)) {
-            throw new \Exception("Magento operation method {$class} class does not exist.");
+            $this->magento
+                ->exceptionContainer()
+                ->throwGenericException("Magento operation method {$class} class does not exist.");
         }
 
         /** @var MethodInterface $method */
         $method = new $class($this->magento);
 
         if (!($method instanceof MethodInterface)) {
-            throw new \Exception("Magento operation method must be an instance of ".MethodInterface::class.".");
+            $this->magento
+                ->exceptionContainer()
+                ->throwGenericException("Magento operation method must be an instance of ".MethodInterface::class.".");
         }
 
         if (true == $method->requiresMagentoInitialization()) {

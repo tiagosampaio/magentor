@@ -3,6 +3,8 @@
 namespace Magentor\Framework\Magento;
 
 
+use Magentor\Framework\Exception\Container;
+
 class Application implements ApplicationInterface
 {
     
@@ -100,5 +102,14 @@ class Application implements ApplicationInterface
         }
 
         return $this->operationCommand;
+    }
+
+
+    /**
+     * @return Container
+     */
+    public function exceptionContainer()
+    {
+        return Container::getInstance();
     }
 }

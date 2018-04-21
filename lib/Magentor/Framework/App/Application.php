@@ -4,7 +4,7 @@ namespace Magentor\Framework\App;
 
 use Magentor\Framework\File\Locator;
 use Magentor\Framework\Component\ModuleRegistrar;
-use Symfony\Component\Console\Command\Command;
+use Magentor\Framework\Console\Command\Command;
 use Magentor\Framework\Console\Application as ConsoleApplication;
 
 class Application implements ApplicationInterface
@@ -168,7 +168,7 @@ class Application implements ApplicationInterface
         }
 
         /** @var Command $command */
-        $command = new $class();
+        $command = new $class($this->getMagentoApp());
         $this->app->add($command);
 
         return $this;

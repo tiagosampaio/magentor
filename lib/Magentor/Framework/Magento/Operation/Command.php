@@ -7,15 +7,18 @@ class Command extends CommandAbstract
 {
 
     /**
-     * @return string
+     * @return bool|mixed|string
+     * @throws \Exception
      */
     public function getVersion()
     {
         return $this->executeCommand(Method\GetVersion::class);
     }
 
+
     /**
-     * @return string
+     * @return bool|mixed|string
+     * @throws \Exception
      */
     public function getEdition()
     {
@@ -24,7 +27,8 @@ class Command extends CommandAbstract
 
 
     /**
-     * @return string
+     * @return bool|mixed|string
+     * @throws \Exception
      */
     public function getEditionInfo()
     {
@@ -33,7 +37,8 @@ class Command extends CommandAbstract
 
 
     /**
-     * @return string
+     * @return bool|mixed|string
+     * @throws \Exception
      */
     public function getBaseDir()
     {
@@ -42,7 +47,8 @@ class Command extends CommandAbstract
 
 
     /**
-     * @return string
+     * @return bool|mixed|string
+     * @throws \Exception
      */
     public function getModuleDir()
     {
@@ -51,28 +57,34 @@ class Command extends CommandAbstract
 
 
     /**
-     * @param string   $path
-     * @param int|null $store
-     *
-     * @return string
+     * @param string $path
+     * @param null   $store
+     * @return bool|mixed|null|string
+     * @throws \Exception
      */
     public function getStoreConfig($path, $store = null)
     {
-        return $this->executeCommand(Method\GetStoreConfig::class, [$path, $store]);
+        return $this->executeCommand(Method\GetStoreConfig::class, [
+            'path'  => $path,
+            'store' => $store
+        ]);
     }
 
 
     /**
-     * @inheritdoc
+     * @param null $secure
+     * @return bool|mixed|string
+     * @throws \Exception
      */
     public function getBaseUrl($secure = null)
     {
-        return $this->executeCommand(Method\GetBaseUrl::class, [$secure]);
+        return $this->executeCommand(Method\GetBaseUrl::class, ['secure' => $secure]);
     }
 
 
     /**
-     * @return bool
+     * @return bool|mixed
+     * @throws \Exception
      */
     public function isInstalled()
     {

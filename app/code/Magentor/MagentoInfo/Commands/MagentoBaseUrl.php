@@ -13,11 +13,9 @@ use Symfony\Component\Console\Question\Question;
 class MagentoBaseUrl extends Command
 {
 
-    protected $name = 'info:base-url';
-    
-    
     protected function configure()
     {
+        $this->setName('info:base-url');
         $this->setDescription('Displays the Magento\'s base URL.');
         $this->addArgument('secure', InputArgument::OPTIONAL, 'Get the base secure URL rather than unsecure.', null);
         
@@ -42,10 +40,12 @@ class MagentoBaseUrl extends Command
                 break;
             case 'false':
             case '0':
-            default:
                 $secure = false;
+                break;
+            default:
+                $secure = null;
         }
         
-        $output->writeln(Application::getInstance()->getBootstrapper()->getBaseUrl($secure));
+        $output->writeln($this->magentoCommand()->getBaseUrl($secure));
     }
 }

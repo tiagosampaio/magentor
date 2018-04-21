@@ -12,12 +12,11 @@ use Symfony\Component\Console\Question\Question;
 class MagentoVersion extends Command
 {
 
-    protected $name = 'info:version';
-    
-    
     protected function configure()
     {
-        $this->setDescription('Displays the Magento\'s version.');
+        $this->setName('info:version')
+            ->setDescription('Displays the Magento\'s version.');
+
         parent::configure();
     }
 
@@ -30,6 +29,6 @@ class MagentoVersion extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf('Version %s', Application::getInstance()->getBootstrapper()->getVersion()));
+        $output->writeln(sprintf('Version %s', $this->magentoCommand()->getVersion()));
     }
 }

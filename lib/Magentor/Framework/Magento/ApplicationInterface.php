@@ -2,6 +2,7 @@
 
 namespace Magentor\Framework\Magento;
 
+use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Magento\Info\Version\InfoInterface;
 
 interface ApplicationInterface
@@ -37,4 +38,16 @@ interface ApplicationInterface
      * @return ApplicationInterface
      */
     public static function getInstance();
+
+
+    /**
+     * @return Container
+     */
+    public function exceptionContainer();
+
+
+    /**
+     * @return Operation\CommandInterface
+     */
+    public function operationCommand();
 }

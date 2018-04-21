@@ -12,11 +12,9 @@ use Symfony\Component\Console\Question\Question;
 class MagentoPath extends Command
 {
 
-    protected $name = 'info:directory';
-    
-    
     protected function configure()
     {
+        $this->setName('info:directory');
         $this->setDescription('Displays the Magento\'s current directory.');
         parent::configure();
     }
