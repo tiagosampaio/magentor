@@ -47,12 +47,13 @@ class Command extends CommandAbstract
 
 
     /**
-     * @return bool|mixed|string
+     * @inheritdoc
+     *
      * @throws \Exception
      */
-    public function getModuleDir()
+    public function getModuleDir($name, $type = 'etc')
     {
-        return $this->executeCommand(Method\GetModuleDir::class);
+        return $this->executeCommand(Method\GetModuleDir::class, [$name, $type]);
     }
 
 

@@ -2,13 +2,10 @@
 
 namespace Magentor\Framework\Magento\Operation\Method;
 
-use Magentor\Framework\Magento\Operation\MethodAbstract;
+use Magentor\Framework\Magento\Operation\MethodInitializedAbstract;
 
-class GetBaseUrl extends MethodAbstract
+class GetBaseUrl extends MethodInitializedAbstract
 {
-
-    /** @var bool */
-    protected $initMagento = true;
 
     /**
      * @inheritdoc

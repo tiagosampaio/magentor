@@ -2,9 +2,9 @@
 
 namespace Magentor\Framework\Magento\Operation\Method;
 
-use Magentor\Framework\Magento\Operation\MethodAbstract;
+use Magentor\Framework\Magento\Operation\MethodInitializedAbstract;
 
-class GetModuleDir extends MethodAbstract
+class GetModuleDir extends MethodInitializedAbstract
 {
 
     /**
@@ -12,7 +12,8 @@ class GetModuleDir extends MethodAbstract
      */
     public function executeMagentoOne()
     {
-        return \Mage::getModuleDir();
+        list($name, $type) = func_get_args();
+        return \Mage::getModuleDir($type, $name);
     }
 
 

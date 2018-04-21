@@ -3,6 +3,8 @@
 namespace Magentor\Framework\Magento\Operation;
 
 
+use Magentor\Framework\Exception\GenericException;
+
 interface CommandInterface
 {
 
@@ -25,15 +27,20 @@ interface CommandInterface
 
 
     /**
+     * @var string $name
+     * @var string $type
+     *
      * @return string
+     *
+     * @throws GenericException
      */
-    public function getBaseDir();
+    public function getModuleDir($name, $type = 'etc');
 
 
     /**
      * @return string
      */
-    public function getModuleDir();
+    public function getBaseDir();
 
 
     /**

@@ -2,13 +2,10 @@
 
 namespace Magentor\Framework\Magento\Operation\Method;
 
-use Magentor\Framework\Magento\Operation\MethodAbstract;
+use Magentor\Framework\Magento\Operation\MethodInitializedAbstract;
 
-class GetStoreConfig extends MethodAbstract
+class GetStoreConfig extends MethodInitializedAbstract
 {
-
-    protected $initMagento = true;
-
 
     /**
      * @inheritdoc
