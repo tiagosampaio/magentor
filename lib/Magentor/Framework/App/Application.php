@@ -119,10 +119,16 @@ class Application implements ApplicationInterface
      */
     protected function initMagento()
     {
-        $describer = new \Magentor\Framework\Magento\Info\Describer($this);
-        $describer->bootstrap();
-        
-        return $this;
+        $this->getMagentoApp()->bootstrap();
+    }
+    
+    
+    /**
+     * @return \Magentor\Framework\Magento\ApplicationInterface
+     */
+    protected function getMagentoApp()
+    {
+        return \Magentor\Framework\Magento\Application::getInstance();
     }
 
 

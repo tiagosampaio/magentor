@@ -25,6 +25,8 @@ class DirectoryRegistrar
         if (!defined('ROOT')) {
             define('ROOT', $rootDirectory);
         }
+        
+        define('DS', DIRECTORY_SEPARATOR);
 
         define('DIR_LIB',  ROOT . '/lib');
         define('DIR_APP',  ROOT . '/app');
@@ -121,5 +123,28 @@ class DirectoryRegistrar
     public static function getMagentoDir()
     {
         return self::getDir(self::DIR_TYPE_MAGENTO);
+    }
+    
+    
+    /**
+     * @param string $filename
+     *
+     * @return string
+     */
+    public static function magentoBuildPath($filename)
+    {
+        return self::buildPath(self::DIR_TYPE_MAGENTO, $filename);
+    }
+    
+    
+    /**
+     * @param string $type
+     * @param string $filename
+     *
+     * @return string
+     */
+    public static function buildPath($type, $filename)
+    {
+        return self::getDir($type) . DS . $filename;
     }
 }

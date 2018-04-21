@@ -14,11 +14,11 @@
 
 namespace Magentor\Framework\Magento\Info;
 
-use Magentor\Framework\App\ApplicationInterface;
+use Magentor\Framework\Magento\ApplicationInterface;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 use Magentor\Framework\Magento\FileSystem\MagentoOne;
 
-class Describer
+class Describer implements DescriberInterface
 {
     
     /** @var ApplicationInterface */
@@ -61,20 +61,24 @@ class Describer
     /**
      * @return bool
      */
-    protected function isMagentoOne()
+    public function isMagentoOne()
     {
-        if ($this->magentoIsReadable(MagentoOne::MAGE_PATH)) {
-            return true;
+        if (!$this->magentoIsReadable(MagentoOne::MAGE_PATH)) {
+            return false;
         }
         
-        return false;
+        if (!$this->magentoIsReadable(MagentoOne::CONFIG_XML_PATH)) {
+            return false;
+        }
+        
+        return true;
     }
     
     
     /**
      * @return bool
      */
-    protected function isMagentoTwo()
+    public function isMagentoTwo()
     {
         if ($this->isMagentoOne()) {
             return false;
@@ -93,7 +97,7 @@ class Describer
     protected function magentoIsReadable($filename)
     {
         $fileExists = $this->magentoFileExists($filename);
-        return $fileExists && is_readable($this->magentoBuildPath($filename));
+        return $fileExists && is_readable(DirectoryRegistrar::magentoBuildPath($filename));
     }
     
     
@@ -104,17 +108,6 @@ class Describer
      */
     protected function magentoFileExists($filename)
     {
-        return file_exists($this->magentoBuildPath($filename));
-    }
-    
-    
-    /**
-     * @param string $filename
-     *
-     * @return string
-     */
-    protected function magentoBuildPath($filename)
-    {
-        return DirectoryRegistrar::getMagentoDir() . '/' . $filename;
+        return file_exists(DirectoryRegistrar::magentoBuildPath($filename));
     }
 }

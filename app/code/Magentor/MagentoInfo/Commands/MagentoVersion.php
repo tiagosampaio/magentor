@@ -4,15 +4,17 @@ namespace Magentor\MagentoInfo\Commands;
 
 use Magentor\Framework\Console\Command\Command;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
+use Magentor\Framework\Magento\Application;
+use Magentor\Framework\Magento\ApplicationInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class MagentoPath extends Command
+class MagentoVersion extends Command
 {
 
-    protected $name = 'info:directory';
+    protected $name = 'info:version';
 
 
     /**
@@ -23,6 +25,6 @@ class MagentoPath extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(DirectoryRegistrar::getMagentoDir());
+        $output->writeln(Application::getInstance()->getBootstrapper()->getVersion());
     }
 }
