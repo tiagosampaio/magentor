@@ -5,7 +5,7 @@ namespace Magentor\Framework\App;
 use Magentor\Framework\File\Locator;
 use Magentor\Framework\Component\ModuleRegistrar;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Application as ConsoleApplication;
+use Magentor\Framework\Console\Application as ConsoleApplication;
 
 class Application implements ApplicationInterface
 {

@@ -33,4 +33,70 @@ class MagentoOne extends BootstrapperAbstract
     {
         return \Mage::getVersion();
     }
+    
+    
+    /**
+     * @return string
+     */
+    public function getEdition()
+    {
+        return \Mage::getEdition();
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getEditionInfo()
+    {
+        return \Mage::getEditionInfo();
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getBaseDir()
+    {
+        return \Mage::getBaseDir();
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getModuleDir()
+    {
+        return \Mage::getModuleDir();
+    }
+    
+    
+    /**
+     * @param string   $path
+     * @param int|null $store
+     *
+     * @return string
+     */
+    public function getStoreConfig($path, $store = null)
+    {
+        return \Mage::getStoreConfig($path, $store);
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return \Mage::getBaseUrl();
+    }
+    
+    
+    /**
+     * @return bool
+     */
+    public function isInstalled()
+    {
+        return (bool) \Mage::isInstalled();
+    }
 }
