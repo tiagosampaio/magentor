@@ -30,6 +30,6 @@ class MagentoVersion extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(Application::getInstance()->getBootstrapper()->getVersion());
+        $output->writeln(sprintf('Version %s', Application::getInstance()->getBootstrapper()->getVersion()));
     }
 }

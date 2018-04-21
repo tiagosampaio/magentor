@@ -6,6 +6,7 @@ use Magentor\Framework\Console\Command\Command;
 use Magentor\Framework\Magento\Application;
 use Magentor\Framework\Magento\Bootstrapper\BootstrapperInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -35,8 +36,14 @@ class MagentoEdition extends Command
         $bootstrapper = Application::getInstance()->getBootstrapper();
         
         $output->writeln([
-            sprintf('%s Edition', $bootstrapper->getEdition()),
-            sprintf('Version %s', $bootstrapper->getVersion())
+            sprintf('%s Edition', $bootstrapper->getEdition())
         ]);
+        
+        /** @var MagentoVersion $command */
+        $command = $this->getApplication()->find('info:version');
+    
+        try {
+            $command->run($input, $output);
+        } catch (\Exception $e) {}
     }
 }
