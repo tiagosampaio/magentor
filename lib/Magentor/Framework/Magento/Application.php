@@ -2,19 +2,21 @@
 
 namespace Magentor\Framework\Magento;
 
-use Magentor\Framework\Magento\Bootstrapper\BootstrapperInterface;
 
 class Application implements ApplicationInterface
 {
     
     const MAGENTO_ONE = 1;
-    const MAGENTO_TWO = 1;
-    
-    /** @var Info\DescriberInterface */
-    protected $describer;
-    
-    /** @var BootstrapperInterface */
+    const MAGENTO_TWO = 2;
+
+    /** @var Bootstrapper\BootstrapInterface */
     protected $bootstrapper;
+
+    /** @var Info\Version\InfoInterface */
+    protected $info;
+
+    /** @var Operation\Command */
+    protected $operationCommand;
     
     /** @var Application */
     protected static $instance;
@@ -47,28 +49,23 @@ class Application implements ApplicationInterface
      */
     public function bootstrap()
     {
-        /** @var BootstrapperInterface $bootstrapper */
-        if ($this->getDescriber()->isMagentoOne()) {
-            $class = \Magentor\Framework\Magento\Bootstrapper\MagentoOne::class;
-        }
-        
-        if ($this->getDescriber()->isMagentoTwo()) {
-            $class = \Magentor\Framework\Magento\Bootstrapper\MagentoTwo::class;
-        }
-    
-        $bootstrapper = new $class();
-        $bootstrapper->dispatch($this);
+        /** @var Bootstrapper\BootstrapInterface $bootstrap */
+        $this->bootstrapper = new Bootstrapper\Bootstrap();
+        $this->bootstrapper->dispatch($this);
+
+        /** @var Info\Version\InfoInterface $info */
+        $this->info = (new Info\Builder())->build($this);
         
         return $this;
     }
     
     
     /**
-     * @param BootstrapperInterface $bootstrapper
+     * @param Bootstrapper\BootstrapInterface $bootstrapper
      *
      * @return $this
      */
-    public function setBootstrapper(BootstrapperInterface $bootstrapper)
+    public function setBootstrapper(Bootstrapper\BootstrapInterface $bootstrapper)
     {
         $this->bootstrapper = $bootstrapper;
         return $this;
@@ -76,23 +73,32 @@ class Application implements ApplicationInterface
     
     
     /**
-     * @return BootstrapperInterface
+     * @return Bootstrapper\BootstrapInterface
      */
     public function getBootstrapper()
     {
         return $this->bootstrapper;
     }
-    
-    
+
+
     /**
-     * @return Info\DescriberInterface
+     * @return Info\Version\InfoInterface
      */
-    protected function getDescriber()
+    public function getInfo()
     {
-        if (empty($this->describer)) {
-            $this->describer = new Info\Describer($this);
+        return $this->info;
+    }
+
+
+    /**
+     * @return Operation\Command
+     */
+    public function operationCommand()
+    {
+        if (!$this->operationCommand) {
+            $this->operationCommand = new Operation\Command($this);
         }
-        
-        return $this->describer;
+
+        return $this->operationCommand;
     }
 }

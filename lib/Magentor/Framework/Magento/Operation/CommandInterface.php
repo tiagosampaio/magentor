@@ -1,50 +1,41 @@
 <?php
 
-namespace Magentor\Framework\Magento\Bootstrapper;
+namespace Magentor\Framework\Magento\Operation;
 
-use Magentor\Framework\Magento\ApplicationInterface;
 
-interface BootstrapperInterface
+interface CommandInterface
 {
-    
-    /**
-     * @param ApplicationInterface $magento
-     *
-     * @return mixed
-     */
-    public function dispatch(ApplicationInterface $magento);
-    
-    
+
     /**
      * @return string
      */
     public function getVersion();
-    
-    
+
+
     /**
      * @return string
      */
     public function getEdition();
-    
-    
+
+
     /**
      * @return string
      */
     public function getEditionInfo();
-    
-    
+
+
     /**
      * @return string
      */
     public function getBaseDir();
-    
-    
+
+
     /**
      * @return string
      */
     public function getModuleDir();
-    
-    
+
+
     /**
      * @param string   $path
      * @param int|null $store
@@ -52,16 +43,16 @@ interface BootstrapperInterface
      * @return string|null|mixed
      */
     public function getStoreConfig($path, $store = null);
-    
-    
+
+
     /**
      * @param bool|null $secure
      *
      * @return string
      */
     public function getBaseUrl($secure = null);
-    
-    
+
+
     /**
      * @return bool
      */

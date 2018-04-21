@@ -2,7 +2,7 @@
 
 namespace Magentor\Framework\Magento;
 
-use Magentor\Framework\Magento\Bootstrapper\BootstrapperInterface;
+use Magentor\Framework\Magento\Info\Version\InfoInterface;
 
 interface ApplicationInterface
 {
@@ -11,23 +11,30 @@ interface ApplicationInterface
      * @return $this
      */
     public function bootstrap();
-    
-    
+
+
     /**
+     * @param Bootstrapper\BootstrapInterface $bootstrapper
+     *
      * @return $this
      */
-    public function setBootstrapper(BootstrapperInterface $bootstrapper);
+    public function setBootstrapper(Bootstrapper\BootstrapInterface $bootstrapper);
     
     
     /**
-     * @return BootstrapperInterface
+     * @return Bootstrapper\BootstrapInterface
      */
     public function getBootstrapper();
+
+
+    /**
+     * @return InfoInterface
+     */
+    public function getInfo();
     
     
     /**
      * @return ApplicationInterface
      */
     public static function getInstance();
-    
 }

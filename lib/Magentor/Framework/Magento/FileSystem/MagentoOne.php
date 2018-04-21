@@ -9,5 +9,4 @@ class MagentoOne implements FileSystemInterface
     const LOCAL_XML_PATH  = 'app/etc/local.xml';
     const CONFIG_XML_PATH = 'app/etc/config.xml';
     const INDEX_PATH      = 'index.php';
-    
 }
