@@ -25,8 +25,6 @@ class DirectoryRegistrar
         if (!defined('ROOT')) {
             define('ROOT', $rootDirectory);
         }
-        
-        define('DS', DIRECTORY_SEPARATOR);
 
         define('DIR_LIB',  ROOT . '/lib');
         define('DIR_APP',  ROOT . '/app');
@@ -145,6 +143,6 @@ class DirectoryRegistrar
      */
     public static function buildPath($type, $filename)
     {
-        return self::getDir($type) . DS . $filename;
+        return self::getDir($type) . DIRECTORY_SEPARATOR . $filename;
     }
 }
