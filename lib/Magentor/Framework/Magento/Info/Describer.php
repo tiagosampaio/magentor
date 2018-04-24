@@ -65,6 +65,10 @@ class Describer implements DescriberInterface
             return false;
         }
         
+        if (!$this->magentoIsReadable(MagentoTwo::ETC_BOOTSTRAP)) {
+            return false;
+        }
+        
         return true;
     }
     

@@ -4,6 +4,7 @@ namespace Magentor\Framework\Magento\Bootstrapper;
 
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 use Magentor\Framework\Magento\FileSystem\MagentoOne as MagentoOneFileSystem;
+use Magentor\Framework\Magento\FileSystem\MagentoTwo;
 
 class Bootstrap extends BootstrapAbstract
 {
@@ -52,6 +53,14 @@ class Bootstrap extends BootstrapAbstract
         }
         
         if ($this->magento->getInfo()->isMagentoTwo()) {
+            if (!class_exists('Magento\Framework\App\Bootstrap')) {
+                require_once DirectoryRegistrar::magentoBuildPath('vendor/autoload.php');
+                require_once DirectoryRegistrar::magentoBuildPath(MagentoTwo::ETC_BOOTSTRAP);
+                
+                $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+                $app = $bootstrap->createApplication(\Magento\Framework\App\Cron::class);
+            }
+            
             return true;
         }
         
