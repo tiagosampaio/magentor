@@ -17,7 +17,7 @@ class Application implements ApplicationInterface
     /** @var Info\Version\InfoInterface */
     protected $info;
 
-    /** @var Operation\Command */
+    /** @var Operation\CommandInterface */
     protected $operationCommand;
     
     /** @var Application */
@@ -51,12 +51,12 @@ class Application implements ApplicationInterface
      */
     public function bootstrap()
     {
+        /** @var Info\Version\InfoInterface $info */
+        $this->info = (new Info\Builder())->build($this);
+        
         /** @var Bootstrapper\BootstrapInterface $bootstrap */
         $this->bootstrapper = new Bootstrapper\Bootstrap();
         $this->bootstrapper->dispatch($this);
-
-        /** @var Info\Version\InfoInterface $info */
-        $this->info = (new Info\Builder())->build($this);
         
         return $this;
     }

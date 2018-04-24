@@ -4,6 +4,7 @@ namespace Magentor\Framework\Magento\Info;
 
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 use Magentor\Framework\Magento\FileSystem\MagentoOne;
+use Magentor\Framework\Magento\FileSystem\MagentoTwo;
 
 class Describer implements DescriberInterface
 {
@@ -52,12 +53,19 @@ class Describer implements DescriberInterface
      */
     public function isMagentoTwo()
     {
-        if ($this->isMagentoOne()) {
+        if (!$this->magentoIsReadable(MagentoTwo::PUB_INDEX)) {
             return false;
         }
         
-        /** @todo Implement the logic to check if it's a Magento 2 version. */
-        return false;
+        if (!$this->magentoIsReadable(MagentoTwo::ETC_DI_XML)) {
+            return false;
+        }
+        
+        if (!$this->magentoIsReadable(MagentoTwo::ETC_COMPONENT_REGISTRATION)) {
+            return false;
+        }
+        
+        return true;
     }
     
     

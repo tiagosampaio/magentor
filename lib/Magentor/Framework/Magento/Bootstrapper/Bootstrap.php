@@ -38,16 +38,28 @@ class Bootstrap extends BootstrapAbstract
     
     
     /**
-     * @return $this
+     * @return bool
      */
     protected function requireMageFile()
     {
-        if (!class_exists('Mage')) {
-            $mageFile = DirectoryRegistrar::magentoBuildPath(MagentoOneFileSystem::MAGE_PATH);
-            require_once $mageFile;
+        if ($this->magento->getInfo()->isMagentoOne()) {
+            if (!class_exists('Mage')) {
+                $mageFile = DirectoryRegistrar::magentoBuildPath(MagentoOneFileSystem::MAGE_PATH);
+                require_once $mageFile;
+            }
+    
+            return true;
         }
         
-        return true;
+        if ($this->magento->getInfo()->isMagentoTwo()) {
+            return true;
+        }
+        
+        if ($this->magento->getInfo()->isNotMagento()) {
+            return true;
+        }
+        
+        return false;
     }
     
     
