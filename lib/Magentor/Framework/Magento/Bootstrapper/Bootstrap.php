@@ -54,11 +54,11 @@ class Bootstrap extends BootstrapAbstract
         
         if ($this->magento->getInfo()->isMagentoTwo()) {
             if (!class_exists('Magento\Framework\App\Bootstrap')) {
-                require_once DirectoryRegistrar::magentoBuildPath('vendor/autoload.php');
-                require_once DirectoryRegistrar::magentoBuildPath(MagentoTwo::ETC_BOOTSTRAP);
+//                require_once DirectoryRegistrar::magentoBuildPath('vendor/autoload.php');
+//                require_once DirectoryRegistrar::magentoBuildPath(MagentoTwo::ETC_BOOTSTRAP);
                 
-                $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
-                $app = $bootstrap->createApplication(\Magento\Framework\App\Cron::class);
+//                $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+//                $app = $bootstrap->createApplication(\Magento\Framework\App\Cron::class);
             }
             
             return true;

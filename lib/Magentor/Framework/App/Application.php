@@ -104,6 +104,14 @@ class Application implements ApplicationInterface
      */
     protected function initCommands()
     {
+        $commands = (array) ModuleRegistrar::getCommands();
+        
+        /** @var string $command */
+        foreach ($commands as $command) {
+            $this->registerCommand($command);
+        }
+        
+        
         $modulePaths = ModuleRegistrar::getPaths();
 
         foreach ($modulePaths as $module => $path) {
