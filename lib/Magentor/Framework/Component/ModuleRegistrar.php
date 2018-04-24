@@ -18,9 +18,14 @@ class ModuleRegistrar implements ModuleRegistrarInterface
      * @param string $moduleName
      * @param string $path
      * @param array  $commands
+     * @param array  $moduleOptions
      */
-    public static function register($moduleName, $path, array $commands = [])
+    public static function register($moduleName, $path, array $commands = [], array $moduleOptions = [])
     {
+        if (isset($moduleOptions['enabled']) && !$moduleOptions['enabled']) {
+            return;
+        }
+        
         self::$paths[self::TYPE_MODULES][$moduleName] = str_replace('\\', '/', $path);
         self::registerCommands($moduleName, $commands);
     }
@@ -57,6 +62,10 @@ class ModuleRegistrar implements ModuleRegistrarInterface
             if (!class_exists($class) && class_exists($options)) {
                 $commandClass   = $options;
                 $commandOptions = [];
+            }
+            
+            if (isset($commandOptions['enabled']) && !$commandOptions['enabled']) {
+                continue;
             }
         
             $commandOptions['module'] = $moduleName;
