@@ -5,12 +5,14 @@ namespace Magentor\Framework\Filesystem;
 class DirectoryRegistrar
 {
     
-    const DIR_TYPE_ROOT    = 'root';
-    const DIR_TYPE_APP     = 'app';
-    const DIR_TYPE_LIB     = 'lib';
-    const DIR_TYPE_ETC     = 'etc';
-    const DIR_TYPE_CODE    = 'code';
-    const DIR_TYPE_MAGENTO = 'magento';
+    const DIR_TYPE_ROOT         = 'root';
+    const DIR_TYPE_APP          = 'app';
+    const DIR_TYPE_LIB          = 'lib';
+    const DIR_TYPE_ETC          = 'etc';
+    const DIR_TYPE_CODE         = 'code';
+    const DIR_TYPE_MAGENTO      = 'magento';
+    const DIR_TYPE_MAGENTO_APP  = 'magento_app';
+    const DIR_TYPE_MAGENTO_CODE = 'magento_code';
     
     
     /** @var array */
@@ -51,7 +53,12 @@ class DirectoryRegistrar
         }
 
         define('MAGENTO_ROOT', $magentoDir);
-        self::$dirs[self::DIR_TYPE_MAGENTO] = MAGENTO_ROOT;
+        define('MAGENTO_APP',  MAGENTO_ROOT . DIRECTORY_SEPARATOR . 'app');
+        define('MAGENTO_CODE', MAGENTO_APP . DIRECTORY_SEPARATOR . 'code');
+        
+        self::$dirs[self::DIR_TYPE_MAGENTO]      = MAGENTO_ROOT;
+        self::$dirs[self::DIR_TYPE_MAGENTO_APP]  = MAGENTO_APP;
+        self::$dirs[self::DIR_TYPE_MAGENTO_CODE] = MAGENTO_CODE;
     }
     
     
@@ -132,6 +139,18 @@ class DirectoryRegistrar
     public static function magentoBuildPath($filename)
     {
         return self::buildPath(self::DIR_TYPE_MAGENTO, $filename);
+    }
+    
+    
+    /**
+     * @param string $filename
+     *
+     * @return string
+     */
+    public static function magentoBuildModulePath($vendor, $module)
+    {
+        $moduleDir = $vendor . DIRECTORY_SEPARATOR . $module;
+        return self::buildPath(self::DIR_TYPE_MAGENTO_CODE, $moduleDir);
     }
     
     

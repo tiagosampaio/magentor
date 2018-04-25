@@ -32,44 +32,19 @@ class MakeModel extends CommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $vendor    = $this->ask($input, $output, 'Which vendor? ', 'BitTools');
-        $module    = $this->ask($input, $output, 'Which module? ', 'SkyHub');
-        $modelFile = $this->ask($input, $output, 'Model\'s name? ', 'Preset');
+        $vendor = $this->ask($input, $output, 'Which vendor? ', 'BitTools');
+        $module = $this->ask($input, $output, 'Which module? ', 'SkyHub');
+        $class  = $this->ask($input, $output, 'Model\'s class name? ', 'Preset');
 
-        $moduleDir = DirectoryRegistrar::magentoBuildPath("app/code/{$vendor}/{$module}");
-        $dirMode   = 0755;
-        
-        if (!is_dir($moduleDir)) {
-            $created = mkdir($moduleDir, $dirMode, true);
-        }
-        
-        $modelDir = $moduleDir . DIRECTORY_SEPARATOR . 'Model';
-        if (!is_dir($modelDir)) {
-            $created = mkdir($modelDir, $dirMode, true);
-        }
-        
-        $modelFilepath = $modelDir . DIRECTORY_SEPARATOR . $modelFile . '.php';
-        if (file_exists($modelFilepath)) {
-            $output->writeln('Model already exists. Cannot create it.');
+        try {
+            $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($class, $module, $vendor);
+            $maker->generate();
+    
+            $output->writeln('Model was created!');
+        } catch (\Exception $e) {
+            $output->writeln(['Error', $e->getMessage()]);
             return;
         }
-        
-        $name      = $modelFile;
-        
-        $phpFile = new \Nette\PhpGenerator\PhpFile();
-        $abstractModel = "\Magento\Framework\Model\AbstractModel";
-        
-        $namespace = $vendor . '\\' . $module . '\\' . 'Model';
-        $namespace = $phpFile->addNamespace($namespace);
-        $namespace->addUse($abstractModel);
-        
-        /** @var \Nette\PhpGenerator\ClassType $class */
-        $class = $namespace->addClass($name);
-        $class->addExtend($abstractModel);
-        
-        $io = @file_put_contents($modelFilepath, (string) $phpFile);
-        
-        $output->writeln((string) $phpFile);
     }
     
     
