@@ -17,8 +17,9 @@ class MakeModel extends CommandAbstract
         $this->setName('make:model')
             ->setDescription('Creates a Magento model.');
 
-//        $this->addArgument('vendor', InputArgument::REQUIRED, 'The module\'s vendor name', null);
-//        $this->addArgument('module', InputArgument::REQUIRED, 'The module\'s name.', null);
+        $this->addArgument('vendor', InputArgument::REQUIRED, 'The module\'s vendor name');
+        $this->addArgument('module', InputArgument::REQUIRED, 'The module\'s name.');
+        $this->addArgument('name', InputArgument::REQUIRED, 'The module\'s model name.');
 
         parent::configure();
     }
@@ -32,14 +33,18 @@ class MakeModel extends CommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $vendor = $this->ask($input, $output, 'Which vendor? ', 'BitTools');
-        $module = $this->ask($input, $output, 'Which module? ', 'SkyHub');
-        $class  = $this->ask($input, $output, 'Model\'s class name? ', 'Preset');
+        $vendor = $input->getArgument('vendor');
+        $module = $input->getArgument('module');
+        $name   = $input->getArgument('name');
+        
+//        $vendor = $this->ask($input, $output, 'Which vendor? ');
+//        $module = $this->ask($input, $output, 'Which module? ', 'SkyHub');
+//        $class  = $this->ask($input, $output, 'Model\'s class name? ', 'Preset');
 
         try {
-            $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($class, $module, $vendor);
+            $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($name, $module, $vendor);
             $maker->generate();
-    
+            
             $output->writeln('Model was created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);

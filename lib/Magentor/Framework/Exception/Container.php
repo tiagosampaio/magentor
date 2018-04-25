@@ -30,9 +30,9 @@ class Container
     /**
      * @param $message
      */
-    public function throwGenericException($message)
+    public static function throwGenericException($message)
     {
-        $this->throwException(GenericException::class, $message);
+        self::throwException(GenericException::class, $message);
     }
 
 
@@ -42,7 +42,7 @@ class Container
      *
      * @throws ExceptionInterface
      */
-    public function throwException($class, $message)
+    public static function throwException($class, $message)
     {
         throw new $class($message);
     }

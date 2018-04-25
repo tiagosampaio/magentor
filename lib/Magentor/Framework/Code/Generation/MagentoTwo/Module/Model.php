@@ -1,6 +1,7 @@
 <?php
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
+use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Exception\GenericException;
 
 class Model extends AbstractModulePhp
@@ -16,8 +17,27 @@ class Model extends AbstractModulePhp
     protected $modelName;
     
     
+    /**
+     * Model constructor.
+     *
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     */
     public function __construct($name, $module, $vendor)
     {
+        if (!$name) {
+            Container::throwGenericException('Model name cannot be empty.');
+        }
+        
+        if (!$module) {
+            Container::throwGenericException('Module name cannot be empty.');
+        }
+        
+        if (!$vendor) {
+            Container::throwGenericException('Module\'s vendor name cannot be empty.');
+        }
+        
         $this->setModelName($name);
         $this->setVendorName($vendor);
         $this->setModuleName($module);
@@ -34,20 +54,17 @@ class Model extends AbstractModulePhp
     public function generate()
     {
         if (file_exists($this->getFilePath())) {
-            throw new GenericException('Model already exists. Cannot create it.');
+            throw new GenericException('Model already exists. Cannot be created again.');
         }
     
         $phpFile = new \Nette\PhpGenerator\PhpFile();
-        $abstractModel = "\Magento\Framework\Model\AbstractModel";
     
-        $ns = $this->getNamespace();
-        
-        $namespace = $phpFile->addNamespace($ns);
-        $namespace->addUse($abstractModel);
+        $namespace = $phpFile->addNamespace($this->getNamespace());
+        $namespace->addUse($this->getAbstractModel());
     
         /** @var \Nette\PhpGenerator\ClassType $class */
         $class = $namespace->addClass($this->getModelName());
-        $class->addExtend($abstractModel);
+        $class->addExtend($this->getAbstractModel());
     
         /** @var \Nette\PhpGenerator\Method $method */
         $method = $class->addMethod('_construct');
@@ -102,7 +119,7 @@ class Model extends AbstractModulePhp
     protected function getModelDirectory()
     {
         $this->initModelDirectory();
-        return $this->moduleDirectory;
+        return realpath($this->moduleDirectory);
     }
     
     
@@ -125,6 +142,15 @@ class Model extends AbstractModulePhp
      */
     protected function getNamespace()
     {
-        return $this->getVendorName() . '\\' . $this->getModuleName() . '\\' . $this->getObjectType();
+        return $this->getVendorName() . NS . $this->getModuleName() . NS . $this->getObjectType();
+    }
+    
+    
+    /**
+     * @return string
+     */
+    protected function getAbstractModel()
+    {
+        return implode(NS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
     }
 }
