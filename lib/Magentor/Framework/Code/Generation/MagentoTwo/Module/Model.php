@@ -10,39 +10,6 @@ class Model extends AbstractModulePhp
     /** @var string */
     protected $objectType = 'Model';
     
-    /** @var string */
-    protected $modelDirectory;
-    
-    /** @var string */
-    protected $modelName;
-    
-    
-    /**
-     * Model constructor.
-     *
-     * @param string $name
-     * @param string $module
-     * @param string $vendor
-     */
-    public function __construct($name, $module, $vendor)
-    {
-        if (!$name) {
-            Container::throwGenericException('Model name cannot be empty.');
-        }
-        
-        if (!$module) {
-            Container::throwGenericException('Module name cannot be empty.');
-        }
-        
-        if (!$vendor) {
-            Container::throwGenericException('Module\'s vendor name cannot be empty.');
-        }
-        
-        $this->setModelName($name);
-        $this->setVendorName($vendor);
-        $this->setModuleName($module);
-    }
-    
     
     /**
      * @param string $name
@@ -54,22 +21,19 @@ class Model extends AbstractModulePhp
     public function generate()
     {
         if (file_exists($this->getFilePath())) {
-            throw new GenericException('Model already exists. Cannot be created again.');
+            Container::throwGenericException('Model already exists. Cannot be created again.');
         }
     
         $phpFile = new \Nette\PhpGenerator\PhpFile();
     
         $namespace = $phpFile->addNamespace($this->getNamespace());
-        $namespace->addUse($this->getAbstractModel());
+        $namespace->addUse($this->getAbstractModelClass());
     
         /** @var \Nette\PhpGenerator\ClassType $class */
-        $class = $namespace->addClass($this->getModelName());
-        $class->addExtend($this->getAbstractModel());
+        $class = $namespace->addClass($this->getObjectName());
+        $class->addExtend($this->getAbstractModelClass());
     
-        /** @var \Nette\PhpGenerator\Method $method */
-        $method = $class->addMethod('_construct');
-        $method->setVisibility('protected');
-        $method->setBody('$this->_init(?);', ['\resourceClass']);
+        $this->prepareObjectMethods($class);
     
         $contents = (string) $phpFile;
         
@@ -78,48 +42,18 @@ class Model extends AbstractModulePhp
     
     
     /**
-     * @param $modelName
+     * @param \Nette\PhpGenerator\ClassType $class
      *
      * @return $this
      */
-    protected function setModelName($modelName)
+    protected function prepareObjectMethods(\Nette\PhpGenerator\ClassType $class)
     {
-        $this->modelName = $modelName;
-        return $this;
-    }
-    
-    
-    /**
-     * @return string
-     */
-    protected function getModelName()
-    {
-        return (string) $this->modelName;
-    }
-    
-    
-    /**
-     * @return $this
-     */
-    protected function initModelDirectory($createAutomatically = true)
-    {
-        $this->modelDirectory = $this->getModuleDirectory() . DIRECTORY_SEPARATOR . $this->getObjectType();
-        
-        if (!is_dir($this->modelDirectory) && (true === $createAutomatically)) {
-            mkdir($this->modelDirectory, $this->getDirectoryCreationMode(), true);
-        }
+        /** @var \Nette\PhpGenerator\Method $method */
+        $method = $class->addMethod('_construct');
+        $method->setVisibility('protected');
+        $method->setBody('$this->_init(?);', [$this->getResourceModelClass()]);
         
         return $this;
-    }
-    
-    
-    /**
-     * @return string
-     */
-    protected function getModelDirectory()
-    {
-        $this->initModelDirectory();
-        return realpath($this->moduleDirectory);
     }
     
     
@@ -128,10 +62,9 @@ class Model extends AbstractModulePhp
      */
     protected function getFilePath()
     {
-        $path  = $this->getModelDirectory() . DIRECTORY_SEPARATOR;
-        $path .= $this->getObjectType() . DIRECTORY_SEPARATOR;
-        $path .= $this->getModelName();
-        $path .= '.' . $this->getFileExtension();
+        $path  = $this->getObjectBaseDirectory() . DS;
+        $path .= $this->getObjectDirectory();
+        $path .= $this->getObjectFilename();
         
         return $path;
     }
@@ -140,17 +73,24 @@ class Model extends AbstractModulePhp
     /**
      * @return string
      */
-    protected function getNamespace()
+    protected function getAbstractModelClass()
     {
-        return $this->getVendorName() . NS . $this->getModuleName() . NS . $this->getObjectType();
+        return implode(NS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
     }
     
     
     /**
      * @return string
      */
-    protected function getAbstractModel()
+    protected function getResourceModelClass()
     {
-        return implode(NS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
+        return implode(NS, [
+            null,
+            $this->getVendorName(),
+            $this->getModuleName(),
+            $this->getObjectType(),
+            'Resource',
+            $this->getObjectName()
+        ]);
     }
 }
