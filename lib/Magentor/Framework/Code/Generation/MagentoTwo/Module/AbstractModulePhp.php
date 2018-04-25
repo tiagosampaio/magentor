@@ -124,13 +124,10 @@ abstract class AbstractModulePhp extends AbstractPhp
     /**
      * @return $this
      */
-    protected function initObjectBaseDirectory($createAutomatically = true)
+    protected function initObjectBaseDirectory()
     {
         $this->objectBaseDirectory = $this->getModuleDirectory() . DS . $this->getObjectType();
-        
-        if (!is_dir($this->objectBaseDirectory) && (true === $createAutomatically)) {
-            mkdir($this->objectBaseDirectory, $this->getDirectoryCreationMode(), true);
-        }
+        \Magentor\Framework\Filesystem\Directory::mkDir($this->objectBaseDirectory);
         
         return $this;
     }
@@ -189,20 +186,28 @@ abstract class AbstractModulePhp extends AbstractPhp
     
     
     /**
-     * @return string
+     * @return $this
      */
-    protected function getModuleDirectory()
+    protected function initModuleDirectory()
     {
         if (!$this->moduleDirectory) {
             $this->moduleDirectory = DirectoryRegistrar::magentoBuildModulePath(
                 $this->getVendorName(), $this->getModuleName()
             );
-    
-            if (!is_dir($this->moduleDirectory)) {
-                mkdir($this->moduleDirectory, $this->getDirectoryCreationMode(), true);
-            }
+        
+            \Magentor\Framework\Filesystem\Directory::mkDir($this->moduleDirectory);
         }
         
+        return $this;
+    }
+    
+    
+    /**
+     * @return string
+     */
+    protected function getModuleDirectory()
+    {
+        $this->initModuleDirectory();
         return $this->moduleDirectory;
     }
     

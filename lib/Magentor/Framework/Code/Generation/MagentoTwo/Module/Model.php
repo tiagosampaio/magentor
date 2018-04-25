@@ -3,6 +3,7 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Exception\GenericException;
+use Magentor\Framework\Filesystem\Io;
 
 class Model extends AbstractModulePhp
 {
@@ -37,7 +38,8 @@ class Model extends AbstractModulePhp
     
         $contents = (string) $phpFile;
         
-        @file_put_contents($this->getFilePath(), $contents);
+        $io = new Io();
+        $io->write($this->getFilePath(), $contents);
     }
     
     
