@@ -6,6 +6,7 @@ use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
+use Nette\PhpGenerator\Helpers;
 
 class PhpClassBuilder implements PhpClassBuilderInterface
 {
@@ -155,7 +156,7 @@ class PhpClassBuilder implements PhpClassBuilderInterface
      */
     public function __toString()
     {
-        return (string) $this->build();
+        return Helpers::tabsToSpaces((string) $this->build());
     }
     
     

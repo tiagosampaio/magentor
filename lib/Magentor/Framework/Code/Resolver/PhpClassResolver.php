@@ -181,7 +181,14 @@ class PhpClassResolver implements PhpClassInterface
         $this->vendor    = array_shift($parts);
         $this->package   = array_shift($parts);
         $this->className = array_pop($parts);
-        $this->classPath = implode(BS, $parts);
+        
+        $this->classPath = $this->joinClass($parts);
+        
+        $this->namespace = $this->joinClass([
+            $this->vendor,
+            $this->package,
+            $this->classPath
+        ]);
         
         return $this;
     }
@@ -196,7 +203,7 @@ class PhpClassResolver implements PhpClassInterface
             $this->rebuild($class);
         }
         
-        $fullClass = implode(BS, [
+        $fullClass = $this->joinClass([
             $this->vendor,
             $this->package,
             $this->classPath,
@@ -231,5 +238,24 @@ class PhpClassResolver implements PhpClassInterface
         $class = str_replace('/', BS, $class);
 
         return $class;
+    }
+    
+    
+    /**
+     * @param array $parts
+     *
+     * @return string
+     */
+    protected function joinClass(array $parts)
+    {
+        foreach ($parts as $key => $value) {
+            if (!empty($value)) {
+                continue;
+            }
+            
+            unset($parts[$key]);
+        }
+        
+        return implode(BS, $parts);
     }
 }

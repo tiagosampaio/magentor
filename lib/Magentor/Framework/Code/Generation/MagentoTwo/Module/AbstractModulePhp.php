@@ -53,16 +53,17 @@ abstract class AbstractModulePhp extends AbstractPhp
             Container::throwGenericException('Module\'s vendor name cannot be empty.');
         }
         
-        $classResolver = new PhpClassResolver(implode(BS, [
+        $this->classResolver = new PhpClassResolver(implode(BS, [
             $vendor,
             $module,
+            $this->objectType,
             $objectName
         ]));
     
-        $this->setVendorName($classResolver->getVendor());
-        $this->setModuleName($classResolver->getPackage());
-        $this->setObjectPath($classResolver->getClassPath());
-        $this->setObjectName($classResolver->getClassName());
+        $this->setVendorName($this->classResolver->getVendor());
+        $this->setModuleName($this->classResolver->getPackage());
+        $this->setObjectPath($this->classResolver->getClassPath());
+        $this->setObjectName($this->classResolver->getClassName());
     }
     
     
@@ -237,6 +238,6 @@ abstract class AbstractModulePhp extends AbstractPhp
      */
     protected function getNamespace()
     {
-        return $this->getVendorName() . BS . $this->getModuleName() . BS . $this->getObjectType();
+        return $this->classResolver()->getNamespace();
     }
 }

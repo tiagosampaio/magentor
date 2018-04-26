@@ -133,6 +133,24 @@ class PhpClassResolverTest extends TestCase
     /**
      * @test
      */
+    public function resolveModuleClassNamespace()
+    {
+        /** @var PhpClassInterface $resolver */
+        $resolver = $this->getResolver($this->class);
+        
+        $namespace = 'Magentor\ModuleName\Operation\Command\Method';
+        
+        $this->assertEquals($namespace, $resolver->getNamespace());
+        $this->assertEquals($namespace, $resolver->renew($this->classWrong)->getNamespace());
+        $this->assertEquals('Magentor\ModuleName', $resolver->renew($this->classNoPath)->getNamespace());
+        $this->assertEquals($namespace, $resolver->renew($this->fileName)->getNamespace());
+        $this->assertEquals($namespace, $resolver->renew($this->fileNameWithDS)->getNamespace());
+    }
+
+
+    /**
+     * @test
+     */
     public function resolveModuleClassParts()
     {
         $parts = [
