@@ -93,7 +93,7 @@ class PhpClass implements PhpClassInterface
      */
     public function getFullClassName() : string
     {
-        return BS . $this->fullClassName;
+        return BS . join(BS, $this->getParts());
     }
 
 
@@ -120,7 +120,26 @@ class PhpClass implements PhpClassInterface
      */
     public function getParts() : array
     {
-        return $this->parts;
+        $fullClass = implode(BS, [
+            $this->vendor,
+            $this->package,
+            $this->classPath,
+            $this->className,
+        ]);
+        
+        $parts = [];
+        
+        foreach (explode(BS, $fullClass) as $part) {
+            $part = $this->clearClassString($part);
+            
+            if (empty($part)) {
+                continue;
+            }
+    
+            $parts[] = $part;
+        }
+        
+        return $parts;
     }
 
 
@@ -130,9 +149,9 @@ class PhpClass implements PhpClassInterface
     protected function resolve()
     {
         $this->fullClassName = $this->clearClassString($this->fullClassName);
-        $this->parts         = explode(BS, $this->fullClassName);
-
-        $parts = $this->parts;
+        
+        /** @var array $parts */
+        $parts = explode(BS, $this->fullClassName);
 
         $this->className = array_pop($parts);
         $this->vendor    = array_shift($parts);
