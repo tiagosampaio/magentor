@@ -123,7 +123,7 @@ class Model extends AbstractModulePhp
             $this->getVendorName(),
             $this->getModuleName(),
             $this->getObjectType(),
-            'Resource',
+            'ResourceModel',
             $this->getObjectName() . '::class'
         ]);
     }

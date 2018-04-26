@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tiagosampaio
- * Date: 26/04/18
- * Time: 10:30
- */
 
 namespace Magentor\Framework\Code\Resolver;
 
 
-class PhpClass implements PhpClassInterface
+class PhpClassResolver implements PhpClassInterface
 {
 
     /** @var array */

@@ -8,11 +8,11 @@
 
 namespace MagentorTest\Framework\Code\Resolver;
 
-use Magentor\Framework\Code\Resolver\PhpClass;
+use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Code\Resolver\PhpClassInterface;
 use PHPUnit\Framework\TestCase;
 
-class PhpClassTest extends TestCase
+class PhpClassResolverTest extends TestCase
 {
 
     protected $class          = 'Magentor\ModuleName\Operation\Command\Method\GetModuleCommand';
@@ -28,7 +28,7 @@ class PhpClassTest extends TestCase
     public function resolveInstanceOf()
     {
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
         $this->assertInstanceOf(PhpClassInterface::class, $resolver);
     }
 
@@ -39,7 +39,7 @@ class PhpClassTest extends TestCase
     public function resolveModuleVendorName()
     {
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
         
         $this->assertEquals('Magentor', $resolver->getVendor());
         $this->assertEquals('Magentor', $resolver->renew($this->classWrong)->getVendor());
@@ -58,7 +58,7 @@ class PhpClassTest extends TestCase
     public function resolveModulePackageName()
     {
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
         
         $this->assertEquals('ModuleName', $resolver->getPackage());
         $this->assertEquals('ModuleName', $resolver->renew($this->classWrong)->getPackage());
@@ -77,7 +77,7 @@ class PhpClassTest extends TestCase
     public function resolveModuleClassName()
     {
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
         
         $this->assertEquals('GetModuleCommand', $resolver->getClassName());
         $this->assertEquals('GetModuleCommand', $resolver->renew($this->classWrong)->getClassName());
@@ -96,7 +96,7 @@ class PhpClassTest extends TestCase
     public function resolveModuleFullClassName()
     {
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
         
         $this->assertEquals($this->class, $resolver->getFullClassName());
         $this->assertEquals($this->class, $resolver->renew($this->classWrong)->getFullClassName());
@@ -120,7 +120,8 @@ class PhpClassTest extends TestCase
     public function resolveModuleClassPath()
     {
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
+        
         $this->assertEquals('Operation\Command\Method', $resolver->getClassPath());
         $this->assertEquals('Operation\Command\Method', $resolver->renew($this->classWrong)->getClassPath());
         $this->assertEquals('', $resolver->renew($this->classNoPath)->getClassPath());
@@ -144,7 +145,8 @@ class PhpClassTest extends TestCase
         ];
 
         /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->class);
+        $resolver = $this->getResolver($this->class);
+        
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals($parts, $resolver->getParts());
         
@@ -183,5 +185,16 @@ class PhpClassTest extends TestCase
             'Method',
             'GetModuleCommand2'
         ], $resolver->getParts());
+    }
+    
+    
+    /**
+     * @param string|null $class
+     *
+     * @return PhpClassResolver
+     */
+    protected function getResolver(string $class = null)
+    {
+        return new PhpClassResolver($class);
     }
 }
