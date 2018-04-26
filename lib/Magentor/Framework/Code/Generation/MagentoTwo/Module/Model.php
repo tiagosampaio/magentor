@@ -4,8 +4,6 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Exception\Container;
-use Magentor\Framework\Exception\GenericException;
-use Magentor\Framework\Filesystem\Io;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
@@ -86,19 +84,6 @@ class Model extends AbstractModulePhp
     /**
      * @return string
      */
-    public function getFilename()
-    {
-        $path  = $this->getObjectBaseDirectory() . DS;
-        $path .= $this->getObjectDirectory();
-        $path .= $this->getObjectFilename();
-        
-        return $path;
-    }
-    
-    
-    /**
-     * @return string
-     */
     protected function getAbstractModelClass()
     {
         return implode(BS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
@@ -111,11 +96,11 @@ class Model extends AbstractModulePhp
     protected function getResourceModelClass()
     {
         $resolver = new PhpClassResolver(implode(BS, [
-            $this->getVendorName(),
-            $this->getModuleName(),
+            $this->classResolver()->getVendor(),
+            $this->classResolver()->getPackage(),
             $this->getObjectType(),
             'ResourceModel',
-            $this->getObjectName()
+            $this->classResolver()->getClassName()
         ]));
         
         return $resolver->getFullClassName(true, true);

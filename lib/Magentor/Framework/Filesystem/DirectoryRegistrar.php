@@ -132,6 +132,15 @@ class DirectoryRegistrar
     
     
     /**
+     * @return mixed|null
+     */
+    public static function getMagentoCodeDir()
+    {
+        return self::getDir(self::DIR_TYPE_MAGENTO_CODE);
+    }
+    
+    
+    /**
      * @param string $filename
      *
      * @return string
@@ -147,9 +156,20 @@ class DirectoryRegistrar
      *
      * @return string
      */
+    public static function magentoBuildCodePath($filename)
+    {
+        return self::buildPath(self::DIR_TYPE_MAGENTO_CODE, $filename);
+    }
+    
+    
+    /**
+     * @param string $filename
+     *
+     * @return string
+     */
     public static function magentoBuildModulePath($vendor, $module)
     {
-        $moduleDir = $vendor . DIRECTORY_SEPARATOR . $module;
+        $moduleDir = $vendor . DS . $module;
         return self::buildPath(self::DIR_TYPE_MAGENTO_CODE, $moduleDir);
     }
     
@@ -162,6 +182,6 @@ class DirectoryRegistrar
      */
     public static function buildPath($type, $filename)
     {
-        return self::getDir($type) . DIRECTORY_SEPARATOR . $filename;
+        return self::getDir($type) . DS . $filename;
     }
 }

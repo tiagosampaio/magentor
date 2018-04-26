@@ -97,6 +97,27 @@ class PhpClassResolver implements PhpClassInterface
         
         return $fullClassName;
     }
+    
+    
+    /**
+     * @return string
+     */
+    public function getRelativePath()
+    {
+        $parts = $this->getParts();
+        array_pop($parts);
+        
+        return implode(DS, $parts);
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getRelativeFilenamePath()
+    {
+        return implode(DS, $this->getParts());
+    }
 
 
     /**

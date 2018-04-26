@@ -3,7 +3,6 @@
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Generation\AbstractPhp;
-use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 
@@ -29,7 +28,7 @@ abstract class AbstractModulePhp extends AbstractPhp
     protected $moduleName;
     
     /** @var string */
-    protected $moduleDirectory;
+    protected $classDirectory;
     
     
     /**
@@ -53,17 +52,17 @@ abstract class AbstractModulePhp extends AbstractPhp
             Container::throwGenericException('Module\'s vendor name cannot be empty.');
         }
         
-        $this->classResolver = new PhpClassResolver(implode(BS, [
+        $this->initResolver([
             $vendor,
             $module,
             $this->objectType,
             $objectName
-        ]));
+        ]);
     
-        $this->setVendorName($this->classResolver->getVendor());
-        $this->setModuleName($this->classResolver->getPackage());
-        $this->setObjectPath($this->classResolver->getClassPath());
-        $this->setObjectName($this->classResolver->getClassName());
+        $this->setVendorName($this->classResolver()->getVendor());
+        $this->setModuleName($this->classResolver()->getPackage());
+        $this->setObjectPath($this->classResolver()->getClassPath());
+        $this->setObjectName($this->classResolver()->getClassName());
     }
     
     
@@ -138,29 +137,19 @@ abstract class AbstractModulePhp extends AbstractPhp
      */
     protected function getObjectFilename()
     {
-        return $this->getObjectName() . '.' . $this->getFileExtension();
-    }
-    
-    
-    /**
-     * @return $this
-     */
-    protected function initObjectBaseDirectory()
-    {
-        $this->objectBaseDirectory = $this->getModuleDirectory() . DS . $this->getObjectType();
-        \Magentor\Framework\Filesystem\Directory::mkDir($this->objectBaseDirectory);
-        
-        return $this;
+        return $this->classResolver()->getClassName() . '.' . $this->getFileExtension();
     }
     
     
     /**
      * @return string
      */
-    protected function getObjectBaseDirectory()
+    public function getFilename()
     {
-        $this->initObjectBaseDirectory();
-        return realpath($this->objectBaseDirectory);
+        $path  = $this->getClassDir() . DS;
+        $path .= $this->getObjectFilename();
+        
+        return $path;
     }
     
     
@@ -209,14 +198,14 @@ abstract class AbstractModulePhp extends AbstractPhp
     /**
      * @return $this
      */
-    protected function initModuleDirectory()
+    protected function initClassDir()
     {
-        if (!$this->moduleDirectory) {
-            $this->moduleDirectory = DirectoryRegistrar::magentoBuildModulePath(
-                $this->getVendorName(), $this->getModuleName()
+        if (!$this->classDirectory) {
+            $this->classDirectory = DirectoryRegistrar::magentoBuildCodePath(
+                $this->classResolver()->getRelativePath()
             );
-        
-            \Magentor\Framework\Filesystem\Directory::mkDir($this->moduleDirectory);
+            
+            \Magentor\Framework\Filesystem\Directory::mkDir($this->classDirectory);
         }
         
         return $this;
@@ -226,10 +215,10 @@ abstract class AbstractModulePhp extends AbstractPhp
     /**
      * @return string
      */
-    protected function getModuleDirectory()
+    protected function getClassDir()
     {
-        $this->initModuleDirectory();
-        return $this->moduleDirectory;
+        $this->initClassDir();
+        return $this->classDirectory;
     }
     
     
