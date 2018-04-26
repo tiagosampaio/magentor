@@ -15,11 +15,11 @@ use PHPUnit\Framework\TestCase;
 class PhpClassTest extends TestCase
 {
 
-    protected $class          = '\Magentor\ModuleName\Operation\Command\Method\GetModuleCommand';
-    protected $classWrong     = 'Magentor\ModuleName/Operation\Command/Method\GetModuleCommand/';
+    protected $class          = 'Magentor\ModuleName\Operation\Command\Method\GetModuleCommand';
+    protected $classWrong     = '\Magentor\ModuleName/Operation\Command/Method\GetModuleCommand/';
     protected $classNoPath    = 'Magentor\ModuleName/GetModuleCommand/.php';
     protected $fileName       = '\Magentor\ModuleName\Operation\Command\Method\GetModuleCommand.php';
-    protected $fileNameWithDS = 'Magentor/ModuleName/Operation/Command/Method/GetModuleCommand.php';
+    protected $fileNameWithDS = '\Magentor/ModuleName/Operation/Command/Method/GetModuleCommand.php';
 
 
     /**
@@ -40,8 +40,8 @@ class PhpClassTest extends TestCase
     {
         /** @var PhpClassInterface $resolver */
         $resolver = new PhpClass($this->class);
+        
         $this->assertEquals('Magentor', $resolver->getVendor());
-
         $this->assertEquals('Magentor', $resolver->renew($this->classWrong)->getVendor());
         $this->assertEquals('Magentor', $resolver->renew($this->classNoPath)->getVendor());
         $this->assertEquals('Magentor', $resolver->renew($this->fileName)->getVendor());
@@ -56,23 +56,12 @@ class PhpClassTest extends TestCase
     {
         /** @var PhpClassInterface $resolver */
         $resolver = new PhpClass($this->class);
+        
         $this->assertEquals('ModuleName', $resolver->getPackage());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classWrong);
-        $this->assertEquals('ModuleName', $resolver->getPackage());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classNoPath);
-        $this->assertEquals('ModuleName', $resolver->getPackage());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileName);
-        $this->assertEquals('ModuleName', $resolver->getPackage());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileNameWithDS);
-        $this->assertEquals('ModuleName', $resolver->getPackage());
+        $this->assertEquals('ModuleName', $resolver->renew($this->classWrong)->getPackage());
+        $this->assertEquals('ModuleName', $resolver->renew($this->classNoPath)->getPackage());
+        $this->assertEquals('ModuleName', $resolver->renew($this->fileName)->getPackage());
+        $this->assertEquals('ModuleName', $resolver->renew($this->fileNameWithDS)->getPackage());
     }
 
 
@@ -83,23 +72,12 @@ class PhpClassTest extends TestCase
     {
         /** @var PhpClassInterface $resolver */
         $resolver = new PhpClass($this->class);
+        
         $this->assertEquals('GetModuleCommand', $resolver->getClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classWrong);
-        $this->assertEquals('GetModuleCommand', $resolver->getClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classNoPath);
-        $this->assertEquals('GetModuleCommand', $resolver->getClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileName);
-        $this->assertEquals('GetModuleCommand', $resolver->getClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileNameWithDS);
-        $this->assertEquals('GetModuleCommand', $resolver->getClassName());
+        $this->assertEquals('GetModuleCommand', $resolver->renew($this->classWrong)->getClassName());
+        $this->assertEquals('GetModuleCommand', $resolver->renew($this->classNoPath)->getClassName());
+        $this->assertEquals('GetModuleCommand', $resolver->renew($this->fileName)->getClassName());
+        $this->assertEquals('GetModuleCommand', $resolver->renew($this->fileNameWithDS)->getClassName());
     }
 
 
@@ -110,23 +88,13 @@ class PhpClassTest extends TestCase
     {
         /** @var PhpClassInterface $resolver */
         $resolver = new PhpClass($this->class);
+        
         $this->assertEquals($this->class, $resolver->getFullClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classWrong);
-        $this->assertEquals($this->class, $resolver->getFullClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classNoPath);
-        $this->assertEquals('\Magentor\ModuleName\GetModuleCommand', $resolver->getFullClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileName);
-        $this->assertEquals($this->class, $resolver->getFullClassName());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileNameWithDS);
-        $this->assertEquals($this->class, $resolver->getFullClassName());
+        $this->assertEquals($this->class, $resolver->renew($this->classWrong)->getFullClassName());
+        $this->assertEquals('Magentor\ModuleName\GetModuleCommand', $resolver->renew($this->classNoPath)
+                                                                             ->getFullClassName());
+        $this->assertEquals($this->class, $resolver->renew($this->fileName)->getFullClassName());
+        $this->assertEquals($this->class, $resolver->renew($this->fileNameWithDS)->getFullClassName());
     }
 
 
@@ -138,22 +106,10 @@ class PhpClassTest extends TestCase
         /** @var PhpClassInterface $resolver */
         $resolver = new PhpClass($this->class);
         $this->assertEquals('Operation\Command\Method', $resolver->getClassPath());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classWrong);
-        $this->assertEquals('Operation\Command\Method', $resolver->getClassPath());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classNoPath);
-        $this->assertEquals('', $resolver->getClassPath());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileName);
-        $this->assertEquals('Operation\Command\Method', $resolver->getClassPath());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileNameWithDS);
-        $this->assertEquals('Operation\Command\Method', $resolver->getClassPath());
+        $this->assertEquals('Operation\Command\Method', $resolver->renew($this->classWrong)->getClassPath());
+        $this->assertEquals('', $resolver->renew($this->classNoPath)->getClassPath());
+        $this->assertEquals('Operation\Command\Method', $resolver->renew($this->fileName)->getClassPath());
+        $this->assertEquals('Operation\Command\Method', $resolver->renew($this->fileNameWithDS)->getClassPath());
     }
 
 
@@ -175,14 +131,12 @@ class PhpClassTest extends TestCase
         $resolver = new PhpClass($this->class);
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals($parts, $resolver->getParts());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classWrong);
+        
+        $resolver->renew($this->classWrong);
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals($parts, $resolver->getParts());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->classNoPath);
+        
+        $resolver->renew($this->classNoPath);
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals([
             'Magentor',
@@ -190,13 +144,11 @@ class PhpClassTest extends TestCase
             'GetModuleCommand'
         ], $resolver->getParts());
 
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileName);
+        $resolver->renew($this->fileName);
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals($parts, $resolver->getParts());
-
-        /** @var PhpClassInterface $resolver */
-        $resolver = new PhpClass($this->fileNameWithDS);
+        
+        $resolver->renew($this->fileNameWithDS);
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals($parts, $resolver->getParts());
     }

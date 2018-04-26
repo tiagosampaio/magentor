@@ -39,7 +39,7 @@ class PhpClass implements PhpClassInterface
      *
      * @param string $class
      */
-    public function __construct(string $class)
+    public function __construct(string $class = null)
     {
         if (!empty($class)) {
             $this->renew($class);
@@ -93,7 +93,7 @@ class PhpClass implements PhpClassInterface
      */
     public function getFullClassName() : string
     {
-        return BS . join(BS, $this->getParts());
+        return join(BS, $this->getParts());
     }
 
 
@@ -120,26 +120,44 @@ class PhpClass implements PhpClassInterface
      */
     public function getParts() : array
     {
-        $fullClass = implode(BS, [
-            $this->vendor,
-            $this->package,
-            $this->classPath,
-            $this->className,
-        ]);
-        
-        $parts = [];
-        
-        foreach (explode(BS, $fullClass) as $part) {
-            $part = $this->clearClassString($part);
-            
-            if (empty($part)) {
-                continue;
-            }
+        $this->buildParts();
+        return $this->parts;
+    }
     
-            $parts[] = $part;
-        }
-        
-        return $parts;
+    
+    /**
+     * @param string $vendor
+     *
+     * @return $this
+     */
+    public function setVendor(string $vendor)
+    {
+        $this->vendor = $vendor;
+        return $this;
+    }
+    
+    
+    /**
+     * @param string $package
+     *
+     * @return $this
+     */
+    public function setPackage(string $package)
+    {
+        $this->package = $package;
+        return $this;
+    }
+    
+    
+    /**
+     * @param string $className
+     *
+     * @return $this
+     */
+    public function setClassName(string $className)
+    {
+        $this->className = $className;
+        return $this;
     }
 
 
@@ -158,6 +176,34 @@ class PhpClass implements PhpClassInterface
         $this->package   = array_shift($parts);
         $this->classPath = implode(BS, $parts);
 
+        return $this;
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    protected function buildParts()
+    {
+        $fullClass = implode(BS, [
+            $this->vendor,
+            $this->package,
+            $this->classPath,
+            $this->className,
+        ]);
+    
+        $this->parts = [];
+    
+        foreach (explode(BS, $fullClass) as $part) {
+            $part = $this->clearClassString($part);
+        
+            if (empty($part)) {
+                continue;
+            }
+    
+            $this->parts[] = $part;
+        }
+        
         return $this;
     }
 
