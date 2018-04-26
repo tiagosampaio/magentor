@@ -83,9 +83,19 @@ class PhpClassResolver implements PhpClassInterface
     /**
      * @return string
      */
-    public function getFullClassName() : string
+    public function getFullClassName($absolute = false, $append = false) : string
     {
-        return implode(BS, $this->getParts());
+        $fullClassName = implode(BS, $this->getParts());
+        
+        if (true === $absolute) {
+            $fullClassName = BS . $fullClassName;
+        }
+        
+        if (true === $append) {
+            $fullClassName .= '::class';
+        }
+        
+        return $fullClassName;
     }
 
 

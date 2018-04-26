@@ -79,17 +79,17 @@ interface PhpClassInterface
     /**
      * @return string
      */
-    public function getClassPath();
+    public function getClassPath() : string;
 
 
     /**
      * @return string
      */
-    public function getFullClassName();
+    public function getFullClassName($absolute = false) : string;
 
 
     /**
      * @return array
      */
-    public function getParts();
+    public function getParts() : array;
 }

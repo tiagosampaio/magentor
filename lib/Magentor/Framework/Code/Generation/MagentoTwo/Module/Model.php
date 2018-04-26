@@ -1,6 +1,8 @@
 <?php
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
+use Magentor\Framework\Code\Builder\PhpClassBuilder;
+use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Exception\GenericException;
 use Magentor\Framework\Filesystem\Io;
@@ -25,11 +27,7 @@ class Model extends AbstractModulePhp
     
     
     /**
-     * @param string $name
-     * @param string $module
-     * @param string $vendor
-     *
-     * @throws GenericException
+     * @return PhpClassBuilder
      */
     public function build()
     {
@@ -37,23 +35,16 @@ class Model extends AbstractModulePhp
             Container::throwGenericException('Model already exists. Cannot be created again.');
         }
     
-        $this->file = new \Nette\PhpGenerator\PhpFile();
-    
-        $this->namespace = $this->file->addNamespace($this->getNamespace());
-        $this->namespace->addUse($this->getAbstractModelClass());
-    
-        /** @var \Nette\PhpGenerator\ClassType $class */
-        $this->class = $this->namespace->addClass($this->getObjectName());
-        $this->class->addExtend($this->getAbstractModelClass());
-    
-        $this->prepareObjectMethods($this->class);
+        $builder = new PhpClassBuilder();
         
-        return $this->file;
-    
-        $contents = (string) $phpFile;
+        $builder->setNamespace($this->getNamespace());
+        $builder->addUse($this->getAbstractModelClass());
+        $builder->setClassName($this->getObjectName());
+        $builder->setExtends($this->getAbstractModelClass());
         
-        $io = new Io();
-        $io->write($this->getFilePath(), $contents);
+        $this->prepareObjectMethods($builder);
+        
+        return $builder;
     }
     
     
@@ -80,12 +71,13 @@ class Model extends AbstractModulePhp
      *
      * @return $this
      */
-    protected function prepareObjectMethods(\Nette\PhpGenerator\ClassType $class)
+    protected function prepareObjectMethods(PhpClassBuilder $builder)
     {
-        /** @var \Nette\PhpGenerator\Method $method */
-        $method = $class->addMethod('_construct');
-        $method->setVisibility('protected');
-        $method->setBody('$this->_init('.$this->getResourceModelClass().');');
+        $name       = '_construct';
+        $visibility = 'protected';
+        $body       = '$this->_init('.$this->getResourceModelClass().');';
+        
+        $builder->addMethod($name, $visibility, $body);
         
         return $this;
     }
@@ -109,7 +101,7 @@ class Model extends AbstractModulePhp
      */
     protected function getAbstractModelClass()
     {
-        return implode(NS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
+        return implode(BS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
     }
     
     
@@ -118,13 +110,14 @@ class Model extends AbstractModulePhp
      */
     protected function getResourceModelClass()
     {
-        return implode(NS, [
-            null,
+        $resolver = new PhpClassResolver(implode(BS, [
             $this->getVendorName(),
             $this->getModuleName(),
             $this->getObjectType(),
             'ResourceModel',
-            $this->getObjectName() . '::class'
-        ]);
+            $this->getObjectName()
+        ]));
+        
+        return $resolver->getFullClassName(true, true);
     }
 }

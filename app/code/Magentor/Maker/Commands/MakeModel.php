@@ -2,6 +2,7 @@
 
 namespace Magentor\Maker\Commands;
 
+use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
@@ -45,11 +46,11 @@ class MakeModel extends CommandAbstract
         try {
             $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($name, $module, $vendor);
             
-            /** @var \Nette\PhpGenerator\PhpFile $file */
-            $file = $maker->build();
+            /** @var PhpClassBuilder $file */
+            $builder = $maker->build();
             
             $filesystem = new Filesystem();
-            $filesystem->dumpFile($maker->getFilename(), (string) $file);
+            $filesystem->dumpFile($maker->getFilename(), (string) $builder);
             
             $output->writeln('Model was created!');
         } catch (\Exception $e) {

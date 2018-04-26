@@ -57,8 +57,8 @@ interface PhpClassBuilderInterface
      */
     public function addMethod(
         string $name,
-        string $body       = null,
         string $visibility = 'public',
+        string $body       = null,
         bool   $static     = false,
         bool   $abstract   = false,
         bool   $final      = false

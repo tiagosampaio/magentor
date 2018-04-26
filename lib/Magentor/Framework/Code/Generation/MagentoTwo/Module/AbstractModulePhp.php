@@ -3,6 +3,7 @@
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Generation\AbstractPhp;
+use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 
@@ -52,9 +53,16 @@ abstract class AbstractModulePhp extends AbstractPhp
             Container::throwGenericException('Module\'s vendor name cannot be empty.');
         }
         
-        $this->setObjectName($objectName);
-        $this->setVendorName($vendor);
-        $this->setModuleName($module);
+        $classResolver = new PhpClassResolver(implode(BS, [
+            $vendor,
+            $module,
+            $objectName
+        ]));
+    
+        $this->setVendorName($classResolver->getVendor());
+        $this->setModuleName($classResolver->getPackage());
+        $this->setObjectPath($classResolver->getClassPath());
+        $this->setObjectName($classResolver->getClassName());
     }
     
     
@@ -75,6 +83,18 @@ abstract class AbstractModulePhp extends AbstractPhp
     protected function setObjectName($objectName)
     {
         $this->objectName = $objectName;
+        return $this;
+    }
+    
+    
+    /**
+     * @param $objectName
+     *
+     * @return $this
+     */
+    protected function setObjectPath($objectPath)
+    {
+        $this->objectPath = $objectPath;
         return $this;
     }
     
@@ -217,6 +237,6 @@ abstract class AbstractModulePhp extends AbstractPhp
      */
     protected function getNamespace()
     {
-        return $this->getVendorName() . NS . $this->getModuleName() . NS . $this->getObjectType();
+        return $this->getVendorName() . BS . $this->getModuleName() . BS . $this->getObjectType();
     }
 }

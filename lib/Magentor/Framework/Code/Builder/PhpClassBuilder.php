@@ -80,8 +80,8 @@ class PhpClassBuilder implements PhpClassBuilderInterface
      */
     public function addMethod(
         string $name,
-        string $body       = null,
         string $visibility = 'public',
+        string $body       = null,
         bool   $static     = false,
         bool   $abstract   = false,
         bool   $final      = false
@@ -97,6 +97,27 @@ class PhpClassBuilder implements PhpClassBuilderInterface
         ];
         
         return $this;
+    }
+    
+    
+    /**
+     * @param string      $name
+     * @param string|null $body
+     * @param bool        $static
+     * @param bool        $abstract
+     * @param bool        $final
+     *
+     * @return $this
+     */
+    public function addProtectedMethod(
+        string $name,
+        string $body     = null,
+        bool   $static   = false,
+        bool   $abstract = false,
+        bool   $final    = false
+    )
+    {
+        return $this->addMethod($name, 'protected', $body, $static, $abstract, $final);
     }
     
     
@@ -251,15 +272,15 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     protected function buildClassMethods(ClassType $class)
     {
         /** @var array $method */
-        foreach ($this->methods as $method) {
+        foreach ($this->methods as $methodData) {
             /** @var Method $method */
-            $method = $class->addMethod($method['name']);
+            $method = $class->addMethod($methodData['name']);
             
-            $method->setVisibility($method['visibility']);
-            $method->setBody($method['body']);
-            $method->setStatic((bool) $method['static']);
-            $method->setAbstract((bool) $method['abstract']);
-            $method->setFinal((bool) $method['final']);
+            $method->setVisibility($methodData['visibility']);
+            $method->setBody($methodData['body']);
+            $method->setStatic((bool) $methodData['static']);
+            $method->setAbstract((bool) $methodData['abstract']);
+            $method->setFinal((bool) $methodData['final']);
         }
         
         return $this;
