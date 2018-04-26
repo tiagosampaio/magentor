@@ -5,27 +5,24 @@ namespace Magentor\Maker\Commands;
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
 use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Magentor\Framework\Filesystem\Filesystem;
 
-class MakeModel extends CommandAbstract
+class MakeResourceModel extends CommandAbstract
 {
 
     protected function configure()
     {
-        $this->setName('make:model')
-            ->setDescription('Creates a Magento model.');
+        $this->setName('make:resource-model')
+            ->setDescription('Creates a Magento resource model.');
 
-//        $this->addArgument('vendor', InputArgument::REQUIRED, 'The module\'s vendor name');
-//        $this->addArgument('module', InputArgument::REQUIRED, 'The module\'s name.');
-//        $this->addArgument('name', InputArgument::REQUIRED, 'The module\'s model name.');
-    
-        $this->addOption('create-resources', 'r', null, 'Create the resources with the model.');
-        
+        $this->addArgument('vendor', InputArgument::OPTIONAL, 'The module\'s vendor name');
+        $this->addArgument('module', InputArgument::OPTIONAL, 'The module\'s name.');
+        $this->addArgument('name', InputArgument::OPTIONAL, 'The module\'s model name.');
+
         parent::configure();
     }
 
@@ -38,41 +35,32 @@ class MakeModel extends CommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//        $vendor = $input->getArgument('vendor');
-//        $module = $input->getArgument('module');
-//        $name   = $input->getArgument('name');
+        $vendor = $input->getArgument('vendor');
+        $module = $input->getArgument('module');
+        $name   = $input->getArgument('name');
         
-        $vendor = $this->ask($input, $output, 'Which vendor? ');
-        $module = $this->ask($input, $output, 'Which module? ', 'SkyHub');
-        $name   = $this->ask($input, $output, 'Model\'s class name? ', 'Preset');
-        
-        $withResources = $input->getOption('create-resources');
-        
+        if (!$vendor) {
+            $vendor = $this->ask($input, $output, 'Which vendor? ');
+        }
+    
+        if (!$module) {
+            $module = $this->ask($input, $output, 'Which module? ', 'SkyHub');
+        }
+    
+        if (!$name) {
+            $name = $this->ask($input, $output, 'Model\'s class name? ', 'Preset');
+        }
+
         try {
-            $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($name, $module, $vendor);
+            $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\ResourceModel($name, $module, $vendor);
             
             /** @var PhpClassBuilder $file */
             $builder = $maker->build();
             
             $filesystem = new Filesystem();
             $filesystem->dumpFile($maker->getFilename(), (string) $builder);
-    
-            $output->writeln('Model was created!');
             
-            if (true === $withResources) {
-                /** @var MakeResourceModel $command */
-                $command = $this->getApplication()->find('make:resource-model');
-                
-                $arguments = [
-                    'vendor' => $vendor,
-                    'module' => $module,
-                    'name'   => $name,
-                ];
-                
-                $newInput = new ArrayInput($arguments);
-    
-                $command->run($newInput, $output);
-            }
+            $output->writeln('Resource model was created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;

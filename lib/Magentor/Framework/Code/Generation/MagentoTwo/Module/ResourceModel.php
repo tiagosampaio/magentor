@@ -7,20 +7,11 @@ use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 
-class Model extends AbstractModulePhp
+class ResourceModel extends Model
 {
     
     /** @var string */
-    protected $objectType = 'Model';
-    
-    /** @var PhpNamespace */
-    protected $namespace;
-    
-    /** @var ClassType */
-    protected $class;
-    
-    /** @var PhpFile */
-    protected $file;
+    protected $objectType = 'Model/ResourceModel';
     
     
     /**
@@ -29,7 +20,7 @@ class Model extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('Model already exists. Cannot be created again.');
+            Container::throwGenericException('Resource Model already exists. Cannot be created again.');
         }
     
         $builder = new PhpClassBuilder();
@@ -42,24 +33,6 @@ class Model extends AbstractModulePhp
         $this->prepareObjectMethods($builder);
         
         return $builder;
-    }
-    
-    
-    /**
-     * @return PhpNamespace
-     */
-    public function getFileContentNamespace()
-    {
-        return $this->namespace;
-    }
-    
-    
-    /**
-     * @return ClassType
-     */
-    public function getFileContentClass()
-    {
-        return $this->class;
     }
     
     
