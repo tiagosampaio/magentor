@@ -28,13 +28,26 @@
         "psr-4": {
             "Magentor\\Framework\\": "lib/Magentor/Framework/",
             "Magentor\\": "app/code/Magentor/",
-            "MagentorTest\\": "dev/tests/unit"
+            "MagentorTest\\": "dev/tests/unit/code",
+            "MagentorTest\\Framework\\": "dev/tests/unit/lib/Framework"
         },
         "files": [
             "app/etc/functions.php"
         ]
     },
     "scripts":{
-        "test":"php vendor/bin/phpunit"
+        "post-install-cmd": [
+            "@phpunit"
+        ],
+        "post-update-cmd": [
+            "@phpunit"
+        ],
+        "test":[
+            "@composer install"
+        ],
+        "phpunit": "php vendor/bin/phpunit"
+    },
+    "script-descriptions": {
+        "test": "Try to install all dependencies and then run the PHP Unit tests."
     }
 }
