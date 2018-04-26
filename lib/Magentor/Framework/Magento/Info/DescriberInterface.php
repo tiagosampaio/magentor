@@ -15,5 +15,5 @@ interface DescriberInterface
     /**
      * @return bool
      */
-    public function isMagentoTwo();
+    public function isMagentoTwo(string $directory = null);
 }

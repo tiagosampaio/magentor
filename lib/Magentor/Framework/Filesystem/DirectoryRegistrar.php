@@ -2,6 +2,8 @@
 
 namespace Magentor\Framework\Filesystem;
 
+use Magentor\Framework\Magento\FileSystem\MagentoTwo;
+
 class DirectoryRegistrar
 {
     
@@ -51,14 +53,79 @@ class DirectoryRegistrar
         if (empty($magentoDir)) {
             $magentoDir = getcwd();
         }
-
-        define('MAGENTO_ROOT', $magentoDir);
-        define('MAGENTO_APP',  MAGENTO_ROOT . DIRECTORY_SEPARATOR . 'app');
-        define('MAGENTO_CODE', MAGENTO_APP . DIRECTORY_SEPARATOR . 'code');
         
-        self::$dirs[self::DIR_TYPE_MAGENTO]      = MAGENTO_ROOT;
-        self::$dirs[self::DIR_TYPE_MAGENTO_APP]  = MAGENTO_APP;
-        self::$dirs[self::DIR_TYPE_MAGENTO_CODE] = MAGENTO_CODE;
+        $found = false;
+        $count = 0;
+        $limit = 50;
+        
+        while (!$found && ($count <= $limit)) {
+            $count++;
+            
+            if (!self::isMagentoDir($magentoDir)) {
+                $magentoDir = dirname($magentoDir);
+                continue;
+            }
+    
+            define('MAGENTO_ROOT', $magentoDir);
+            define('MAGENTO_APP',  MAGENTO_ROOT . DS . 'app');
+            define('MAGENTO_CODE', MAGENTO_APP . DS . 'code');
+    
+            self::$dirs[self::DIR_TYPE_MAGENTO]      = MAGENTO_ROOT;
+            self::$dirs[self::DIR_TYPE_MAGENTO_APP]  = MAGENTO_APP;
+            self::$dirs[self::DIR_TYPE_MAGENTO_CODE] = MAGENTO_CODE;
+    
+            $found = true;
+        }
+    }
+    
+    
+    /**
+     * @param string $magentoDir
+     *
+     * @return bool
+     */
+    protected static function isMagentoDir($magentoDir)
+    {
+        $requiredFiles = [
+            MagentoTwo::PUB_INDEX,
+            MagentoTwo::ETC_BOOTSTRAP,
+            MagentoTwo::ETC_COMPONENT_REGISTRATION,
+            MagentoTwo::ETC_DI_XML,
+        ];
+        
+        foreach ($requiredFiles as $requiredFile) {
+            if (!self::isReadable($magentoDir . DS . $requiredFile)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    
+    /**
+     * @param string $filename
+     *
+     * @return bool
+     */
+    protected static function isReadable($filename)
+    {
+        $filename = realpath($filename);
+        
+        $fileExists = static::fileExists($filename);
+        return $fileExists && is_readable($filename);
+    }
+    
+    
+    /**
+     * @param string $filename
+     *
+     * @return bool
+     */
+    protected static function fileExists($filename)
+    {
+        $filename = realpath($filename);
+        return file_exists($filename);
     }
     
     

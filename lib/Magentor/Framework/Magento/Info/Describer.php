@@ -51,7 +51,7 @@ class Describer implements DescriberInterface
     /**
      * @return bool
      */
-    public function isMagentoTwo()
+    public function isMagentoTwo(string $directory = null)
     {
         if (!$this->magentoIsReadable(MagentoTwo::PUB_INDEX)) {
             return false;
