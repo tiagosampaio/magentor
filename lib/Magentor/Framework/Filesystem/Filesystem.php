@@ -2,7 +2,10 @@
 
 namespace Magentor\Framework\Filesystem;
 
-class Io
+use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
+class Filesystem extends SymfonyFilesystem
 {
     
     /** @var int */

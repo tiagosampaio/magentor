@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Magentor\Framework\Filesystem\Filesystem;
 
 class MakeModel extends CommandAbstract
 {
@@ -43,7 +44,12 @@ class MakeModel extends CommandAbstract
 
         try {
             $maker = new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($name, $module, $vendor);
-            $maker->generate();
+            
+            /** @var \Nette\PhpGenerator\PhpFile $file */
+            $file = $maker->build();
+            
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile($maker->getFilename(), (string) $file);
             
             $output->writeln('Model was created!');
         } catch (\Exception $e) {

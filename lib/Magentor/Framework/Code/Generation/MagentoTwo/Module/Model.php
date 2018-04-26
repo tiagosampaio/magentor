@@ -4,12 +4,24 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Exception\GenericException;
 use Magentor\Framework\Filesystem\Io;
+use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\PhpFile;
+use Nette\PhpGenerator\PhpNamespace;
 
 class Model extends AbstractModulePhp
 {
     
     /** @var string */
     protected $objectType = 'Model';
+    
+    /** @var PhpNamespace */
+    protected $namespace;
+    
+    /** @var ClassType */
+    protected $class;
+    
+    /** @var PhpFile */
+    protected $file;
     
     
     /**
@@ -19,27 +31,47 @@ class Model extends AbstractModulePhp
      *
      * @throws GenericException
      */
-    public function generate()
+    public function build()
     {
-        if (file_exists($this->getFilePath())) {
+        if (file_exists($this->getFilename())) {
             Container::throwGenericException('Model already exists. Cannot be created again.');
         }
     
-        $phpFile = new \Nette\PhpGenerator\PhpFile();
+        $this->file = new \Nette\PhpGenerator\PhpFile();
     
-        $namespace = $phpFile->addNamespace($this->getNamespace());
-        $namespace->addUse($this->getAbstractModelClass());
+        $this->namespace = $this->file->addNamespace($this->getNamespace());
+        $this->namespace->addUse($this->getAbstractModelClass());
     
         /** @var \Nette\PhpGenerator\ClassType $class */
-        $class = $namespace->addClass($this->getObjectName());
-        $class->addExtend($this->getAbstractModelClass());
+        $this->class = $this->namespace->addClass($this->getObjectName());
+        $this->class->addExtend($this->getAbstractModelClass());
     
-        $this->prepareObjectMethods($class);
+        $this->prepareObjectMethods($this->class);
+        
+        return $this->file;
     
         $contents = (string) $phpFile;
         
         $io = new Io();
         $io->write($this->getFilePath(), $contents);
+    }
+    
+    
+    /**
+     * @return PhpNamespace
+     */
+    public function getFileContentNamespace()
+    {
+        return $this->namespace;
+    }
+    
+    
+    /**
+     * @return ClassType
+     */
+    public function getFileContentClass()
+    {
+        return $this->class;
     }
     
     
@@ -53,7 +85,7 @@ class Model extends AbstractModulePhp
         /** @var \Nette\PhpGenerator\Method $method */
         $method = $class->addMethod('_construct');
         $method->setVisibility('protected');
-        $method->setBody('$this->_init(?);', [$this->getResourceModelClass()]);
+        $method->setBody('$this->_init('.$this->getResourceModelClass().');');
         
         return $this;
     }
@@ -62,7 +94,7 @@ class Model extends AbstractModulePhp
     /**
      * @return string
      */
-    protected function getFilePath()
+    public function getFilename()
     {
         $path  = $this->getObjectBaseDirectory() . DS;
         $path .= $this->getObjectDirectory();
@@ -92,7 +124,7 @@ class Model extends AbstractModulePhp
             $this->getModuleName(),
             $this->getObjectType(),
             'Resource',
-            $this->getObjectName()
+            $this->getObjectName() . '::class'
         ]);
     }
 }
