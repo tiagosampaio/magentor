@@ -46,6 +46,9 @@ class PhpClassTest extends TestCase
         $this->assertEquals('Magentor', $resolver->renew($this->classNoPath)->getVendor());
         $this->assertEquals('Magentor', $resolver->renew($this->fileName)->getVendor());
         $this->assertEquals('Magentor', $resolver->renew($this->fileNameWithDS)->getVendor());
+    
+        $resolver->setVendor('Magentor2');
+        $this->assertEquals('Magentor2', $resolver->getVendor());
     }
 
 
@@ -62,6 +65,9 @@ class PhpClassTest extends TestCase
         $this->assertEquals('ModuleName', $resolver->renew($this->classNoPath)->getPackage());
         $this->assertEquals('ModuleName', $resolver->renew($this->fileName)->getPackage());
         $this->assertEquals('ModuleName', $resolver->renew($this->fileNameWithDS)->getPackage());
+    
+        $resolver->setPackage('ModuleName2');
+        $this->assertEquals('ModuleName2', $resolver->getPackage());
     }
 
 
@@ -78,6 +84,9 @@ class PhpClassTest extends TestCase
         $this->assertEquals('GetModuleCommand', $resolver->renew($this->classNoPath)->getClassName());
         $this->assertEquals('GetModuleCommand', $resolver->renew($this->fileName)->getClassName());
         $this->assertEquals('GetModuleCommand', $resolver->renew($this->fileNameWithDS)->getClassName());
+    
+        $resolver->setClassName('GetModuleCommand2');
+        $this->assertEquals('GetModuleCommand2', $resolver->getClassName());
     }
 
 
@@ -95,6 +104,13 @@ class PhpClassTest extends TestCase
                                                                              ->getFullClassName());
         $this->assertEquals($this->class, $resolver->renew($this->fileName)->getFullClassName());
         $this->assertEquals($this->class, $resolver->renew($this->fileNameWithDS)->getFullClassName());
+    
+        $resolver->setVendor('Magentor2');
+        $resolver->setPackage('ModuleName2');
+        $resolver->setClassName('GetModuleCommand2');
+        
+        $newClass = 'Magentor2\ModuleName2\Operation\Command\Method\GetModuleCommand2';
+        $this->assertEquals($newClass, $resolver->getFullClassName());
     }
 
 
@@ -151,5 +167,21 @@ class PhpClassTest extends TestCase
         $resolver->renew($this->fileNameWithDS);
         $this->assertInternalType('array', $resolver->getParts());
         $this->assertEquals($parts, $resolver->getParts());
+    
+        /**
+         * Lets change some information.
+         */
+        $resolver->setVendor('Magentor2');
+        $resolver->setPackage('ModuleName2');
+        $resolver->setClassName('GetModuleCommand2');
+        
+        $this->assertEquals([
+            'Magentor2',
+            'ModuleName2',
+            'Operation',
+            'Command',
+            'Method',
+            'GetModuleCommand2'
+        ], $resolver->getParts());
     }
 }

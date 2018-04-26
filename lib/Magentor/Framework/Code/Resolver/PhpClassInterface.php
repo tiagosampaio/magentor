@@ -32,12 +32,28 @@ interface PhpClassInterface
      * @return string
      */
     public function getVendor();
+    
+    
+    /**
+     * @param string $vendor
+     *
+     * @return $this
+     */
+    public function setVendor(string $vendor);
 
 
     /**
      * @return string
      */
     public function getPackage();
+    
+    
+    /**
+     * @param string $package
+     *
+     * @return $this
+     */
+    public function setPackage(string $package);
 
 
     /**
@@ -50,6 +66,14 @@ interface PhpClassInterface
      * @return string
      */
     public function getClassName();
+    
+    
+    /**
+     * @param string $className
+     *
+     * @return $this
+     */
+    public function setClassName(string $className);
 
 
     /**

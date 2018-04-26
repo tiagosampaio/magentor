@@ -54,9 +54,7 @@ class PhpClass implements PhpClassInterface
      */
     public function renew(string $class)
     {
-        $this->fullClassName = $class;
-        $this->resolve();
-
+        $this->buildParts($class);
         return $this;
     }
 
@@ -93,7 +91,7 @@ class PhpClass implements PhpClassInterface
      */
     public function getFullClassName() : string
     {
-        return join(BS, $this->getParts());
+        return implode(BS, $this->getParts());
     }
 
 
@@ -133,6 +131,7 @@ class PhpClass implements PhpClassInterface
     public function setVendor(string $vendor)
     {
         $this->vendor = $vendor;
+        $this->buildParts();
         return $this;
     }
     
@@ -145,6 +144,7 @@ class PhpClass implements PhpClassInterface
     public function setPackage(string $package)
     {
         $this->package = $package;
+        $this->buildParts();
         return $this;
     }
     
@@ -157,25 +157,28 @@ class PhpClass implements PhpClassInterface
     public function setClassName(string $className)
     {
         $this->className = $className;
+        $this->buildParts();
         return $this;
     }
-
-
+    
+    
     /**
+     * @param string|null $class
+     *
      * @return $this
      */
-    protected function resolve()
+    protected function rebuild(string $class = null)
     {
-        $this->fullClassName = $this->clearClassString($this->fullClassName);
-        
+        $class = $this->clearClassString($class);
+    
         /** @var array $parts */
-        $parts = explode(BS, $this->fullClassName);
-
-        $this->className = array_pop($parts);
+        $parts = explode(BS, $class);
+        
         $this->vendor    = array_shift($parts);
         $this->package   = array_shift($parts);
+        $this->className = array_pop($parts);
         $this->classPath = implode(BS, $parts);
-
+        
         return $this;
     }
     
@@ -183,8 +186,12 @@ class PhpClass implements PhpClassInterface
     /**
      * @return $this
      */
-    protected function buildParts()
+    protected function buildParts(string $class = null)
     {
+        if (!empty($class)) {
+            $this->rebuild($class);
+        }
+        
         $fullClass = implode(BS, [
             $this->vendor,
             $this->package,
