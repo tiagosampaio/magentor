@@ -27,10 +27,14 @@
     "autoload": {
         "psr-4": {
             "Magentor\\Framework\\": "lib/Magentor/Framework/",
-            "Magentor\\": "app/code/Magentor/"
+            "Magentor\\": "app/code/Magentor/",
+            "MagentorTest\\": "dev/tests/unit"
         },
         "files": [
             "app/etc/functions.php"
         ]
+    },
+    "scripts":{
+        "test":"php vendor/bin/phpunit"
     }
 }
