@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<phpunit backupGlobals="true"
+        bootstrap="dev/tests/unit/bootstrap.php"
+        backupStaticAttributes="false"
+        cacheTokens="false"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        forceCoversAnnotation="false"
+        mapTestClassNameToCoveredClassName="false"
+        processIsolation="false"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false">
+    <testsuites>
+        <testsuite name="magentor-tests">
+            <directory>./dev/tests/unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
