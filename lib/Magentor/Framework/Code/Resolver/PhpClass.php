@@ -38,12 +38,26 @@ class PhpClass implements PhpClassInterface
      * PhpClassInterface constructor.
      *
      * @param string $class
-     * @param string $type
      */
-    public function __construct(string $class, string $type = self::TYPE_MODULE)
+    public function __construct(string $class)
+    {
+        if (!empty($class)) {
+            $this->renew($class);
+        }
+    }
+
+
+    /**
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function renew(string $class)
     {
         $this->fullClassName = $class;
         $this->resolve();
+
+        return $this;
     }
 
 
@@ -136,9 +150,9 @@ class PhpClass implements PhpClassInterface
      */
     protected function clearClassString(string $class) : string
     {
+        $class = str_replace('.php', null, $class);
         $class = trim(trim($class), '/\\');
         $class = str_replace('/', BS, $class);
-        $class = str_replace('.php', null, $class);
 
         return $class;
     }

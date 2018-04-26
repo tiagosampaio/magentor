@@ -12,16 +12,20 @@ namespace Magentor\Framework\Code\Resolver;
 interface PhpClassInterface
 {
 
-    const TYPE_MODULE = 'module';
-    const TYPE_FRAMEWORK = 'framework';
-
     /**
      * PhpClassInterface constructor.
      *
      * @param string $class
-     * @param string $type
      */
-    public function __construct(string $class, string $type = self::TYPE_MODULE);
+    public function __construct(string $class);
+
+
+    /**
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function renew(string $class);
 
 
     /**
