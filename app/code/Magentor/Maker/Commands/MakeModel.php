@@ -12,8 +12,7 @@ class MakeModel extends CommandAbstract
 {
 
     protected $name        = 'make:model';
-    protected $description = 'Creates a Magento model.';
-    protected $builder     = ModuleComponentBuilder::TYPE_MODEL;
+    protected $description = 'Creates a Magento model for a given module.';
     
     
     /**

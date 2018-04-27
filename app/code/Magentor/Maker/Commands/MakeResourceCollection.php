@@ -10,7 +10,7 @@ class MakeResourceCollection extends MakeModel
 {
     
     protected $name        = 'make:resource-collection';
-    protected $description = 'Creates a Magento resource model.';
+    protected $description = 'Creates a Magento resource collection for a given module.';
     
     
     /**

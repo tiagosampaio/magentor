@@ -10,8 +10,7 @@ class MakeResourceModel extends MakeModel
 {
     
     protected $name        = 'make:resource-model';
-    protected $description = 'Creates a Magento resource model.';
-    protected $builder     = ModuleComponentBuilder::TYPE_RESOURCE_MODEL;
+    protected $description = 'Creates a Magento resource model for a given module.';
     
     
     /**
