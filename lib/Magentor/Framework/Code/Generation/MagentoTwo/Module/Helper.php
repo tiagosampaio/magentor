@@ -19,14 +19,7 @@ class Helper extends AbstractModulePhp
             Container::throwGenericException('Helper already exists. Cannot be created again.');
         }
     
-        $builder = $this->getTemplateBuilder();
-    
-        $builder->addUse($this->getParentClass());
-        $builder->setExtends($this->getParentClass());
-    
-        $this->template = $builder->build();
-    
-        return $this->template;
+        return parent::build();
     }
     
     

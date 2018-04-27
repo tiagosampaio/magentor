@@ -7,23 +7,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeHelper extends CommandAbstract
+class MakeController extends CommandAbstract
 {
     
-    protected $name        = 'make:helper';
-    protected $description = 'Creates a Magento Helper for a given module.';
-    
-    
-    /**
-     * @return array
-     */
-    protected function getArguments()
-    {
-        $arguments = parent::getArguments();
-        $arguments['name']['mode'] = InputArgument::OPTIONAL;
-        
-        return $arguments;
-    }
+    protected $name        = 'make:controller';
+    protected $description = 'Creates a Magento Controller for a given module.';
     
     
     /**
@@ -38,15 +26,11 @@ class MakeHelper extends CommandAbstract
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
             $name   = $input->getArgument('name');
-            
-            if (empty($name)) {
-                $name = 'Data';
-            }
     
-            $builder  = ModuleComponentBuilder::buildHelper($name, $module, $vendor);
+            $builder  = ModuleComponentBuilder::buildController($name, $module, $vendor);
             $builder->write();
             
-            $output->writeln('Your helper was created!');
+            $output->writeln('Your controller was created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;
