@@ -10,6 +10,9 @@ class PhpClass extends PhpNamespace
     /** @var ClassType */
     private $classObject;
     
+    /** @var array */
+    protected $methods = [];
+    
     
     /**
      * @return $this
@@ -30,7 +33,24 @@ class PhpClass extends PhpNamespace
     public function addMethod(string $name)
     {
         /** @var \Nette\PhpGenerator\Method $method */
-        return $this->getClass()->addMethod($name);
+        $method = $this->getClass()->addMethod($name);
+        $this->methods[$name] = $method;
+        return $method;
+    }
+    
+    
+    /**
+     * @param string $name
+     *
+     * @return mixed|null
+     */
+    public function getMethod(string $name, $createDinamically = true)
+    {
+        if (!isset($this->methods[$name]) && true === $createDinamically) {
+            $this->addMethod($name);
+        }
+        
+        return $this->methods[$name];
     }
     
     

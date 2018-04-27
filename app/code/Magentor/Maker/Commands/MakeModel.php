@@ -65,7 +65,8 @@ class MakeModel extends CommandAbstract
             $module = $input->getArgument('module');
             $name   = $input->getArgument('name');
     
-            $this->getBuilder($name, $module, $vendor)->write();
+            $builder  = $this->getBuilder($name, $module, $vendor);
+            $template = $builder->build();
             
             $output->writeln('Model was created!');
     
@@ -74,6 +75,12 @@ class MakeModel extends CommandAbstract
             if (true === $withResources) {
                 $this->executeNestedCommands($output, $input);
             }
+            
+            if (!$withResources) {
+                $template->getMethod('_construct')->setBody('/** @todo Implement $this->_init() method here... */');
+            }
+    
+            $builder->write();
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;
