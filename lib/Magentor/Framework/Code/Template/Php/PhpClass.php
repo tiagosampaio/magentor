@@ -30,8 +30,7 @@ class PhpClass extends PhpNamespace
     public function addMethod(string $name)
     {
         /** @var \Nette\PhpGenerator\Method $method */
-        $method = $this->getClass()->addMethod($name);
-        return $method;
+        return $this->getClass()->addMethod($name);
     }
     
     
@@ -42,8 +41,7 @@ class PhpClass extends PhpNamespace
      */
     public function addImplement(string $name)
     {
-        $implement = $this->getClass()->addImplement($name);
-        return $implement;
+        return $this->getClass()->addImplement($name);
     }
     
     
@@ -54,8 +52,7 @@ class PhpClass extends PhpNamespace
      */
     public function addExtend(string $name)
     {
-        $extend = $this->getClass()->addExtend($name);
-        return $extend;
+        return $this->getClass()->addExtend($name);
     }
     
     
@@ -67,8 +64,7 @@ class PhpClass extends PhpNamespace
      */
     public function addConstant(string $name, string $value)
     {
-        $constant = $this->getClass()->addConstant($name, $value);
-        return $constant;
+        return $this->getClass()->addConstant($name, $value);
     }
     
     
@@ -80,8 +76,7 @@ class PhpClass extends PhpNamespace
      */
     public function addProperty(string $name, string $value = null)
     {
-        $property = $this->getClass()->addProperty($name, $value);
-        return $property;
+        return $this->getClass()->addProperty($name, $value);
     }
     
     
@@ -92,8 +87,7 @@ class PhpClass extends PhpNamespace
      */
     public function addComment(string $comment)
     {
-        $comment = $this->getClass()->addComment($comment);
-        return $comment;
+        return $this->getClass()->addComment($comment);
     }
     
     

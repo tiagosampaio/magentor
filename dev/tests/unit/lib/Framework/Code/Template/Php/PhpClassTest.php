@@ -6,6 +6,7 @@ use Magentor\Framework\Code\Template\Php\PhpClass;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;
+use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\Property;
 
 class PhpClassTest extends PhpAbstract
@@ -14,6 +15,25 @@ class PhpClassTest extends PhpAbstract
     protected $namespace      = 'MagentorTest\ModuleTest\PathToClass';
     protected $abstractClass  = "Magentor\Framework\AbstractClass";
     protected $interfaceClass = "Magentor\Framework\AbstractInterface";
+    
+    
+    /**
+     * @test
+     */
+    public function involvedInstanceTypes()
+    {
+        $class = $this->getClass();
+        $this->assertInstanceOf(PhpClass::class, $class);
+        
+        $extend = $class->addExtend($this->abstractClass);
+        $this->assertInstanceOf(ClassType::class, $extend);
+        
+        $method = $class->addMethod('test');
+        $this->assertInstanceOf(Method::class, $method);
+    
+        $namespace = $class->getNamespace();
+        $this->assertInstanceOf(PhpNamespace::class, $namespace);
+    }
     
     
     /**
@@ -51,7 +71,7 @@ class ClassTest extends \\$this->abstractClass
 
 PHP;
         
-        $class = $this->getClass();
+        $class  = $this->getClass();
         $class->addExtend($this->abstractClass);
         
         $this->assertEquals($expected, (string) $class);
@@ -184,8 +204,6 @@ PHP;
         
         /** @var Method $method */
         $method = $class->addMethod('setInterface');
-        
-        $this->assertInstanceOf(Method::class, $method);
         
         $method->setStatic(true);
         $method->setFinal(true);
