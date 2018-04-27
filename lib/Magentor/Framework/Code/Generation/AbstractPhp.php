@@ -3,6 +3,7 @@
 namespace Magentor\Framework\Code\Generation;
 
 use Magentor\Framework\Code\Resolver\PhpClassResolver;
+use Magentor\Framework\Code\Template\Php\PhpClass;
 
 abstract class AbstractPhp
 {
@@ -12,6 +13,12 @@ abstract class AbstractPhp
     
     /** @var PhpClassResolver */
     private $classResolver;
+    
+    
+    /**
+     * @return PhpClass
+     */
+    abstract public function build();
     
     
     /**

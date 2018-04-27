@@ -2,9 +2,12 @@
 
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
+use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Code\Generation\AbstractPhp;
+use Magentor\Framework\Code\Template\Php\PhpClass;
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
+use Magentor\Framework\Filesystem\Filesystem;
 
 abstract class AbstractModulePhp extends AbstractPhp
 {
@@ -29,6 +32,9 @@ abstract class AbstractModulePhp extends AbstractPhp
     
     /** @var string */
     protected $classDirectory;
+    
+    /** @var PhpClass */
+    protected $template;
     
     
     /**
@@ -63,6 +69,41 @@ abstract class AbstractModulePhp extends AbstractPhp
         $this->setModuleName($this->classResolver()->getPackage());
         $this->setObjectPath($this->classResolver()->getClassPath());
         $this->setObjectName($this->classResolver()->getClassName());
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    public function write()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($this->getFilename(), (string) $this->getTemplate());
+        
+        return $this;
+    }
+    
+    
+    /**
+     * @return PhpClass
+     */
+    public function getTemplate()
+    {
+        if (!$this->template) {
+            $this->build();
+        }
+        
+        return $this->template;
+    }
+    
+    
+    /**
+     * @return PhpClassBuilder
+     */
+    protected function getTemplateBuilder()
+    {
+        $builder = new PhpClassBuilder($this->classResolver());
+        return $builder;
     }
     
     

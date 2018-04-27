@@ -2,23 +2,18 @@
 
 namespace Magentor\Framework\Code\Builder;
 
+use Magentor\Framework\Code\Resolver\PhpClassResolver;
+use Magentor\Framework\Code\Template\Php\PhpClass;
+
 interface PhpClassBuilderInterface
 {
     
     /**
-     * @param string $namespace
+     * PhpClassBuilderInterface constructor.
      *
-     * @return $this
+     * @param PhpClassResolver $resolver
      */
-    public function setNamespace(string $namespace);
-    
-    
-    /**
-     * @param string $className
-     *
-     * @return $this
-     */
-    public function setClassName(string $className);
+    public function __construct(PhpClassResolver $resolver);
     
     
     /**
@@ -66,7 +61,7 @@ interface PhpClassBuilderInterface
     
     
     /**
-     * @return \Nette\PhpGenerator\PhpFile
+     * @return PhpClass
      */
     public function build();
 }

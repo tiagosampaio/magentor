@@ -2,6 +2,7 @@
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
+use Magentor\Framework\Code\Template\Php\PhpClass;
 use Magentor\Framework\Exception\Container;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
@@ -24,7 +25,7 @@ class Model extends AbstractModulePhp
     
     
     /**
-     * @return PhpClassBuilder
+     * @return PhpClass
      */
     public function build()
     {
@@ -32,16 +33,16 @@ class Model extends AbstractModulePhp
             Container::throwGenericException('Model already exists. Cannot be created again.');
         }
     
-        $builder = new PhpClassBuilder();
+        $builder = $this->getTemplateBuilder();
         
-        $builder->setNamespace($this->getNamespace());
         $builder->addUse($this->getAbstractModelClass());
-        $builder->setClassName($this->getObjectName());
         $builder->setExtends($this->getAbstractModelClass());
         
         $this->prepareObjectMethods($builder);
         
-        return $builder;
+        $this->template = $builder->build();
+        
+        return $this->template;
     }
     
     
