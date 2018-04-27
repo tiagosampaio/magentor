@@ -12,12 +12,13 @@ class PhpNamespace extends PhpFile
     
     
     /**
-     * @return GeneratorNamespace
+     * @return $this
      */
     public function build()
     {
         parent::build();
-        return $this->getNamespace();
+        $this->getNamespace();
+        return $this;
     }
     
     
@@ -52,8 +53,14 @@ class PhpNamespace extends PhpFile
      */
     private function initPhpNamespace()
     {
-        $this->namespaceObject = $this->getPhpFile()
-                                      ->addNamespace($this->getClassResolver()->getNamespace());
+        if ($this->namespaceObject) {
+            return $this;
+        }
+        
+        $this->namespaceObject = $this->getPhpFile()->addNamespace(
+            $this->getClassResolver()->getNamespace()
+        );
+        
         return $this;
     }
     
@@ -61,7 +68,7 @@ class PhpNamespace extends PhpFile
     /**
      * @return GeneratorNamespace
      */
-    protected function getNamespace()
+    public function getNamespace()
     {
         $this->initPhpNamespace();
         return $this->namespaceObject;

@@ -3,7 +3,6 @@
 namespace Magentor\Framework\Code\Template\Php;
 
 use Magentor\Framework\Code\Resolver\PhpClassResolver;
-use Nette\PhpGenerator\Helpers;
 
 abstract class PhpAbstract implements PhpInterface
 {
@@ -20,15 +19,6 @@ abstract class PhpAbstract implements PhpInterface
     public function __construct(PhpClassResolver $classResolver)
     {
         $this->classResolver = $classResolver;
-    }
-    
-    
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return Helpers::tabsToSpaces((string) $this->build());
     }
     
     

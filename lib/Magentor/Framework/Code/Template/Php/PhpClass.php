@@ -12,12 +12,13 @@ class PhpClass extends PhpNamespace
     
     
     /**
-     * @return ClassType
+     * @return $this
      */
     public function build()
     {
         parent::build();
-        return $this->getClass();
+        $this->getClass();
+        return $this;
     }
     
     

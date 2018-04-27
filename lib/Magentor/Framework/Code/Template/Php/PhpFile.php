@@ -2,6 +2,7 @@
 
 namespace Magentor\Framework\Code\Template\Php;
 
+use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile as PhpGeneratorFile;
 
 class PhpFile extends PhpAbstract
@@ -12,12 +13,30 @@ class PhpFile extends PhpAbstract
     
     
     /**
-     * @return PhpGeneratorFile
+     * @return $this
      */
     public function build()
     {
-        $this->initPhpFile();
-        return $this->getPhpFile();
+        $this->getPhpFile();
+        return $this;
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return Helpers::tabsToSpaces((string) $this->build()->getPhpFile());
+    }
+    
+    
+    /**
+     * @param string $comment
+     */
+    public function addComment(string $comment)
+    {
+        return $this->getPhpFile()->addComment($comment);
     }
     
     
@@ -26,6 +45,10 @@ class PhpFile extends PhpAbstract
      */
     private function initPhpFile()
     {
+        if ($this->phpFile) {
+            return $this;
+        }
+        
         $this->phpFile = new PhpGeneratorFile();
         return $this;
     }
@@ -34,8 +57,9 @@ class PhpFile extends PhpAbstract
     /**
      * @return PhpGeneratorFile
      */
-    protected function getPhpFile()
+    public function getPhpFile()
     {
+        $this->initPhpFile();
         return $this->phpFile;
     }
 }
