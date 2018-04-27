@@ -22,6 +22,12 @@ abstract class CommandAbstract extends SymfonyCommand
 
     /** @var ApplicationInterface */
     private $magentoApplication;
+    
+    /** @var InputInterface */
+    private $input;
+    
+    /** @var OutputInterface */
+    private $output;
 
 
     /**
@@ -48,6 +54,50 @@ abstract class CommandAbstract extends SymfonyCommand
     protected function magento()
     {
         return $this->magentoApplication;
+    }
+    
+    
+    /**
+     * @return InputInterface
+     */
+    protected function input()
+    {
+        return $this->input;
+    }
+    
+    
+    /**
+     * @return OutputInterface
+     */
+    protected function output()
+    {
+        return $this->output;
+    }
+    
+    
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    protected function getArgument(string $name)
+    {
+        return $this->input()->getArgument($name);
+    }
+    
+    
+    /**
+     * Initializes the command just after the input has been validated.
+     *
+     * This is mainly useful when a lot of commands extends one main command
+     * where some things need to be initialized based on the input arguments and options.
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->input  = $input;
+        $this->output = $output;
+    
+        parent::initialize($input, $output);
     }
     
     

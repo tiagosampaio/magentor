@@ -3,9 +3,6 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Exception\Container;
-use Nette\PhpGenerator\ClassType;
-use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PhpNamespace;
 
 class ResourceModel extends Model
 {
@@ -15,7 +12,7 @@ class ResourceModel extends Model
     
     
     /**
-     * @return PhpClassBuilder
+     * @return \Magentor\Framework\Code\Template\Php\PhpClass
      */
     public function build()
     {
@@ -23,32 +20,26 @@ class ResourceModel extends Model
             Container::throwGenericException('Resource Model already exists. Cannot be created again.');
         }
     
-        $builder = new PhpClassBuilder();
-        
-        $builder->setNamespace($this->getNamespace());
-        $builder->addUse($this->getAbstractModelClass());
-        $builder->setClassName($this->getObjectName());
-        $builder->setExtends($this->getAbstractModelClass());
-        
-        $this->prepareObjectMethods($builder);
-        
-        return $builder;
+        $builder = $this->getTemplateBuilder();
+    
+        $builder->addUse($this->getParentClass());
+        $builder->setExtends($this->getParentClass());
+    
+        // $this->prepareObjectMethods($builder);
+    
+        $this->template = $builder->build();
+    
+        return $this->template;
     }
     
     
     /**
-     * @param \Nette\PhpGenerator\ClassType $class
+     * @param PhpClassBuilder $builder
      *
      * @return $this
      */
     protected function prepareObjectMethods(PhpClassBuilder $builder)
     {
-        $name       = '_construct';
-        $visibility = 'protected';
-        $body       = '$this->_init('.$this->getResourceModelClass().');';
-        
-        $builder->addMethod($name, $visibility, $body);
-        
         return $this;
     }
     
@@ -56,25 +47,8 @@ class ResourceModel extends Model
     /**
      * @return string
      */
-    protected function getAbstractModelClass()
+    protected function getParentClass()
     {
-        return implode(BS, ['Magento', 'Framework', 'Model', 'AbstractModel']);
-    }
-    
-    
-    /**
-     * @return string
-     */
-    protected function getResourceModelClass()
-    {
-        $resolver = $this->buildResolver([
-            $this->classResolver()->getVendor(),
-            $this->classResolver()->getPackage(),
-            $this->getObjectType(),
-            'ResourceModel',
-            $this->classResolver()->getClassName()
-        ]);
-        
-        return $resolver->getFullClassName(true, true);
+        return "Magento\Framework\Model\ResourceModel\Db\AbstractDb";
     }
 }

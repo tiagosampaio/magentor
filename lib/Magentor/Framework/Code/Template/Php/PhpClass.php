@@ -3,6 +3,7 @@
 namespace Magentor\Framework\Code\Template\Php;
 
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Method;
 
 class PhpClass extends PhpNamespace
 {
@@ -42,7 +43,7 @@ class PhpClass extends PhpNamespace
     /**
      * @param string $name
      *
-     * @return mixed|null
+     * @return Method
      */
     public function getMethod(string $name, $createDinamically = true)
     {

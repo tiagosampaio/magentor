@@ -22,24 +22,24 @@ abstract class AbstractPhp
     
     
     /**
-     * @return string
-     */
-    protected function getFileExtension()
-    {
-        return (string) $this->fileExtension;
-    }
-    
-    
-    /**
      * @param $vendor
      * @param $module
      * @param $class
      *
      * @return PhpClassResolver
      */
-    protected function classResolver()
+    public function classResolver()
     {
         return $this->classResolver;
+    }
+    
+    
+    /**
+     * @return string
+     */
+    protected function getFileExtension()
+    {
+        return (string) $this->fileExtension;
     }
     
     

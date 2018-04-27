@@ -3,6 +3,7 @@
 namespace Magentor\Maker\Commands;
 
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
+use Nette\PhpGenerator\Method;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -72,12 +73,19 @@ class MakeModel extends CommandAbstract
     
             $withResources = $input->getOption('create-resources');
             
+            /** @var Method $method */
+            $method = $template->addMethod('_construct');
+            $method->setVisibility('protected');
+            
             if (true === $withResources) {
-                $this->executeNestedCommands($output, $input);
+                $resourceModelBuilder = $this->buildResourceModel();
+                $className            = $resourceModelBuilder->classResolver()->getFullClassName(true, true);
+    
+                $method->addBody("\$this->_init({$className});");
             }
             
             if (!$withResources) {
-                $template->getMethod('_construct')->setBody('/** @todo Implement $this->_init() method here... */');
+                $method->setBody('/** @todo Implement $this->_init() method here... */');
             }
     
             $builder->write();
@@ -104,26 +112,23 @@ class MakeModel extends CommandAbstract
     
     
     /**
-     * @param OutputInterface $output
-     * @param InputInterface  $input
-     *
-     * @throws \Exception
+     * @throws \Magentor\Framework\Exception\GenericException
      */
-    protected function executeNestedCommands(OutputInterface $output, InputInterface $input)
+    protected function buildResourceModel()
     {
-        $vendor = $input->getArgument('vendor');
-        $module = $input->getArgument('module');
-        $name   = $input->getArgument('name');
+        $vendor = $this->getArgument('vendor');
+        $module = $this->getArgument('module');
+        $name   = $this->getArgument('name');
         
-        /** @var MakeResourceModel $command */
-        $command = $this->getApplication()->find('make:resource-model');
+        $builder  = ModuleComponentBuilder::buildResourceModel($name, $module, $vendor);
+        $template = $builder->build();
+        
+        $template->getMethod('_construct')
+                 ->setVisibility('protected')
+                 ->addBody("\$this->_init('database_name', 'id_column');");
     
-        $newInput = new ArrayInput([
-            'vendor' => $vendor,
-            'module' => $module,
-            'name'   => $name,
-        ]);
-    
-        $command->run($newInput, $output);
+        $builder->write();
+        
+        return $builder;
     }
 }
