@@ -93,7 +93,7 @@ class MakeModel extends CommandAbstract
      * @param string $module
      * @param string $vendor
      *
-     * @return \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model
+     * @return \Magentor\Framework\Code\Generation\MagentoTwo\Module\AbstractModulePhp
      *
      * @throws \Magentor\Framework\Exception\GenericException
      */

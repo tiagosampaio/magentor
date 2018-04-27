@@ -36,7 +36,9 @@ class MakeResourceModel extends MakeModel
             $module = $input->getArgument('module');
             $name   = $input->getArgument('name');
     
-            $this->getBuilder($name, $module, $vendor)->write();
+            $builder = $this->getBuilder($name, $module, $vendor);
+            $template = $builder->build();
+            $builder->write();
             
             $output->writeln('Resource model was created!');
         } catch (\Exception $e) {

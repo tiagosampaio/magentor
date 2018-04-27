@@ -17,12 +17,6 @@ class Model extends AbstractModulePhp
     /** @var PhpNamespace */
     protected $namespace;
     
-    /** @var ClassType */
-    protected $class;
-    
-    /** @var PhpFile */
-    protected $file;
-    
     
     /**
      * @return PhpClass
@@ -43,24 +37,6 @@ class Model extends AbstractModulePhp
         $this->template = $builder->build();
         
         return $this->template;
-    }
-    
-    
-    /**
-     * @return PhpNamespace
-     */
-    public function getFileContentNamespace()
-    {
-        return $this->namespace;
-    }
-    
-    
-    /**
-     * @return ClassType
-     */
-    public function getFileContentClass()
-    {
-        return $this->class;
     }
     
     
