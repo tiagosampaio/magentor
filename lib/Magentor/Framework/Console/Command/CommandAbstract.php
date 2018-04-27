@@ -91,7 +91,7 @@ abstract class CommandAbstract extends SymfonyCommand
             }
             
             $shortcut    = isset($opt['shortcut'])    ? $opt['shortcut']    : null;
-            $mode        = isset($opt['mode'])        ? $opt['mode']        : InputArgument::OPTIONAL;
+            $mode        = isset($opt['mode'])        ? $opt['mode']        : null;
             $description = isset($opt['description']) ? $opt['description'] : "One more great command option!";
             $default     = isset($opt['default'])     ? $opt['default']     : null;
             

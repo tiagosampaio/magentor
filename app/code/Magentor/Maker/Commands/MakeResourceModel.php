@@ -2,6 +2,9 @@
 
 namespace Magentor\Maker\Commands;
 
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 class MakeResourceModel extends MakeModel
 {
     
@@ -19,6 +22,24 @@ class MakeResourceModel extends MakeModel
     
     
     /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        try {
+            $this->buildFile($input);
+            $output->writeln('Resource model was created!');
+        } catch (\Exception $e) {
+            $output->writeln(['Error', $e->getMessage()]);
+            return;
+        }
+    }
+    
+    
+    /**
      * @param string $name
      * @param string $module
      * @param string $vendor
@@ -27,6 +48,6 @@ class MakeResourceModel extends MakeModel
      */
     protected function getMaker(string $name, string $module, string $vendor)
     {
-        return new \Magentor\Framework\Code\Generation\MagentoTwo\Module\Model($name, $module, $vendor);
+        return new \Magentor\Framework\Code\Generation\MagentoTwo\Module\ResourceModel($name, $module, $vendor);
     }
 }

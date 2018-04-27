@@ -46,9 +46,7 @@ class MakeModel extends CommandAbstract
         return [
             'create-resources' => [
                 'shortcut'    => 'r',
-                'mode'        => InputArgument::OPTIONAL,
                 'description' => "Create the resources with the model.",
-                'default'     => null,
             ]
         ];
     }
