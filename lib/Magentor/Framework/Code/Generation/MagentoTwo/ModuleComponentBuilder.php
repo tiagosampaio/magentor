@@ -15,6 +15,7 @@ class ModuleComponentBuilder
     const TYPE_HELPER              = 'helper';
     
     protected static $makers = [
+        self::TYPE_HELPER              => Module\Helper::class,
         self::TYPE_MODEL               => Module\Model::class,
         self::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
         self::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
@@ -51,6 +52,23 @@ class ModuleComponentBuilder
     {
         /** @var Module\ResourceModel $component */
         $component = self::build(self::TYPE_RESOURCE_MODEL, [$name, $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Helper
+     *
+     * @throws GenericException
+     */
+    public static function buildHelper(string $name, string $module, string $vendor)
+    {
+        /** @var Module\Helper $component */
+        $component = self::build(self::TYPE_HELPER, [$name, $module, $vendor]);
         return $component;
     }
     

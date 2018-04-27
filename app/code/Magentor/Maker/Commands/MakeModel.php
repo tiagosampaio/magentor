@@ -18,28 +18,6 @@ class MakeModel extends CommandAbstract
     /**
      * @return array
      */
-    protected function getArguments()
-    {
-        return [
-            'vendor' => [
-                'mode'        => InputArgument::REQUIRED,
-                'description' => "The module's vendor name.",
-            ],
-            'module' => [
-                'mode'        => InputArgument::REQUIRED,
-                'description' => "The module's name.",
-            ],
-            'name' => [
-                'mode'        => InputArgument::REQUIRED,
-                'description' => "The module's class name.",
-            ],
-        ];
-    }
-    
-    
-    /**
-     * @return array
-     */
     protected function getOptions()
     {
         return [
