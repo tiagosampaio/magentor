@@ -2,11 +2,6 @@
 
 namespace Magentor\Maker\Commands;
 
-use Magentor\Framework\Code\Builder\PhpClassBuilder;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Magentor\Framework\Filesystem\Filesystem;
-
 class MakeResourceModel extends MakeModel
 {
     
