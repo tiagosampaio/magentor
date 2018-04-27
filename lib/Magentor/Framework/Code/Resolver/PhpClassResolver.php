@@ -26,29 +26,32 @@ class PhpClassResolver implements PhpClassInterface
 
     /** @var string */
     protected $fullClassName;
-
-
+    
+    /** @var string */
+    protected $alias;
+    
+    
     /**
-     * PhpClassInterface constructor.
-     *
-     * @param string $class
+     * @inheritdoc
      */
-    public function __construct(string $class = null)
+    public function __construct(string $class = null, string $alias = null)
     {
+        $this->setAlias($alias);
+        
         if (!empty($class)) {
-            $this->renew($class);
+            $this->renew($class, $alias);
         }
     }
-
-
+    
+    
     /**
-     * @param string $class
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function renew(string $class)
+    public function renew(string $class, string $alias = null)
     {
+        $this->setAlias($alias);
         $this->buildParts($class);
+        
         return $this;
     }
 
@@ -63,7 +66,7 @@ class PhpClassResolver implements PhpClassInterface
 
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getClassName() : string
     {
@@ -72,30 +75,101 @@ class PhpClassResolver implements PhpClassInterface
 
 
     /**
-     * @return string
+     * @inheritdoc
+     */
+    public function getAlias() : string
+    {
+        return (string) $this->alias;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getAliasReference() : string
+    {
+        return $this->getAlias() . '::class';
+    }
+    
+    
+    /**
+     * @param string|null $alias
+     *
+     * @return $this
+     */
+    public function setAlias(string $alias = null)
+    {
+        if (empty($alias) && $this->getAlias()) {
+            return $this;
+        }
+        
+        $this->alias = $this->clearClassString($alias);
+        return $this;
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    public function unsetAlias()
+    {
+        $this->alias = null;
+        return $this;
+    }
+
+
+    /**
+     * @inheritdoc
      */
     public function getClassPath() : string
     {
         return $this->classPath;
     }
-
-
+    
+    
     /**
-     * @return string
+     * @inheritdoc
      */
-    public function getFullClassName($absolute = false, $append = false) : string
+    public function getFullClassName(bool $absoluteClass = false, $suffix = null) : string
     {
         $fullClassName = implode(BS, $this->getParts());
         
-        if (true === $absolute) {
+        if (true === $absoluteClass) {
             $fullClassName = BS . $fullClassName;
         }
         
-        if (true === $append) {
-            $fullClassName .= '::class';
+        if ($suffix) {
+            $fullClassName .= $suffix;
         }
         
         return $fullClassName;
+    }
+    
+    
+    /**
+     * @inheritdoc
+     */
+    public function getClassReference() : string
+    {
+        return $this->getFullClassName(false, '::class');
+    }
+    
+    
+    /**
+     * @inheritdoc
+     */
+    public function getAbsoluteClassName($suffix = null) : string
+    {
+        return $this->getFullClassName(true, $suffix);
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getAbsoluteClassReference() : string
+    {
+        return $this->getFullClassName(true, '::class');
     }
     
     
@@ -189,6 +263,7 @@ class PhpClassResolver implements PhpClassInterface
     
     /**
      * @param string|null $class
+     * @param string|null $alias
      *
      * @return $this
      */
@@ -230,7 +305,7 @@ class PhpClassResolver implements PhpClassInterface
             $this->classPath,
             $this->className,
         ]);
-    
+        
         $this->parts = [];
     
         foreach (explode(BS, $fullClass) as $part) {
@@ -252,7 +327,7 @@ class PhpClassResolver implements PhpClassInterface
      *
      * @return string
      */
-    protected function clearClassString(string $class) : string
+    protected function clearClassString(string $class = null) : string
     {
         $class = str_replace('.php', null, $class);
         $class = trim(trim($class), '/\\');

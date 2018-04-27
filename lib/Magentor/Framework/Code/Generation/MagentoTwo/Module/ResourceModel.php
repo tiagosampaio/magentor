@@ -29,12 +29,12 @@ class ResourceModel extends AbstractModulePhp
      *
      * @return $this
      */
-    public function buildDefaultMethod(string $databaseName = 'database_table', $entityField = 'id_field')
+    public function buildDefaultMethod(string $tableName = 'database_table', $fieldName = 'id_field')
     {
         $this->getTemplate()
              ->getMethod('_construct')
              ->setVisibility('protected')
-             ->addBody("\$this->_init('{$databaseName}', '{$entityField}');")
+             ->addBody("\$this->_init('{$tableName}', '{$fieldName}');")
              ->addComment("Initialize database relation.\n")
              ->addComment("@return void")
         ;

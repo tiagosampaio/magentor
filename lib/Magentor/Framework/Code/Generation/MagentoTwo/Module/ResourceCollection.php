@@ -2,6 +2,8 @@
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
+use Magentor\Framework\Code\Resolver\PhpClassResolver;
+use Magentor\Framework\Code\Template\Php\PhpClass;
 use Magentor\Framework\Exception\Container;
 use Nette\PhpGenerator\Method;
 
@@ -41,6 +43,9 @@ class ResourceCollection extends AbstractModulePhp
         ;
         
         if ($modelClass && $resourceModelClass) {
+            $modelClass         = (new PhpClassResolver($modelClass))->getAbsoluteClassReference();
+            $resourceModelClass = (new PhpClassResolver($resourceModelClass))->getAbsoluteClassReference();
+            
             $method->addBody("\$this->_init($modelClass, $resourceModelClass);");
         } else {
             $method->addBody("/** @todo Call \$this->_init(ModelClass, ResourceModelClass) */");

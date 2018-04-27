@@ -2,6 +2,7 @@
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
+use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Code\Template\Php\PhpClass;
 use Magentor\Framework\Exception\Container;
 use Nette\PhpGenerator\Method;
@@ -38,7 +39,10 @@ class Model extends AbstractModulePhp
         $method->setVisibility('protected');
         
         if (!empty($resourceClass)) {
-            $method->addBody("\$this->_init({$resourceClass});");
+            $resolver = new PhpClassResolver($resourceClass, 'ResourceModel');
+            
+            $this->getTemplate()->addUse($resolver->getFullClassName(), $resolver->getAlias());
+            $method->addBody("\$this->_init({$resolver->getAliasReference()});");
         }
         
         if (empty($resourceClass)) {

@@ -11,21 +11,23 @@ namespace Magentor\Framework\Code\Resolver;
 
 interface PhpClassInterface
 {
-
+    
     /**
      * PhpClassInterface constructor.
      *
-     * @param string $class
+     * @param string|null $class
+     * @param string|null $alias
      */
-    public function __construct(string $class);
+    public function __construct(string $class = null, string $alias = null);
 
 
     /**
-     * @param string $class
+     * @param string      $class
+     * @param null|string $alias
      *
      * @return $this
      */
-    public function renew(string $class);
+    public function renew(string $class, string $alias = null);
 
 
     /**
@@ -74,18 +76,49 @@ interface PhpClassInterface
      * @return $this
      */
     public function setClassName(string $className);
+    
+    
+    /**
+     * @return string
+     */
+    public function getAlias() : string;
 
 
     /**
      * @return string
      */
     public function getClassPath() : string;
-
-
+    
+    
+    /**
+     * @param bool        $absoluteClass
+     * @param null|string $suffix
+     *
+     * @return string
+     */
+    public function getFullClassName(bool $absoluteClass = false, $suffix = null) : string;
+    
+    
+    /**
+     * @param null|string $suffix
+     *
+     * @return string
+     */
+    public function getClassReference() : string;
+    
+    
+    /**
+     * @param null|string $suffix
+     *
+     * @return string
+     */
+    public function getAbsoluteClassName($suffix = null) : string;
+    
+    
     /**
      * @return string
      */
-    public function getFullClassName($absolute = false) : string;
+    public function getAbsoluteClassReference() : string;
 
 
     /**
