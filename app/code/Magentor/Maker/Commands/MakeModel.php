@@ -2,6 +2,7 @@
 
 namespace Magentor\Maker\Commands;
 
+use Magentor\Framework\Code\Generation\MagentoTwo\Module\Model;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
 use Nette\PhpGenerator\Method;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -66,27 +67,21 @@ class MakeModel extends CommandAbstract
             $module = $input->getArgument('module');
             $name   = $input->getArgument('name');
     
-            $builder  = $this->getBuilder($name, $module, $vendor);
-            $template = $builder->build();
+            /** @var Model $builder */
+            $builder = ModuleComponentBuilder::buildModel($name, $module, $vendor);
             
             $output->writeln('Model was created!');
     
+            $resourceClass = null;
             $withResources = $input->getOption('create-resources');
             
-            /** @var Method $method */
-            $method = $template->addMethod('_construct');
-            $method->setVisibility('protected');
-            
             if (true === $withResources) {
-                $resourceModelBuilder = $this->buildResourceModel();
-                $className            = $resourceModelBuilder->classResolver()->getFullClassName(true, true);
+                $resourceClass = $this->buildResourceModel()
+                                      ->classResolver()
+                                      ->getFullClassName(true, true);
+            }
     
-                $method->addBody("\$this->_init({$className});");
-            }
-            
-            if (!$withResources) {
-                $method->setBody('/** @todo Implement $this->_init() method here... */');
-            }
+            $builder->buildDefaultMethod($resourceClass);
     
             $builder->write();
         } catch (\Exception $e) {
@@ -121,12 +116,8 @@ class MakeModel extends CommandAbstract
         $name   = $this->getArgument('name');
         
         $builder  = ModuleComponentBuilder::buildResourceModel($name, $module, $vendor);
-        $template = $builder->build();
+        $builder->buildDefaultMethod();
         
-        $template->getMethod('_construct')
-                 ->setVisibility('protected')
-                 ->addBody("\$this->_init('database_name', 'id_column');");
-    
         $builder->write();
         
         return $builder;

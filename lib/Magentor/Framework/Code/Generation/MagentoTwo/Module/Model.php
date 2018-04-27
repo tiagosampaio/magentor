@@ -4,6 +4,7 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Code\Template\Php\PhpClass;
 use Magentor\Framework\Exception\Container;
+use Nette\PhpGenerator\Method;
 
 class Model extends AbstractModulePhp
 {
@@ -26,8 +27,6 @@ class Model extends AbstractModulePhp
         $builder->addUse($this->getParentClass());
         $builder->setExtends($this->getParentClass());
         
-        // $this->prepareObjectMethods($builder);
-        
         $this->template = $builder->build();
         
         return $this->template;
@@ -39,8 +38,20 @@ class Model extends AbstractModulePhp
      *
      * @return $this
      */
-    protected function prepareObjectMethods(PhpClassBuilder $builder)
+    public function buildDefaultMethod(string $resourceClass = null)
     {
+        /** @var Method $method */
+        $method = $this->getTemplate()->addMethod('_construct');
+        $method->setVisibility('protected');
+        
+        if (!empty($resourceClass)) {
+            $method->addBody("\$this->_init({$resourceClass});");
+        }
+        
+        if (empty($resourceClass)) {
+            $method->setBody('/** @todo Implement $this->_init() method here... */');
+        }
+        
         return $this;
     }
     
@@ -51,22 +62,5 @@ class Model extends AbstractModulePhp
     protected function getParentClass()
     {
         return "Magento\Framework\Model\AbstractModel";
-    }
-    
-    
-    /**
-     * @return string
-     */
-    protected function getResourceModelClass()
-    {
-        $resolver = $this->buildResolver([
-            $this->classResolver()->getVendor(),
-            $this->classResolver()->getPackage(),
-            $this->getObjectType(),
-            'ResourceModel',
-            $this->classResolver()->getClassName()
-        ]);
-        
-        return $resolver->getFullClassName(true, true);
     }
 }

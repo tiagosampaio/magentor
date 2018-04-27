@@ -3,8 +3,9 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Exception\Container;
+use Nette\PhpGenerator\Method;
 
-class ResourceModel extends AbstractModulePhp
+class ResourceCollection extends AbstractModulePhp
 {
     
     /** @var string */
@@ -17,7 +18,7 @@ class ResourceModel extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('Resource Model already exists. Cannot be created again.');
+            Container::throwGenericException('Resource Collection already exists. Cannot be created again.');
         }
     
         $builder = $this->getTemplateBuilder();
@@ -36,15 +37,21 @@ class ResourceModel extends AbstractModulePhp
      *
      * @return $this
      */
-    public function buildDefaultMethod(string $databaseName = 'database_table', $entityField = 'id_field')
+    public function buildDefaultMethod(string $modelClass = null, $resourceModelClass = null)
     {
-        $this->getTemplate()
+        /** @var Method $method */
+        $method = $this->getTemplate()
              ->getMethod('_construct')
              ->setVisibility('protected')
-             ->addBody("\$this->_init('{$databaseName}', '{$entityField}');")
              ->addComment("Initialize resource model\n")
              ->addComment("@return void")
         ;
+        
+        if ($modelClass && $resourceModelClass) {
+            $method->addBody("\$this->_init($modelClass, $resourceModelClass)");
+        } else {
+            $method->addBody("/** @todo Call \$this->_init(ModelClass, ResourceModelClass) */");
+        }
         
         return $this;
     }
@@ -55,6 +62,6 @@ class ResourceModel extends AbstractModulePhp
      */
     protected function getParentClass()
     {
-        return "Magento\Framework\Model\ResourceModel\Db\AbstractDb";
+        return "Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection";
     }
 }

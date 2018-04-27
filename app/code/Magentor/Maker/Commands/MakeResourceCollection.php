@@ -6,12 +6,11 @@ use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeResourceModel extends MakeModel
+class MakeResourceCollection extends MakeModel
 {
     
-    protected $name        = 'make:resource-model';
+    protected $name        = 'make:resource-collection';
     protected $description = 'Creates a Magento resource model.';
-    protected $builder     = ModuleComponentBuilder::TYPE_RESOURCE_MODEL;
     
     
     /**
@@ -34,13 +33,13 @@ class MakeResourceModel extends MakeModel
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $name   = $input->getArgument('name') . DS . 'Collection';
     
-            $builder  = ModuleComponentBuilder::buildResourceModel($name, $module, $vendor);
+            $builder  = ModuleComponentBuilder::buildResourceCollection($name, $module, $vendor);
             $builder->buildDefaultMethod();
             $builder->write();
             
-            $output->writeln('Resource model was created!');
+            $output->writeln('Resource Collection was created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;

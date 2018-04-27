@@ -17,7 +17,7 @@ class ModuleComponentBuilder
     protected static $makers = [
         self::TYPE_MODEL               => Module\Model::class,
         self::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
-        self::TYPE_RESOURCE_COLLECTION => Module\ResourceModel::class,
+        self::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
     ];
     
     
@@ -51,6 +51,23 @@ class ModuleComponentBuilder
     {
         /** @var Module\ResourceModel $component */
         $component = self::build(self::TYPE_RESOURCE_MODEL, [$name, $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\ResourceCollection
+     *
+     * @throws GenericException
+     */
+    public static function buildResourceCollection(string $name, string $module, string $vendor)
+    {
+        /** @var Module\ResourceCollection $component */
+        $component = self::build(self::TYPE_RESOURCE_COLLECTION, [$name, $module, $vendor]);
         return $component;
     }
     

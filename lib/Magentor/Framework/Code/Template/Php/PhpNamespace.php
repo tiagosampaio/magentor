@@ -58,7 +58,7 @@ class PhpNamespace extends PhpFile
         }
         
         $this->namespaceObject = $this->getPhpFile()->addNamespace(
-            $this->getClassResolver()->getNamespace()
+            $this->resolver()->getNamespace()
         );
         
         return $this;

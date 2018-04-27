@@ -25,7 +25,7 @@ abstract class PhpAbstract implements PhpInterface
     /**
      * @return PhpClassResolver
      */
-    protected function getClassResolver()
+    public function resolver()
     {
         return $this->classResolver;
     }

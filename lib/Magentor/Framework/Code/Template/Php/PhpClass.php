@@ -135,7 +135,7 @@ class PhpClass extends PhpNamespace
         }
         
         $this->classObject = $this->getNamespace()->addClass(
-            $this->getClassResolver()->getClassName()
+            $this->resolver()->getClassName()
         );
         
         return $this;
