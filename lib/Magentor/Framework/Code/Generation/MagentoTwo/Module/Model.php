@@ -52,6 +52,9 @@ class Model extends AbstractModulePhp
             $method->setBody('/** @todo Implement $this->_init() method here... */');
         }
         
+        $method->addComment("Initialize resource model\n")
+               ->addComment("@return void");
+        
         return $this;
     }
     

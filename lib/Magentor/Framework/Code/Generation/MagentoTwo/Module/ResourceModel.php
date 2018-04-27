@@ -42,7 +42,7 @@ class ResourceModel extends AbstractModulePhp
              ->getMethod('_construct')
              ->setVisibility('protected')
              ->addBody("\$this->_init('{$databaseName}', '{$entityField}');")
-             ->addComment("Initialize resource model\n")
+             ->addComment("Initialize database relation.\n")
              ->addComment("@return void")
         ;
         

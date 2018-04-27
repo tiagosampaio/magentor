@@ -48,7 +48,7 @@ class ResourceCollection extends AbstractModulePhp
         ;
         
         if ($modelClass && $resourceModelClass) {
-            $method->addBody("\$this->_init($modelClass, $resourceModelClass)");
+            $method->addBody("\$this->_init($modelClass, $resourceModelClass);");
         } else {
             $method->addBody("/** @todo Call \$this->_init(ModelClass, ResourceModelClass) */");
         }

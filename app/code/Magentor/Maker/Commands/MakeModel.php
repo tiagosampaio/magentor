@@ -4,8 +4,6 @@ namespace Magentor\Maker\Commands;
 
 use Magentor\Framework\Code\Generation\MagentoTwo\Module\Model;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
-use Nette\PhpGenerator\Method;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -79,6 +77,11 @@ class MakeModel extends CommandAbstract
                 $resourceClass = $this->buildResourceModel()
                                       ->classResolver()
                                       ->getFullClassName(true, true);
+                
+                $this->buildResourceCollection(
+                    $builder->classResolver()->getFullClassName(true, true),
+                    $resourceClass
+                );
             }
     
             $builder->buildDefaultMethod($resourceClass);
@@ -118,6 +121,24 @@ class MakeModel extends CommandAbstract
         $builder  = ModuleComponentBuilder::buildResourceModel($name, $module, $vendor);
         $builder->buildDefaultMethod();
         
+        $builder->write();
+        
+        return $builder;
+    }
+    
+    
+    /**
+     * @return \Magentor\Framework\Code\Generation\MagentoTwo\Module\ResourceCollection
+     * @throws \Magentor\Framework\Exception\GenericException
+     */
+    protected function buildResourceCollection(string $modelClass = null, string $resourceModelClass = null)
+    {
+        $vendor = $this->getArgument('vendor');
+        $module = $this->getArgument('module');
+        $name   = $this->getArgument('name') . DS . 'Collection';
+    
+        $builder  = ModuleComponentBuilder::buildResourceCollection($name, $module, $vendor);
+        $builder->buildDefaultMethod($modelClass, $resourceModelClass);
         $builder->write();
         
         return $builder;
