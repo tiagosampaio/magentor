@@ -22,6 +22,7 @@ class Controller extends AbstractModulePhp
             Container::throwGenericException('Controller already exists. Cannot be created again.');
         }
         
+        parent::build();
         $this->buildDefault();
         
         return $this->getTemplate();
@@ -39,7 +40,7 @@ class Controller extends AbstractModulePhp
         /** @var Property $property */
         $property = $this->getTemplate()->addProperty("resultPageFactory");
         $property->setVisibility('protected');
-        $property->addComment("@var \Magento\Framework\View\Result\PageFactory");
+        $property->addComment("@var PageFactory");
         
         $this->getTemplate()->addUse($pageFactoryClass);
         $this->getTemplate()->addUse($contextClass);
