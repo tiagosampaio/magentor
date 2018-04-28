@@ -152,7 +152,9 @@ class PhpClassBuilder implements PhpClassBuilderInterface
      */
     protected function buildClass(PhpClass $template)
     {
-        $template->addExtend($this->extends);
+        if (!empty($this->extends)) {
+            $template->addExtend($this->extends);
+        }
     
         foreach ($this->implements as $implement) {
             $template->addImplement((string) $implement);

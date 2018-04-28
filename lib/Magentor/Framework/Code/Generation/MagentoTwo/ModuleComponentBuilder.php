@@ -16,6 +16,7 @@ class ModuleComponentBuilder
         Type::TYPE_MODEL               => Module\Model::class,
         Type::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
         Type::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
+        Type::TYPE_CONFIG_SOURCE       => Module\ConfigSource::class,
     ];
     
     
@@ -100,6 +101,23 @@ class ModuleComponentBuilder
     {
         /** @var Module\ResourceCollection $component */
         $component = self::build(Type::TYPE_RESOURCE_COLLECTION, [$name, $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\ResourceCollection
+     *
+     * @throws GenericException
+     */
+    public static function buildConfigSource(string $name, string $module, string $vendor)
+    {
+        /** @var Module\ResourceCollection $component */
+        $component = self::build(Type::TYPE_CONFIG_SOURCE, [$name, $module, $vendor]);
         return $component;
     }
     

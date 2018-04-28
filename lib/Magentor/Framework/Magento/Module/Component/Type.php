@@ -11,4 +11,5 @@ class Type
     const TYPE_CONTROLLER          = 'controller';
     const TYPE_HELPER              = 'helper';
     const TYPE_BLOCK               = 'block';
+    const TYPE_CONFIG_SOURCE       = 'config_source';
 }

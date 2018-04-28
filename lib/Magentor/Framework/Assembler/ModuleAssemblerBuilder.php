@@ -14,6 +14,7 @@ class ModuleAssemblerBuilder
         Type::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
         Type::TYPE_CONTROLLER          => Module\Controller::class,
         Type::TYPE_HELPER              => Module\Helper::class,
+        Type::TYPE_CONFIG_SOURCE       => Module\ConfigSource::class,
     ];
     
     
