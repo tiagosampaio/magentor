@@ -1,14 +1,15 @@
 <?php
 
-namespace Magentor\Maker\Commands;
+namespace Magentor\Maker\Commands\Config;
 
 use Magentor\Framework\Assembler\Module\Controller;
 use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
+use Magentor\Framework\Code\Template\Xml\Config\Module;
 use Magentor\Framework\Magento\Module\Component\Type;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeXmlModule extends CommandAbstract
+class MakeXmlModule extends CommandConfigAbstract
 {
     
     protected $name        = 'make:config:module';
@@ -29,18 +30,13 @@ class MakeXmlModule extends CommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $xml = new \SimpleXMLElement("<config/>", LIBXML_NOERROR, false, 'ws', true);
-        $xml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $xml->addAttribute('xmlns:xsi:noNamespaceSchemaLocation', 'urn:magento:framework:Module/etc/module.xsd');
+        $template = new Module('ConfigTest', 'BSeller');
+        $template->build();
+        $template->addSequence('Magento_Catalog');
+        $template->addSequence('Magento_Catalog');
+        $template->addSequence('Magento_Backend');
         
-        $module = $xml->addChild('module');
-        $module->addAttribute('name', 'BitTools_SkyHub');
-        $module->addAttribute('setup_version', '1.0.0');
-    
-        $module->addChild('sequence');
-        
-        $content = $xml->asXML();
-        echo $content;
+        echo (string) $template;
         
         return;
         
