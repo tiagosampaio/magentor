@@ -1,7 +1,7 @@
 <?php
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;
 use Nette\PhpGenerator\Property;
@@ -19,7 +19,7 @@ class Controller extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('Controller already exists. Cannot be created again.');
+            ExceptionContainer::throwGenericException('Controller already exists. Cannot be created again.');
         }
         
         parent::build();

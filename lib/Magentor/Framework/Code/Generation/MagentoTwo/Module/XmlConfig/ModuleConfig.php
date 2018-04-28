@@ -8,6 +8,12 @@ class ModuleConfig extends AbstractConfig
 {
     
     /** @var string */
+    protected $filePath = 'etc';
+    
+    /** @var string */
+    protected $fileName = 'module';
+    
+    /** @var string */
     protected $setupVersion;
     
     /** @var array */

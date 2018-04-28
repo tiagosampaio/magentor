@@ -77,6 +77,8 @@ abstract class XmlAbstract implements XmlInterface
      */
     public function toXml(string $filename = null, bool $beauty = true)
     {
+        $this->build();
+        
         $xmlString = $this->getXml()->asXML();
         
         if (!$beauty) {

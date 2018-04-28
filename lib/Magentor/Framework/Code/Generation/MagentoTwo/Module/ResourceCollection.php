@@ -4,7 +4,7 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Code\Resolver\PhpClassResolver;
 use Magentor\Framework\Code\Template\Php\PhpClass;
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 use Nette\PhpGenerator\Method;
 
 class ResourceCollection extends AbstractModulePhp
@@ -20,7 +20,7 @@ class ResourceCollection extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('Resource Collection already exists. Cannot be created again.');
+            ExceptionContainer::throwGenericException('Resource Collection already exists. Cannot be created again.');
         }
     
         return parent::build();

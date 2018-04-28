@@ -2,7 +2,7 @@
 
 namespace Magentor\Framework\Code\Generation\MagentoTwo;
 
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 use Magentor\Framework\Exception\GenericException;
 use Magentor\Framework\Magento\Module\Component\Type;
 
@@ -171,7 +171,7 @@ class ModuleComponentBuilder
     protected static function getComponentClass(string $type)
     {
         if (!isset(self::$makers[$type])) {
-            Container::throwGenericException('Component maker class does not exist.');
+            ExceptionContainer::throwGenericException('Component maker class does not exist.');
         }
         
         return self::$makers[$type];

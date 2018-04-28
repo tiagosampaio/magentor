@@ -48,11 +48,8 @@ class MakeXmlModule extends CommandConfigAbstract
             
             /** @var ModuleConfig $builder */
             $builder  = ModuleComponentBuilder::buildXmlConfigModule($module, $vendor, $version, $sequence);
-            
-            /** @var Module $template */
-            $template = $builder->build();
-            
-            $output->write((string) $template);
+            $builder->build();
+            $builder->write();
             
             $output->writeln('Your controller was created!');
         } catch (\Exception $e) {

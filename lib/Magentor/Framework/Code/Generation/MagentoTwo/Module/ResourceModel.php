@@ -2,7 +2,7 @@
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 
 class ResourceModel extends AbstractModulePhp
 {
@@ -17,7 +17,7 @@ class ResourceModel extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('Resource Model already exists. Cannot be created again.');
+            ExceptionContainer::throwGenericException('Resource Model already exists. Cannot be created again.');
         }
     
         return parent::build();

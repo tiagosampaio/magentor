@@ -13,7 +13,20 @@ class Documentor
     public static function poweredBy()
     {
         $comment = <<<COMMENT
-Proudly powered with Magentor CLI!
+Proudly powered by Magentor CLI!
+COMMENT;
+
+        return $comment;
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public static function githubUrl()
+    {
+        $comment = <<<COMMENT
+Official Repository: http://github.com/tiagosampaio/magentor
 COMMENT;
 
         return $comment;
@@ -53,12 +66,14 @@ COMMENT;
     public static function documentBegin()
     {
         $poweredBy = self::poweredBy();
+        $repoUrl   = self::githubUrl();
         $version   = self::version();
         $author    = self::author();
         
         $comment = <<<COMMENT
 $poweredBy
 $version
+$repoUrl
 
 $author
 COMMENT;

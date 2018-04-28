@@ -1,7 +1,7 @@
 <?php
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 use Nette\PhpGenerator\Method;
 
 class ConfigSource extends AbstractModulePhp
@@ -17,7 +17,7 @@ class ConfigSource extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('System config source already exists. Cannot be created again.');
+            ExceptionContainer::throwGenericException('System config source already exists. Cannot be created again.');
         }
     
         parent::build();

@@ -1,7 +1,7 @@
 <?php
 namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 
 class Helper extends AbstractModulePhp
 {
@@ -16,7 +16,7 @@ class Helper extends AbstractModulePhp
     public function build()
     {
         if (file_exists($this->getFilename())) {
-            Container::throwGenericException('Helper already exists. Cannot be created again.');
+            ExceptionContainer::throwGenericException('Helper already exists. Cannot be created again.');
         }
     
         return parent::build();

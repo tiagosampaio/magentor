@@ -5,9 +5,8 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module;
 use Magentor\Framework\Code\Builder\PhpClassBuilder;
 use Magentor\Framework\Code\Generation\AbstractPhp;
 use Magentor\Framework\Code\Template\Php\PhpClass;
-use Magentor\Framework\Exception\Container;
+use Magentor\Framework\Exception\ExceptionContainer;
 use Magentor\Framework\Filesystem\DirectoryRegistrar;
-use Magentor\Framework\Filesystem\Filesystem;
 
 abstract class AbstractModulePhp extends AbstractPhp
 {
@@ -33,9 +32,6 @@ abstract class AbstractModulePhp extends AbstractPhp
     /** @var string */
     protected $classDirectory;
     
-    /** @var PhpClass */
-    protected $template;
-    
     
     /**
      * Model constructor.
@@ -47,15 +43,15 @@ abstract class AbstractModulePhp extends AbstractPhp
     public function __construct($objectName, $module, $vendor)
     {
         if (!$objectName) {
-            Container::throwGenericException('Object name cannot be empty.');
+            ExceptionContainer::throwGenericException('Object name cannot be empty.');
         }
         
         if (!$module) {
-            Container::throwGenericException('Module name cannot be empty.');
+            ExceptionContainer::throwGenericException('Module name cannot be empty.');
         }
         
         if (!$vendor) {
-            Container::throwGenericException('Module\'s vendor name cannot be empty.');
+            ExceptionContainer::throwGenericException('Module\'s vendor name cannot be empty.');
         }
         
         $this->initResolver([
@@ -110,31 +106,6 @@ abstract class AbstractModulePhp extends AbstractPhp
     protected function getInterfacesClasses()
     {
         return [];
-    }
-    
-    
-    /**
-     * @return $this
-     */
-    public function write()
-    {
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->getFilename(), (string) $this->getTemplate());
-        
-        return $this;
-    }
-    
-    
-    /**
-     * @return PhpClass
-     */
-    public function getTemplate()
-    {
-        if (!$this->template) {
-            $this->build();
-        }
-        
-        return $this->template;
     }
     
     

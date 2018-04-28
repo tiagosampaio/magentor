@@ -3,7 +3,7 @@
 namespace Magentor\Framework\Exception;
 
 
-class Container
+class ExceptionContainer
 {
 
     /** @var self */
@@ -15,7 +15,7 @@ class Container
 
 
     /**
-     * @return Container
+     * @return ExceptionContainer
      */
     public static function getInstance()
     {
@@ -33,6 +33,15 @@ class Container
     public static function throwGenericException($message)
     {
         self::throwException(GenericException::class, $message);
+    }
+
+
+    /**
+     * @param $message
+     */
+    public static function throwFileOverwriteException($message)
+    {
+        self::throwException(FileOverwrite::class, $message);
     }
 
 
