@@ -4,8 +4,6 @@ namespace Magentor\Framework\Assembler\Module;
 
 use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
-use Magentor\Framework\Code\Generation\MagentoTwo\Module\ResourceModel as ResourceModelBuilder;
-use Magentor\Framework\Code\Generation\MagentoTwo\Module\ResourceCollection as ResourceCollectionBuilder;
 use Magentor\Framework\Code\Generation\MagentoTwo\Module\Model as ModelBuilder;
 use Magentor\Framework\Magento\Module\Component\Type;
 

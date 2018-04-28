@@ -4,22 +4,18 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo;
 
 use Magentor\Framework\Exception\Container;
 use Magentor\Framework\Exception\GenericException;
+use Magentor\Framework\Magento\Module\Component\Type;
 
 class ModuleComponentBuilder
 {
-    
-    const TYPE_MODEL               = 'model';
-    const TYPE_RESOURCE_MODEL      = 'resource-model';
-    const TYPE_RESOURCE_COLLECTION = 'resource-collection';
-    const TYPE_CONTROLLER          = 'controller';
-    const TYPE_HELPER              = 'helper';
-    
+ 
+    /** @var array */
     protected static $makers = [
-        self::TYPE_CONTROLLER          => Module\Controller::class,
-        self::TYPE_HELPER              => Module\Helper::class,
-        self::TYPE_MODEL               => Module\Model::class,
-        self::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
-        self::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
+        Type::TYPE_CONTROLLER          => Module\Controller::class,
+        Type::TYPE_HELPER              => Module\Helper::class,
+        Type::TYPE_MODEL               => Module\Model::class,
+        Type::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
+        Type::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
     ];
     
     
@@ -35,7 +31,7 @@ class ModuleComponentBuilder
     public static function buildModel(string $name, string $module, string $vendor)
     {
         /** @var Module\Model $component */
-        $component = self::build(self::TYPE_MODEL, [$name, $module, $vendor]);
+        $component = self::build(Type::TYPE_MODEL, [$name, $module, $vendor]);
         return $component;
     }
     
@@ -52,7 +48,7 @@ class ModuleComponentBuilder
     public static function buildResourceModel(string $name, string $module, string $vendor)
     {
         /** @var Module\ResourceModel $component */
-        $component = self::build(self::TYPE_RESOURCE_MODEL, [$name, $module, $vendor]);
+        $component = self::build(Type::TYPE_RESOURCE_MODEL, [$name, $module, $vendor]);
         return $component;
     }
     
@@ -69,13 +65,13 @@ class ModuleComponentBuilder
     public static function buildHelper(string $name, string $module, string $vendor)
     {
         /** @var Module\Helper $component */
-        $component = self::build(self::TYPE_HELPER, [$name, $module, $vendor]);
+        $component = self::build(Type::TYPE_HELPER, [$name, $module, $vendor]);
         return $component;
     }
     
     
     /**
-     * @param string $name
+     * @param string $controllerName
      * @param string $module
      * @param string $vendor
      *
@@ -83,10 +79,10 @@ class ModuleComponentBuilder
      *
      * @throws GenericException
      */
-    public static function buildController(string $name, string $module, string $vendor)
+    public static function buildController(string $controllerName, string $module, string $vendor)
     {
         /** @var Module\Controller $component */
-        $component = self::build(self::TYPE_CONTROLLER, [$name, $module, $vendor]);
+        $component = self::build(Type::TYPE_CONTROLLER, [$controllerName, $module, $vendor]);
         return $component;
     }
     
@@ -103,7 +99,7 @@ class ModuleComponentBuilder
     public static function buildResourceCollection(string $name, string $module, string $vendor)
     {
         /** @var Module\ResourceCollection $component */
-        $component = self::build(self::TYPE_RESOURCE_COLLECTION, [$name, $module, $vendor]);
+        $component = self::build(Type::TYPE_RESOURCE_COLLECTION, [$name, $module, $vendor]);
         return $component;
     }
     
