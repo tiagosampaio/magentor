@@ -16,10 +16,10 @@ class Helper implements ModuleInterface
      *
      * @throws \Magentor\Framework\Exception\GenericException
      */
-    public function create(string $vendor, string $module, string $controllerName, array $options = [])
+    public function create(string $vendor, string $module, string $helperName, array $options = [])
     {
         /** @var \Magentor\Framework\Code\Generation\MagentoTwo\Module\Helper $builder */
-        $builder = ModuleComponentBuilder::buildHelper($controllerName, $module, $vendor);
+        $builder = ModuleComponentBuilder::buildHelper($helperName, $module, $vendor);
         return $builder;
     }
 }

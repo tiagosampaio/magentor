@@ -2,7 +2,10 @@
 
 namespace Magentor\Maker\Commands;
 
+use Magentor\Framework\Assembler\Module\Helper;
+use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
+use Magentor\Framework\Magento\Module\Component\Type;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,8 +46,9 @@ class MakeHelper extends CommandAbstract
                 $name = 'Data';
             }
     
-            $builder  = ModuleComponentBuilder::buildHelper($name, $module, $vendor);
-            $builder->write();
+            /** @var Helper $assembler */
+            $assembler = ModuleAssemblerBuilder::build(Type::TYPE_HELPER);
+            $assembler->create($vendor, $module, $name)->write();
             
             $output->writeln('Your helper was created!');
         } catch (\Exception $e) {
