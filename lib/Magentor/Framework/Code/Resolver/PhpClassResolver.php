@@ -6,6 +6,9 @@ namespace Magentor\Framework\Code\Resolver;
 class PhpClassResolver implements PhpClassInterface
 {
 
+    /** @var string */
+    const REFERENCE_STRING = '::class';
+    
     /** @var array */
     protected $parts = [];
 
@@ -77,6 +80,15 @@ class PhpClassResolver implements PhpClassInterface
     /**
      * @inheritdoc
      */
+    public function getClassNameReference() : string
+    {
+        return $this->getClassName() . $this->getReferenceString();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function getAlias() : string
     {
         return (string) $this->alias;
@@ -88,7 +100,7 @@ class PhpClassResolver implements PhpClassInterface
      */
     public function getAliasReference() : string
     {
-        return $this->getAlias() . '::class';
+        return $this->getAlias() . $this->getReferenceString();
     }
     
     
@@ -151,7 +163,7 @@ class PhpClassResolver implements PhpClassInterface
      */
     public function getClassReference() : string
     {
-        return $this->getFullClassName(false, '::class');
+        return $this->getFullClassName(false, $this->getReferenceString());
     }
     
     
@@ -169,7 +181,7 @@ class PhpClassResolver implements PhpClassInterface
      */
     public function getAbsoluteClassReference() : string
     {
-        return $this->getFullClassName(true, '::class');
+        return $this->getFullClassName(true, $this->getReferenceString());
     }
     
     
@@ -334,6 +346,15 @@ class PhpClassResolver implements PhpClassInterface
         $class = str_replace('/', BS, $class);
 
         return $class;
+    }
+    
+    
+    /**
+     * @return string
+     */
+    protected function getReferenceString()
+    {
+        return self::REFERENCE_STRING;
     }
     
     

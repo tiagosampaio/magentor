@@ -43,10 +43,13 @@ class ResourceCollection extends AbstractModulePhp
         ;
         
         if ($modelClass && $resourceModelClass) {
-            $modelClass         = (new PhpClassResolver($modelClass))->getAbsoluteClassReference();
-            $resourceModelClass = (new PhpClassResolver($resourceModelClass))->getAbsoluteClassReference();
+            $model    = new PhpClassResolver($modelClass);
+            $resource = new PhpClassResolver($resourceModelClass, 'ResourceModel');
             
-            $method->addBody("\$this->_init($modelClass, $resourceModelClass);");
+            $this->getTemplate()->addUse($model->getFullClassName());
+            $this->getTemplate()->addUse($resource->getFullClassName(), $resource->getAlias());
+            
+            $method->addBody("\$this->_init({$model->getClassNameReference()}, {$resource->getAliasReference()});");
         } else {
             $method->addBody("/** @todo Call \$this->_init(ModelClass, ResourceModelClass) */");
         }
