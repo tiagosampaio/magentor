@@ -2,8 +2,12 @@
 
 namespace Magentor\Maker\Commands;
 
+use Magentor\Framework\Assembler\Module\ResourceModel;
+use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
+use Magentor\Framework\Magento\Module\Component\Type;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MakeResourceModel extends MakeModel
@@ -18,7 +22,19 @@ class MakeResourceModel extends MakeModel
      */
     protected function getOptions()
     {
-        return [];
+        return [
+            'table' => [
+                'shortcut'    => 't',
+                'mode'        => InputOption::VALUE_OPTIONAL,
+                'description' => "Set the table name for the resource model.",
+            ],
+            'field' => [
+                'shortcut'    => 'f',
+                'mode'        => InputOption::VALUE_OPTIONAL,
+                'description' => "Set the table identifier field name for the resource model.",
+                'default'     => "id",
+            ]
+        ];
     }
     
     
@@ -35,9 +51,15 @@ class MakeResourceModel extends MakeModel
             $module = $input->getArgument('module');
             $name   = $input->getArgument('name');
     
-            $builder  = ModuleComponentBuilder::buildResourceModel($name, $module, $vendor);
-            $builder->buildDefaultMethod();
-            $builder->write();
+            $table = $input->getOption('table');
+            $field = $input->getOption('field');
+            
+            /** @var ResourceModel $assembler */
+            $assembler = ModuleAssemblerBuilder::build(Type::TYPE_RESOURCE_MODEL);
+            $assembler->create($vendor, $module, $name, [
+                'table' => $table,
+                'field' => $field,
+            ])->write();
             
             $output->writeln('Resource model was created!');
         } catch (\Exception $e) {

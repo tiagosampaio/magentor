@@ -2,7 +2,10 @@
 
 namespace Magentor\Maker\Commands;
 
+use Magentor\Framework\Assembler\Module\Model;
+use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
+use Magentor\Framework\Magento\Module\Component\Type;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -42,7 +45,8 @@ class MakeModel extends CommandAbstract
     
             $withResources = (bool) $input->getOption('create-resources');
             
-            $assembler = new \Magentor\Framework\Assembler\Module\Model();
+            /** @var Model $assembler */
+            $assembler = ModuleAssemblerBuilder::build(Type::TYPE_MODEL);
             $assembler->create($vendor, $module, $name, [
                 'resources' => $withResources
             ]);
@@ -52,41 +56,5 @@ class MakeModel extends CommandAbstract
             $output->writeln(['Error', $e->getMessage()]);
             return;
         }
-    }
-    
-    
-    /**
-     * @throws \Magentor\Framework\Exception\GenericException
-     */
-    protected function buildResourceModel()
-    {
-        $vendor = $this->getArgument('vendor');
-        $module = $this->getArgument('module');
-        $name   = $this->getArgument('name');
-        
-        $builder  = ModuleComponentBuilder::buildResourceModel($name, $module, $vendor);
-        $builder->buildDefaultMethod();
-        
-        $builder->write();
-        
-        return $builder;
-    }
-    
-    
-    /**
-     * @return \Magentor\Framework\Code\Generation\MagentoTwo\Module\ResourceCollection
-     * @throws \Magentor\Framework\Exception\GenericException
-     */
-    protected function buildResourceCollection(string $modelClass = null, string $resourceModelClass = null)
-    {
-        $vendor = $this->getArgument('vendor');
-        $module = $this->getArgument('module');
-        $name   = $this->getArgument('name') . DS . 'Collection';
-    
-        $builder  = ModuleComponentBuilder::buildResourceCollection($name, $module, $vendor);
-        $builder->buildDefaultMethod($modelClass, $resourceModelClass);
-        $builder->write();
-        
-        return $builder;
     }
 }
