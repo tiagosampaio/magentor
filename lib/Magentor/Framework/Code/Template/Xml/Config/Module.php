@@ -3,7 +3,7 @@
 namespace Magentor\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\XmlAbstract;
-use SimpleXMLElement;
+use Magentor\Framework\Code\Template\Xml\XmlElement;
 
 class Module extends XmlAbstract
 {
@@ -14,10 +14,10 @@ class Module extends XmlAbstract
     /** @var string */
     protected $setupVersion = '0.1.0';
     
-    /** @var SimpleXMLElement */
+    /** @var XmlElement */
     protected $moduleXml = null;
     
-    /** @var SimpleXMLElement */
+    /** @var XmlElement */
     protected $sequenceXml = null;
     
     /** @var array */
@@ -46,8 +46,12 @@ class Module extends XmlAbstract
      *
      * @return $this
      */
-    public function addSequence(string $module)
+    public function addSequence(string $module = null)
     {
+        if (empty($module)) {
+            return $this;
+        }
+        
         if (isset($this->sequencesCache[$module])) {
             return $this;
         }
@@ -64,11 +68,11 @@ class Module extends XmlAbstract
     
     
     /**
-     * @param SimpleXMLElement $xml
+     * @param XmlElement $xml
      *
      * @return $this
      */
-    protected function prepare(SimpleXMLElement $xml)
+    protected function prepare(XmlElement $xml)
     {
         if (is_null($this->moduleXml)) {
             $this->moduleXml = $xml->addChild('module');

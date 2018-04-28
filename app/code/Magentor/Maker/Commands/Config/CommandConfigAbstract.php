@@ -7,4 +7,11 @@ use Magentor\Maker\Commands\CommandAbstract;
 abstract class CommandConfigAbstract extends CommandAbstract
 {
     
+    /**
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [];
+    }
 }

@@ -12,4 +12,9 @@ class Type
     const TYPE_HELPER              = 'helper';
     const TYPE_BLOCK               = 'block';
     const TYPE_CONFIG_SOURCE       = 'config_source';
+    
+    /**
+     * Config Options
+     */
+    const TYPE_XML_CONFIG_MODULE   = 'xml_config_module';
 }

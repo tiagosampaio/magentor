@@ -17,6 +17,7 @@ class ModuleComponentBuilder
         Type::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
         Type::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
         Type::TYPE_CONFIG_SOURCE       => Module\ConfigSource::class,
+        Type::TYPE_XML_CONFIG_MODULE   => Module\XmlConfig\ModuleConfig::class,
     ];
     
     
@@ -101,6 +102,27 @@ class ModuleComponentBuilder
     {
         /** @var Module\ResourceCollection $component */
         $component = self::build(Type::TYPE_RESOURCE_COLLECTION, [$name, $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\XmlConfig\ModuleConfig
+     *
+     * @throws GenericException
+     */
+    public static function buildXmlConfigModule(
+        string $module,
+        string $vendor,
+        string $setupVersion = null,
+        array $sequence = []
+    )
+    {
+        /** @var Module\XmlConfig\ModuleConfig $component */
+        $component = self::build(Type::TYPE_XML_CONFIG_MODULE, [$module, $vendor, $setupVersion, $sequence]);
         return $component;
     }
     

@@ -2,12 +2,10 @@
 
 namespace Magentor\Framework\Code\Template\Xml;
 
-use SimpleXMLElement;
-
 abstract class XmlAbstract implements XmlInterface
 {
     
-    /** @var SimpleXMLElement */
+    /** @var XmlElement */
     protected $xml;
     
     /** @var string */
@@ -49,11 +47,11 @@ abstract class XmlAbstract implements XmlInterface
     
     
     /**
-     * @param SimpleXMLElement|null $xml
+     * @param XmlElement|null $xml
      *
      * @return $this
      */
-    public function build(SimpleXMLElement $xml = null)
+    public function build(XmlElement $xml = null)
     {
         $this->initXml($xml);
         $this->prepare($this->getXml());
@@ -63,7 +61,7 @@ abstract class XmlAbstract implements XmlInterface
     
     
     /**
-     * @return SimpleXMLElement
+     * @return XmlElement
      */
     public function getXml()
     {
@@ -106,22 +104,22 @@ abstract class XmlAbstract implements XmlInterface
     
     
     
-    abstract protected function prepare(SimpleXMLElement $xml);
+    abstract protected function prepare(XmlElement $xml);
     
     
     /**
-     * @param SimpleXMLElement|null $xml
+     * @param XmlElement|null $xml
      *
      * @return $this
      */
-    protected function initXml(SimpleXMLElement $xml = null)
+    protected function initXml(XmlElement $xml = null)
     {
         if (!is_null($this->xml)) {
             return $this;
         }
         
         if (is_null($xml)) {
-            $this->xml = new SimpleXMLElement($this->rootNode, LIBXML_NOERROR, false, 'ws', true);
+            $this->xml = new XmlElement($this->rootNode, LIBXML_NOERROR, false, 'ws', true);
         }
         
         $this->xml->addAttribute('xmlns:xmlns:xsi', $this->xsiUrl);

@@ -15,6 +15,7 @@ class ModuleAssemblerBuilder
         Type::TYPE_CONTROLLER          => Module\Controller::class,
         Type::TYPE_HELPER              => Module\Helper::class,
         Type::TYPE_CONFIG_SOURCE       => Module\ConfigSource::class,
+//        Type::TYPE_XML_CONFIG_MODULE   => Module\XmlConfig\ModuleConfig::class,
     ];
     
     
