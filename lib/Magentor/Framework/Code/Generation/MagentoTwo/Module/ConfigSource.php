@@ -71,6 +71,9 @@ PHP;
     }
     
     
+    /**
+     * @return array
+     */
     protected function getInterfacesClasses()
     {
         return [

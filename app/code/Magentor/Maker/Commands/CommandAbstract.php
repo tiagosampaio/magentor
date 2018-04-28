@@ -22,19 +22,33 @@ abstract class CommandAbstract extends FrameworkCommandAbstract
      */
     protected function getArguments()
     {
-        return [
-            'vendor' => [
-                'mode'        => InputArgument::REQUIRED,
-                'description' => "The module's vendor name.",
-            ],
-            'module' => [
-                'mode'        => InputArgument::REQUIRED,
-                'description' => "The module's name.",
-            ],
-            'name' => [
-                'mode'        => InputArgument::REQUIRED,
-                'description' => "The module's class name.",
-            ],
+        $arguments = [];
+        
+        $arguments[] = [
+            'name'        => 'class',
+            'mode'        => InputArgument::REQUIRED,
+            'description' => "The module's class name.",
         ];
+    
+        $vendor = defined('MAGENTO_CURRENT_VENDOR') ? MAGENTO_CURRENT_VENDOR : false;
+        $module = defined('MAGENTO_CURRENT_MODULE') ? MAGENTO_CURRENT_MODULE : false;
+        
+        $mode   = ($vendor && $module) ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
+    
+        $arguments[] = [
+            'name'        => 'module',
+            'mode'        => $mode,
+            'description' => "The module's name.",
+            'default'     => $module ? $module : null,
+        ];
+        
+        $arguments[] = [
+            'name'        => 'vendor',
+            'mode'        => $mode,
+            'description' => "The module's vendor name.",
+            'default'     => $vendor ? $vendor : null,
+        ];
+        
+        return $arguments;
     }
 }

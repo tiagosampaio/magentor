@@ -49,14 +49,14 @@ class MakeResourceModel extends MakeModel
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $class  = $input->getArgument('class');
     
             $table = $input->getOption('table');
             $field = $input->getOption('field');
             
             /** @var ResourceModel $assembler */
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_RESOURCE_MODEL);
-            $assembler->create($vendor, $module, $name, [
+            $assembler->create($vendor, $module, $class, [
                 'table' => $table,
                 'field' => $field,
             ])->write();

@@ -35,11 +35,11 @@ class MakeResourceCollection extends MakeModel
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $class   = $input->getArgument('class');
     
             /** @var ResourceCollection $assembler */
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_RESOURCE_COLLECTION);
-            $assembler->create($vendor, $module, $name)->write();
+            $assembler->create($vendor, $module, $class)->write();
             
             $output->writeln('Resource Collection was created!');
         } catch (\Exception $e) {

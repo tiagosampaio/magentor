@@ -35,11 +35,11 @@ class MakeConfigSource extends CommandAbstract
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $class  = $input->getArgument('class');
     
             /** @var ConfigSource $assembler */
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_CONFIG_SOURCE);
-            $assembler->create($vendor, $module, $name, [])->write();
+            $assembler->create($vendor, $module, $class)->write();
             
             $output->writeln('Config source was created!');
         } catch (\Exception $e) {

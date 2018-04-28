@@ -41,13 +41,13 @@ class MakeModel extends CommandAbstract
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $class  = $input->getArgument('class');
     
             $withResources = (bool) $input->getOption('create-resources');
             
             /** @var Model $assembler */
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_MODEL);
-            $assembler->create($vendor, $module, $name, [
+            $assembler->create($vendor, $module, $class, [
                 'resources' => $withResources
             ]);
             

@@ -26,11 +26,11 @@ class MakeController extends CommandAbstract
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $class  = $input->getArgument('class');
             
             /** @var Controller $assembler */
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_CONTROLLER);
-            $assembler->create($vendor, $module, $name)->write();
+            $assembler->create($vendor, $module, $class)->write();
             
             $output->writeln('Your controller was created!');
         } catch (\Exception $e) {

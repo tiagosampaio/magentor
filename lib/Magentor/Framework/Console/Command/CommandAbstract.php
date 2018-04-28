@@ -118,6 +118,8 @@ abstract class CommandAbstract extends SymfonyCommand
          * @var array  $arg
          */
         foreach ((array) $this->getArguments() as $name => $arg) {
+            $name = isset($arg['name']) ? $arg['name'] : null;
+    
             if (empty($name)) {
                 continue;
             }

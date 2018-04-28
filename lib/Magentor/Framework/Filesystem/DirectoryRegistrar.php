@@ -61,6 +61,18 @@ class DirectoryRegistrar
         while (!$found && ($count <= $limit)) {
             $count++;
             
+            if (self::isMagentoModuleDir($magentoDir)) {
+                $pieces = explode(DS, $magentoDir);
+                
+                $module = array_pop($pieces);
+                $vendor = array_pop($pieces);
+                
+                if (!empty($vendor) && !empty($module)) {
+                    define('MAGENTO_CURRENT_VENDOR', $vendor);
+                    define('MAGENTO_CURRENT_MODULE', $module);
+                }
+            }
+            
             if (!self::isMagentoDir($magentoDir)) {
                 $magentoDir = dirname($magentoDir);
                 continue;
@@ -76,6 +88,27 @@ class DirectoryRegistrar
     
             $found = true;
         }
+    }
+    
+    
+    /**
+     * @param string $magentoDir
+     *
+     * @return bool
+     */
+    protected static function isMagentoModuleDir($magentoDir)
+    {
+        $registrationFile = $magentoDir . DS . 'registration.php';
+        if (!self::isReadable($registrationFile)) {
+            return false;
+        }
+        
+        $composerJson = $magentoDir . DS . 'composer.json';
+        if (!self::isReadable($composerJson)) {
+            return false;
+        }
+        
+        return true;
     }
     
     

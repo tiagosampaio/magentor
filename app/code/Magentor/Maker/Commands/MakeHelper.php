@@ -40,7 +40,7 @@ class MakeHelper extends CommandAbstract
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
-            $name   = $input->getArgument('name');
+            $class  = $input->getArgument('class');
             
             if (empty($name)) {
                 $name = 'Data';
@@ -48,7 +48,7 @@ class MakeHelper extends CommandAbstract
     
             /** @var Helper $assembler */
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_HELPER);
-            $assembler->create($vendor, $module, $name)->write();
+            $assembler->create($vendor, $module, $class)->write();
             
             $output->writeln('Your helper was created!');
         } catch (\Exception $e) {
