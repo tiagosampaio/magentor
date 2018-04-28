@@ -56,6 +56,6 @@ PHP;
      */
     protected function getNamespace()
     {
-        return new PhpNamespace($this->getPhpClassResolver());
+        return new PhpNamespace($this->getPhpClassResolver(), false);
     }
 }

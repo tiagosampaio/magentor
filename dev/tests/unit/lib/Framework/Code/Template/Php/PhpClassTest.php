@@ -225,6 +225,6 @@ PHP;
      */
     protected function getClass()
     {
-        return new PhpClass($this->getPhpClassResolver());
+        return new PhpClass($this->getPhpClassResolver(), false);
     }
 }

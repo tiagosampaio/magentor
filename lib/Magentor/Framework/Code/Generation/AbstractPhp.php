@@ -3,9 +3,8 @@
 namespace Magentor\Framework\Code\Generation;
 
 use Magentor\Framework\Code\Resolver\PhpClassResolver;
-use Magentor\Framework\Code\Template\Php\PhpClass;
 
-abstract class AbstractPhp
+abstract class AbstractPhp extends AbstractGeneration
 {
     
     /** @var string */
@@ -13,12 +12,6 @@ abstract class AbstractPhp
     
     /** @var PhpClassResolver */
     private $classResolver;
-    
-    
-    /**
-     * @return PhpClass
-     */
-    abstract public function build();
     
     
     /**
@@ -31,15 +24,6 @@ abstract class AbstractPhp
     public function classResolver()
     {
         return $this->classResolver;
-    }
-    
-    
-    /**
-     * @return string
-     */
-    protected function getFileExtension()
-    {
-        return (string) $this->fileExtension;
     }
     
     

@@ -10,15 +10,19 @@ abstract class PhpAbstract implements PhpInterface
     /** @var PhpClassResolver */
     protected $classResolver;
     
+    /** @var bool */
+    protected $renderDoc;
+    
     
     /**
      * PhpAbstract constructor.
      *
      * @param PhpClassResolver $resolver
      */
-    public function __construct(PhpClassResolver $classResolver)
+    public function __construct(PhpClassResolver $classResolver, bool $renderDoc = true)
     {
         $this->classResolver = $classResolver;
+        $this->renderDoc     = $renderDoc;
     }
     
     

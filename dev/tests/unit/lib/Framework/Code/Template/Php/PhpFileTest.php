@@ -2,6 +2,7 @@
 
 namespace MagentorTest\Framework\Code\Template\Php;
 
+use Magentor\Framework\Code\Template\Documentor;
 use Magentor\Framework\Code\Template\Php\PhpFile;
 
 class PhpFileTest extends PhpAbstract
@@ -51,6 +52,6 @@ PHP;
      */
     protected function getPhpFile()
     {
-        return new PhpFile($this->getPhpClassResolver());
+        return new PhpFile($this->getPhpClassResolver(), false);
     }
 }
