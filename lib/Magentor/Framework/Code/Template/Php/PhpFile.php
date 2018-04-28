@@ -2,6 +2,7 @@
 
 namespace Magentor\Framework\Code\Template\Php;
 
+use Magentor\Framework\App\Version;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile as PhpGeneratorFile;
 
@@ -50,6 +51,12 @@ class PhpFile extends PhpAbstract
         }
         
         $this->phpFile = new PhpGeneratorFile();
+        
+        $version = Version::version();
+        
+        $this->phpFile->addComment('Proudly powered with Magentor CLI!');
+        $this->phpFile->addComment("Version v{$version}");
+        
         return $this;
     }
     
