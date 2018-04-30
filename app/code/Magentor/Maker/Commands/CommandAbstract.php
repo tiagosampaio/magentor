@@ -2,6 +2,7 @@
 
 namespace Magentor\Maker\Commands;
 
+use Magentor\Framework\App\Environment;
 use Magentor\Framework\Console\Command\CommandAbstract as FrameworkCommandAbstract;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -30,8 +31,8 @@ abstract class CommandAbstract extends FrameworkCommandAbstract
             'description' => "The module's class name.",
         ];
     
-        $vendor = defined('MAGENTO_CURRENT_VENDOR') ? MAGENTO_CURRENT_VENDOR : false;
-        $module = defined('MAGENTO_CURRENT_MODULE') ? MAGENTO_CURRENT_MODULE : false;
+        $vendor = Environment::getCurrentMagentoVendor();
+        $module = Environment::getCurrentMagentoModule();
         
         $mode   = ($vendor && $module) ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
     

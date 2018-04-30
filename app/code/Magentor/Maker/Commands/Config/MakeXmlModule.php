@@ -51,7 +51,7 @@ class MakeXmlModule extends CommandConfigAbstract
             $builder->build();
             $builder->write();
             
-            $output->writeln('Your controller was created!');
+            $output->writeln('Your config file was created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;

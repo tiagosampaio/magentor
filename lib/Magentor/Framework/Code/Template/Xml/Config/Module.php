@@ -52,6 +52,8 @@ class Module extends XmlAbstract
             return $this;
         }
         
+        $this->prepare();
+        
         if (isset($this->sequencesCache[$module])) {
             return $this;
         }
@@ -72,10 +74,10 @@ class Module extends XmlAbstract
      *
      * @return $this
      */
-    protected function prepare(XmlElement $xml)
+    protected function prepare()
     {
         if (is_null($this->moduleXml)) {
-            $this->moduleXml = $xml->addChild('module');
+            $this->moduleXml = $this->getXml()->addChild('module');
             $this->moduleXml->addAttribute('name', $this->getModuleName());
             $this->moduleXml->addAttribute('setup_version', $this->setupVersion);
         }

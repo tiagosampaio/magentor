@@ -54,7 +54,7 @@ abstract class XmlAbstract implements XmlInterface
     public function build(XmlElement $xml = null)
     {
         $this->initXml($xml);
-        $this->prepare($this->getXml());
+        $this->prepare();
         
         return $this;
     }
@@ -106,7 +106,7 @@ abstract class XmlAbstract implements XmlInterface
     
     
     
-    abstract protected function prepare(XmlElement $xml);
+    abstract protected function prepare();
     
     
     /**

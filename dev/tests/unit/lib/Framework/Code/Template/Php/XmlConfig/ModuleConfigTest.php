@@ -3,6 +3,7 @@
 namespace MagentorTest\Framework\Code\Template\Php\XmlConfig;
 
 use Magentor\Framework\Code\Generation\MagentoTwo\Module\XmlConfig\ModuleConfig;
+use Magentor\Framework\Code\Template\Xml\Config\Module as ModuleTemplate;
 
 class ModuleConfigTest extends XmlConfigAbstract
 {
@@ -19,9 +20,8 @@ class ModuleConfigTest extends XmlConfigAbstract
 </config>
 XML;
         
-        $builder = $this->getBuilder();
-        $data    = (string) $builder->getTemplate();
-        $this->assertXmlStringEqualsXmlString($expected, $data);
+        $template = $this->getTemplate();
+        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
     }
     
     
@@ -37,9 +37,8 @@ XML;
 </config>
 XML;
         
-        $builder = $this->getBuilder('3.2.1');
-        $data    = (string) $builder->getTemplate();
-        $this->assertXmlStringEqualsXmlString($expected, $data);
+        $template = $this->getTemplate('3.2.1');
+        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
     }
     
     
@@ -61,9 +60,12 @@ XML;
 </config>
 XML;
         
-        $builder = $this->getBuilder('3.2.1', ['Magento_Catalog', 'Magento_Backend', 'Magento_Quote']);
-        $data    = (string) $builder->build();
-        $this->assertXmlStringEqualsXmlString($expected, $data);
+        $template = $this->getTemplate('3.2.1');
+        $template->addSequence('Magento_Catalog')
+                 ->addSequence('Magento_Backend')
+                 ->addSequence('Magento_Quote');
+            
+        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
     }
     
     
@@ -71,10 +73,10 @@ XML;
      * @param string $setupVersion
      * @param array  $sequences
      *
-     * @return ModuleConfig
+     * @return ModuleTemplate
      */
-    protected function getBuilder(string $setupVersion = null, array $sequences = [])
+    protected function getTemplate(string $setupVersion = null)
     {
-        return new ModuleConfig($this->module, $this->vendor, $setupVersion, $sequences);
+        return new ModuleTemplate($this->module, $this->vendor, $setupVersion);
     }
 }

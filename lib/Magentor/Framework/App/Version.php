@@ -5,8 +5,8 @@ namespace Magentor\Framework\App;
 class Version
 {
 
-    protected static $major = '1';
-    protected static $minor = '0';
+    protected static $major = '0';
+    protected static $minor = '1';
     protected static $patch = '0';
 
 
