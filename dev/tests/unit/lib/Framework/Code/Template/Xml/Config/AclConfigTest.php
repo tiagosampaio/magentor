@@ -1,6 +1,6 @@
 <?php
 
-namespace MagentorTest\Framework\Code\Template\Php\XmlConfig;
+namespace MagentorTest\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\Config\Acl as AclTemplate;
 

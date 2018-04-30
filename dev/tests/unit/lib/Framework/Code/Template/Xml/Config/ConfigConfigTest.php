@@ -1,6 +1,6 @@
 <?php
 
-namespace MagentorTest\Framework\Code\Template\Php\XmlConfig;
+namespace MagentorTest\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\Config\Config as ConfigTemplate;
 
@@ -24,7 +24,8 @@ class ConfigConfigTest extends XmlConfigAbstract
 XML;
         
         $template = $this->getTemplate();
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -44,7 +45,8 @@ XML;
         
         $template = $this->getTemplate();
         $template->addSection('module');
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -66,7 +68,8 @@ XML;
         
         $template = $this->getTemplate();
         $template->addGroup('module', 'my_group');
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -92,7 +95,8 @@ XML;
         $template = $this->getTemplate();
         $template->addField('module', 'my_group', 'field_one', 1);
         $template->addField('module', 'my_group', 'field_two', 2);
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -104,6 +108,12 @@ XML;
      */
     protected function getTemplate()
     {
-        return new ConfigTemplate($this->module, $this->vendor);
+        $template = new ConfigTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
+        $template->setXsiUrl($this->xsiUrl)
+                 ->setSchemaLocation($this->schemaLocation);
+        
+        $template->build();
+        
+        return $template;
     }
 }

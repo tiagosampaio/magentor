@@ -10,6 +10,21 @@ class Element extends \SimpleXMLElement
     
     
     /**
+     * @param string $path
+     *
+     * @return bool|Element
+     */
+    protected function node(string $path)
+    {
+        if ($path = $this->xpath($path)) {
+            return $path[0];
+        }
+        
+        return false;
+    }
+    
+    
+    /**
      * For future use
      *
      * @param Element $element
@@ -172,7 +187,7 @@ class Element extends \SimpleXMLElement
         
         $attributes = $source->attributes();
         
-        foreach ($attributes as $key=>$value) {
+        foreach ($attributes as $key => $value) {
             $child->addAttribute($key, $this->xmlEntities($value));
         }
         

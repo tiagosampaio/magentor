@@ -2,18 +2,10 @@
 
 namespace Magentor\Framework\Code\Template\Xml\Config;
 
-use Magentor\Framework\Code\Template\Xml\XmlAbstract;
-use Magentor\Framework\Code\Template\Xml\XmlElement;
+use Magentor\Framework\Code\Template\Xml\ConfigElement;
 
-class Config extends XmlAbstract
+class Config extends ConfigElement
 {
-    
-    /** @var string */
-    protected $schemaLocation = 'urn:magento:module:Magento_Store:etc/config.xsd';
-    
-    /** @var XmlElement */
-    protected $defaultXml = null;
-    
     /** @var array */
     protected $sections = [];
     
@@ -22,45 +14,48 @@ class Config extends XmlAbstract
     
     
     /**
-     * Module constructor.
-     *
-     * @param string $module
-     * @param string $vendor
+     * @return $this
      */
-    public function __construct(string $module, string $vendor)
+    protected function initialize()
     {
-        parent::__construct($module, $vendor);
+        if (false === $this->node('default')) {
+            $this->addChild('default');
+        }
+        
+        return $this;
     }
     
     
     /**
      * @param $name
      *
-     * @return XmlElement
+     * @return ConfigElement
      */
     public function addSection($name)
     {
-        $this->prepare();
+        $this->initialize();
         
-        $this->sections[$name] = $this->defaultXml->addChild($name);
-        return $this->sections[$name];
+        /** @var ConfigElement $section */
+        $section = $this->node('default')->addChild($name);
+        
+        return $section;
     }
     
     
     /**
      * @param $name
      *
-     * @return XmlElement
+     * @return ConfigElement
      */
     public function getSection($name)
     {
-        $this->prepare();
+        $section = $this->node('default')->node($name);
         
-        if (isset($this->sections[$name])) {
-            return $this->sections[$name];
+        if (false === $section) {
+            $section = $this->addSection($name);
         }
         
-        return $this->addSection($name);
+        return $section;
     }
     
     
@@ -68,17 +63,15 @@ class Config extends XmlAbstract
      * @param string $sectionName
      * @param string $groupName
      *
-     * @return XmlElement
+     * @return ConfigElement
      */
     public function addGroup(string $sectionName, string $groupName)
     {
-        /** @var XmlElement $section */
+        /** @var ConfigElement $section */
         $section = $this->getSection($sectionName);
         
-        /** @var XmlElement $group */
+        /** @var ConfigElement $group */
         $group = $section->addChild($groupName);
-        
-        $this->groups[$sectionName . '/' . $groupName] = $group;
         
         return $group;
     }
@@ -88,17 +81,18 @@ class Config extends XmlAbstract
      * @param string $sectionName
      * @param string $groupName
      *
-     * @return XmlElement
+     * @return ConfigElement
      */
     public function getGroup(string $sectionName, string $groupName)
     {
-        $group = $sectionName . '/' . $groupName;
+        /** @var ConfigElement $group */
+        $group = $this->getSection($sectionName)->node($groupName);
         
-        if (isset($this->groups[$group])) {
-            return $this->groups[$group];
+        if (false === $group) {
+            $group = $this->getSection($sectionName)->addChild($groupName);
         }
         
-        return $this->addGroup($sectionName, $groupName);
+        return $group;
     }
     
     
@@ -112,24 +106,7 @@ class Config extends XmlAbstract
      */
     public function addField(string $sectionName, string $groupName, string $fieldName, string $value = null)
     {
-        $group = $this->getGroup($sectionName, $groupName);
-        $group->addChild($fieldName, $value);
-        
-        return $this;
-    }
-    
-    
-    /**
-     * @param XmlElement $xml
-     *
-     * @return $this
-     */
-    protected function prepare()
-    {
-        if (is_null($this->defaultXml)) {
-            $this->defaultXml = $this->getXml()->addChild('default');
-        }
-        
+        $this->getGroup($sectionName, $groupName)->addChild($fieldName, $value);
         return $this;
     }
 }
