@@ -1,6 +1,6 @@
 <?php
 
-namespace Magentor\Maker\Commands;
+namespace Magentor\Maker\Commands\Setup;
 
 use Magentor\Framework\Assembler\Module\Helper;
 use Magentor\Framework\Assembler\Module\SetupInstallSchema;
@@ -11,23 +11,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeInstallSchema extends CommandAbstract
+class MakeInstallSchema extends SetupCommandAbstract
 {
     
     protected $name        = 'make:setup:install-schema';
     protected $description = 'Creates a Magento\'s InstallSchema for a given module.';
-    
-    
-    /**
-     * @return array
-     */
-    protected function getArguments()
-    {
-        $arguments = parent::getArguments();
-        unset($arguments[0]);
-        
-        return $arguments;
-    }
     
     
     /**
