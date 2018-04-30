@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tiagosampaio/magentor.svg?branch=master)](https://travis-ci.org/tiagosampaio/magentor)
+
 # Magentor
 
 Magentor is intended to be your close friend when it comes to make Magento developments with more performance.
