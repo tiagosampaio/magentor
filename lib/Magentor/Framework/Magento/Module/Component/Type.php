@@ -5,13 +5,15 @@ namespace Magentor\Framework\Magento\Module\Component;
 class Type
 {
     
-    const TYPE_MODEL               = 'model';
-    const TYPE_RESOURCE_MODEL      = 'resource_model';
-    const TYPE_RESOURCE_COLLECTION = 'resource_collection';
-    const TYPE_CONTROLLER          = 'controller';
-    const TYPE_HELPER              = 'helper';
-    const TYPE_BLOCK               = 'block';
-    const TYPE_CONFIG_SOURCE       = 'config_source';
+    const TYPE_MODEL                = 'model';
+    const TYPE_RESOURCE_MODEL       = 'resource_model';
+    const TYPE_RESOURCE_COLLECTION  = 'resource_collection';
+    const TYPE_CONTROLLER           = 'controller';
+    const TYPE_HELPER               = 'helper';
+    const TYPE_SETUP_INSTALL_SCHEMA = 'setup_install_schema';
+    const TYPE_SETUP_UPGRADE_SCHEMA = 'setup_upgrade_schema';
+    const TYPE_BLOCK                = 'block';
+    const TYPE_CONFIG_SOURCE        = 'config_source';
     
     /**
      * Config Options

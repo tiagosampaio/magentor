@@ -11,13 +11,14 @@ class ModuleComponentBuilder
  
     /** @var array */
     protected static $makers = [
-        Type::TYPE_CONTROLLER          => Module\Controller::class,
-        Type::TYPE_HELPER              => Module\Helper::class,
-        Type::TYPE_MODEL               => Module\Model::class,
-        Type::TYPE_RESOURCE_MODEL      => Module\ResourceModel::class,
-        Type::TYPE_RESOURCE_COLLECTION => Module\ResourceCollection::class,
-        Type::TYPE_CONFIG_SOURCE       => Module\ConfigSource::class,
-        Type::TYPE_XML_CONFIG_MODULE   => Module\XmlConfig\ModuleConfig::class,
+        Type::TYPE_CONTROLLER           => Module\Controller::class,
+        Type::TYPE_HELPER               => Module\Helper::class,
+        Type::TYPE_MODEL                => Module\Model::class,
+        Type::TYPE_RESOURCE_MODEL       => Module\ResourceModel::class,
+        Type::TYPE_RESOURCE_COLLECTION  => Module\ResourceCollection::class,
+        Type::TYPE_CONFIG_SOURCE        => Module\ConfigSource::class,
+        Type::TYPE_SETUP_INSTALL_SCHEMA => Module\Objects\Setup\InstallSchema::class,
+        Type::TYPE_XML_CONFIG_MODULE    => Module\XmlConfig\ModuleConfig::class,
     ];
     
     
@@ -34,6 +35,23 @@ class ModuleComponentBuilder
     {
         /** @var Module\Model $component */
         $component = self::build(Type::TYPE_MODEL, [$name, $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Setup\InstallSchema
+     *
+     * @throws GenericException
+     */
+    public static function buildSetupInstallSchema(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Setup\InstallSchema $component */
+        $component = self::build(Type::TYPE_SETUP_INSTALL_SCHEMA, ['InstallSchema', $module, $vendor]);
         return $component;
     }
     

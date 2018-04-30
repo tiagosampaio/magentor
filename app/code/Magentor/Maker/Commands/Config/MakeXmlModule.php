@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MakeXmlModule extends CommandConfigAbstract
 {
     
-    protected $name        = 'make:config:module';
+    protected $name        = 'make-config:module';
     protected $description = 'Creates a Magento Controller for a given module.';
     
     

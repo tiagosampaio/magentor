@@ -25,7 +25,7 @@ abstract class CommandAbstract extends FrameworkCommandAbstract
     {
         $arguments = [];
         
-        $arguments[] = [
+        $arguments[0] = [
             'name'        => 'class',
             'mode'        => InputArgument::REQUIRED,
             'description' => "The module's class name.",
@@ -36,14 +36,14 @@ abstract class CommandAbstract extends FrameworkCommandAbstract
         
         $mode   = ($vendor && $module) ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
     
-        $arguments[] = [
+        $arguments[1] = [
             'name'        => 'module',
             'mode'        => $mode,
             'description' => "The module's name.",
             'default'     => $module ? $module : null,
         ];
         
-        $arguments[] = [
+        $arguments[2] = [
             'name'        => 'vendor',
             'mode'        => $mode,
             'description' => "The module's vendor name.",
