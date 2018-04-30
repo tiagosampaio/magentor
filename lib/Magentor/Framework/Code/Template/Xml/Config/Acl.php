@@ -2,6 +2,7 @@
 
 namespace Magentor\Framework\Code\Template\Xml\Config;
 
+use Magentor\Framework\Code\Template\Xml\Config\Acl\Resource;
 use Magentor\Framework\Code\Template\Xml\XmlAbstract;
 use Magentor\Framework\Code\Template\Xml\XmlElement;
 
@@ -39,23 +40,30 @@ class Acl extends XmlAbstract
      * @param string|null $title
      * @param int         $sortOrder
      *
-     * @return $this
+     * @return Resource
      */
     public function addResource(string $code, string $title = null, int $sortOrder = 10)
     {
         $this->prepare();
         
-        /** @var XmlElement $resource */
-        $resource = $this->resourcesXml->addChild('resource');
-        $resource->addAttribute('id', $this->buildResourceCode($code));
-        $resource->addAttribute('title', $title ?: $code);
+        /** @var Resource $resource */
+        $resource = Resource::newResource($this->buildResourceCode($code), $title, $sortOrder);
         
-        if ($title) {
-            $resource->addAttribute('translate', 'title');
-        }
+        $this->resourcesXml->append($resource);
         
-        $resource->addAttribute('sortOrder', (int) $sortOrder);
-        
+        return $resource;
+    }
+    
+    
+    /**
+     * @param Resource $resource
+     *
+     * @return $this
+     */
+    public function appendResource(Resource $resource)
+    {
+        $this->prepare();
+        $this->resourcesXml->append($resource);
         return $this;
     }
     

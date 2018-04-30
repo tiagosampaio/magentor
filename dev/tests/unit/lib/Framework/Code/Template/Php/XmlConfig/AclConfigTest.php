@@ -78,6 +78,39 @@ XML;
     
     
     /**
+     * @test
+     */
+    public function aclConfigWithNestedResource()
+    {
+        $expected = <<<XML
+<?xml version="1.0"?>
+<config xmlns:xsi="{$this->xsiUrl}" xsi:noNamespaceSchemaLocation="{$this->schemaLocation}">
+    <acl>
+        <resources>
+            <resource id="{$this->getModuleName()}::test" title="Test" translate="title" sortOrder="10">
+                <resource id="{$this->getModuleName()}::subTest" title="Sub Test" translate="title" sortOrder="10">
+                    <resource id="{$this->getModuleName()}::subSubTest" title="Sub Sub Test" translate="title" sortOrder="10"/>
+                </resource>
+            </resource>
+            <resource id="{$this->getModuleName()}::secondTest" title="Second Test" translate="title" sortOrder="20"/>
+        </resources>
+    </acl>
+</config>
+XML;
+        
+        $template    = $this->getTemplate();
+        $resource    = AclTemplate\Resource::newResource('MyVendorTest_MyModuleTest::test', 'Test');
+        $resource->addSubResource('MyVendorTest_MyModuleTest::subTest', 'Sub Test')
+                 ->addSubResource('MyVendorTest_MyModuleTest::subSubTest', 'Sub Sub Test');
+        
+        $template->appendResource($resource);
+        $template->addResource('secondTest', 'Second Test', 20);
+        
+        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+    }
+    
+    
+    /**
      * @param array $resources
      *
      * @return AclTemplate
