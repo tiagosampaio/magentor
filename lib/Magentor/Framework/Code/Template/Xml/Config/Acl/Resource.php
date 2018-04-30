@@ -2,9 +2,9 @@
 
 namespace Magentor\Framework\Code\Template\Xml\Config\Acl;
 
-use Magentor\Framework\Code\Template\Xml\XmlElement;
+use Magentor\Framework\SimpleXML\Element;
 
-class Resource extends XmlElement
+class Resource extends Element
 {
     
     /**

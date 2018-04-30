@@ -27,13 +27,13 @@ class RoutesConfigTest extends XmlConfigAbstract
 </config>
 XML;
         
-        $template = $this->getTemplate('standard');
+        $template = $this->getTemplate();
         $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
     /**
-     * @ test
+     * @test
      */
     public function adminRoutesConfig()
     {
@@ -48,13 +48,13 @@ XML;
 </config>
 XML;
         
-        $template = $this->getTemplate(null, null, true);
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $template = $this->getTemplate('admin', null, null, true);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
     /**
-     * @ test
+     * @test
      */
     public function adminRoutesConfigWithDifferentParameters()
     {
@@ -69,8 +69,8 @@ XML;
 </config>
 XML;
         
-        $template = $this->getTemplate('my_id', 'front', true);
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $template = $this->getTemplate('admin', 'my_id', 'front', true);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -80,16 +80,20 @@ XML;
      *
      * @return RoutesTemplate
      */
-    protected function getTemplate(string $id = null, string $frontName = null, bool $isAdmin = false)
+    protected function getTemplate(
+        string $use = 'standard',
+        string $routeId = null,
+        string $frontName = null,
+        bool $isAdmin = false
+    )
     {
-        $module = $this->vendor . '_' . $this->module;
-        
         $template = new RoutesTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
         $template->setXsiUrl($this->xsiUrl)
                  ->setSchemaLocation($this->schemaLocation);
         
-        $template->setRouterId($id);
-        $template->addRoute($module, $module, $frontName, $isAdmin);
+        $template->build();
+        $template->setRouterId($use);
+        $template->addRoute($this->getModuleName(), $routeId, $frontName, $isAdmin);
         
         return $template;
     }

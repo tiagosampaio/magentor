@@ -3,53 +3,32 @@
 namespace Magentor\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\Config\Acl\Resource;
-use Magentor\Framework\Code\Template\Xml\XmlAbstract;
-use Magentor\Framework\Code\Template\Xml\XmlElement;
+use Magentor\Framework\Code\Template\Xml\ConfigElement;
 
-class Acl extends XmlAbstract
+class Acl extends ConfigElement
 {
-    
-    /** @var string */
-    protected $schemaLocation = 'urn:magento:framework:Acl/etc/acl.xsd';
-    
-    /** @var XmlElement */
-    protected $aclXml = null;
-    
-    /** @var XmlElement */
-    protected $resourcesXml = null;
-    
-    /** @var array */
-    protected $sequencesCache = [];
-    
-    
-    /**
-     * Module constructor.
-     *
-     * @param string      $module
-     * @param string      $vendor
-     * @param string|null $setupVersion
-     */
-    public function __construct(string $module, string $vendor, array $resources = [])
-    {
-        parent::__construct($module, $vendor);
-    }
-    
     
     /**
      * @param string      $code
      * @param string|null $title
      * @param int         $sortOrder
      *
-     * @return Resource
+     * @return ConfigElement
      */
     public function addResource(string $code, string $title = null, int $sortOrder = 10)
     {
-        $this->prepare();
+        $this->initialize();
         
-        /** @var Resource $resource */
-        $resource = Resource::newResource($this->buildResourceCode($code), $title, $sortOrder);
+        /** @var ConfigElement $resource */
+        $resource = $this->resources()->addChild('resource');
+        $resource->addAttribute('id', $code);
         
-        $this->resourcesXml->append($resource);
+        if ($title) {
+            $resource->addAttribute('title', $title);
+            $resource->addAttribute('translate', 'title');
+        }
+        
+        $resource->addAttribute('sortOrder', $sortOrder);
         
         return $resource;
     }
@@ -62,34 +41,42 @@ class Acl extends XmlAbstract
      */
     public function appendResource(Resource $resource)
     {
-        $this->prepare();
-        $this->resourcesXml->append($resource);
+        $this->resources()->append($resource);
         return $this;
     }
     
     
     /**
-     * @param string $code
-     *
-     * @return string
+     * @return ConfigElement
      */
-    protected function buildResourceCode(string $code)
+    protected function acl()
     {
-        $moduleName = $this->getModuleName();
-        return $moduleName . '::'  . $code;
+        $this->initialize();
+        
+        /** @var ConfigElement $acl */
+        $acl = $this->node('acl');
+    
+        return $acl;
     }
     
     
     /**
-     * @param XmlElement $xml
-     *
+     * @return bool|\Magentor\Framework\SimpleXML\Element
+     */
+    protected function resources()
+    {
+        return $this->acl()->node('resources');
+    }
+    
+    
+    /**
      * @return $this
      */
-    protected function prepare()
+    protected function initialize()
     {
-        if (is_null($this->aclXml)) {
-            $this->aclXml = $this->getXml()->addChild('acl');
-            $this->resourcesXml = $this->aclXml->addChild('resources');
+        if (false === $this->node('acl')) {
+            $acl = $this->addChild('acl');
+            $acl->addChild('resources');
         }
         
         return $this;

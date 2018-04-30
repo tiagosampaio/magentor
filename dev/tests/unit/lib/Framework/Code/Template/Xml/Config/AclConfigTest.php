@@ -26,7 +26,7 @@ class AclConfigTest extends XmlConfigAbstract
 XML;
         
         $template = $this->getTemplate();
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -47,8 +47,8 @@ XML;
 XML;
         
         $template = $this->getTemplate();
-        $template->addResource('test', 'Test');
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $template->addResource("{$this->getModuleName()}::test", 'Test');
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -70,10 +70,10 @@ XML;
 XML;
         
         $template = $this->getTemplate();
-        $template->addResource('test', 'Test');
-        $template->addResource('myTest', 'My Test', 90);
+        $template->addResource("{$this->getModuleName()}::test", 'Test');
+        $template->addResource("{$this->getModuleName()}::mytest", 'My Test', 90);
         
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -104,9 +104,9 @@ XML;
                  ->addSubResource('MyVendorTest_MyModuleTest::subSubTest', 'Sub Sub Test');
     
         $template->appendResource($resource);
-        $template->addResource('secondTest', 'Second Test', 20);
+        $template->addResource("{$this->getModuleName()}::secondTest", 'Second Test', 20);
     
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -115,8 +115,14 @@ XML;
      *
      * @return AclTemplate
      */
-    protected function getTemplate(array $resources = [])
+    protected function getTemplate()
     {
-        return new AclTemplate($this->module, $this->vendor, $resources);
+        $template = new AclTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
+        $template->setXsiUrl($this->xsiUrl)
+                 ->setSchemaLocation($this->schemaLocation);
+    
+        $template->build();
+    
+        return $template;
     }
 }
