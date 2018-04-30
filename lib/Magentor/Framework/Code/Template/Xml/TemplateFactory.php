@@ -4,6 +4,7 @@ namespace Magentor\Framework\Code\Template\Xml;
 
 use Magentor\Framework\Code\Template\Xml\Config\Acl;
 use Magentor\Framework\Code\Template\Xml\Config\Config;
+use Magentor\Framework\Code\Template\Xml\Config\Menu;
 use Magentor\Framework\Code\Template\Xml\Config\Module;
 use Magentor\Framework\Code\Template\Xml\Config\Routes;
 use Magentor\Framework\Magento\Module\Component\Type;
@@ -23,13 +24,16 @@ class TemplateFactory
         Type::TYPE_XML_CONFIG_ACL    => Acl::class,
         Type::TYPE_XML_CONFIG_CONFIG => Config::class,
         Type::TYPE_XML_CONFIG_ROUTES => Routes::class,
+        Type::TYPE_XML_CONFIG_MENU   => Menu::class,
     ];
     
+    /** @var array */
     protected static $schemaLocations = [
         Type::TYPE_XML_CONFIG_MODULE => 'urn:magento:framework:Module/etc/module.xsd',
         Type::TYPE_XML_CONFIG_ACL    => 'urn:magento:framework:acl/etc/acl.xsd',
         Type::TYPE_XML_CONFIG_CONFIG => 'urn:magento:module:Magento_Store:etc/config.xsd',
         Type::TYPE_XML_CONFIG_ROUTES => 'urn:magento:framework:App/etc/routes.xsd',
+        Type::TYPE_XML_CONFIG_MENU   => 'urn:magento:module:Magento_Backend:etc/menu.xsd',
     ];
     
     
@@ -51,6 +55,17 @@ class TemplateFactory
     {
         /** @var Routes $template */
         $template = self::build(Type::TYPE_XML_CONFIG_ROUTES);
+        return $template;
+    }
+    
+    
+    /**
+     * @return Menu
+     */
+    public static function buildMenuTemplate()
+    {
+        /** @var Menu $template */
+        $template = self::build(Type::TYPE_XML_CONFIG_MENU);
         return $template;
     }
     

@@ -20,4 +20,5 @@ class Type
     const TYPE_XML_CONFIG_ROUTES   = 'xml_config_routes';
     const TYPE_XML_CONFIG_ACL      = 'xml_config_acl';
     const TYPE_XML_CONFIG_CONFIG   = 'xml_config_config';
+    const TYPE_XML_CONFIG_MENU     = 'xml_config_menu';
 }
