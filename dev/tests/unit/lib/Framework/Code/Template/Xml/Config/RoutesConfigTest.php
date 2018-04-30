@@ -27,13 +27,13 @@ class RoutesConfigTest extends XmlConfigAbstract
 </config>
 XML;
         
-        $template = $this->getTemplate();
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $template = $this->getTemplate('standard');
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
     /**
-     * @test
+     * @ test
      */
     public function adminRoutesConfig()
     {
@@ -54,7 +54,7 @@ XML;
     
     
     /**
-     * @test
+     * @ test
      */
     public function adminRoutesConfigWithDifferentParameters()
     {
@@ -82,6 +82,15 @@ XML;
      */
     protected function getTemplate(string $id = null, string $frontName = null, bool $isAdmin = false)
     {
-        return new RoutesTemplate($this->module, $this->vendor, $id, $frontName, $isAdmin);
+        $module = $this->vendor . '_' . $this->module;
+        
+        $template = new RoutesTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
+        $template->setXsiUrl($this->xsiUrl)
+                 ->setSchemaLocation($this->schemaLocation);
+        
+        $template->setRouterId($id);
+        $template->addRoute($module, $module, $frontName, $isAdmin);
+        
+        return $template;
     }
 }

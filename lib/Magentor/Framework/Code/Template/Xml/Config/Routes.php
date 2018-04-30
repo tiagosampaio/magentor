@@ -2,121 +2,71 @@
 
 namespace Magentor\Framework\Code\Template\Xml\Config;
 
-use Magentor\Framework\Code\Template\Xml\XmlAbstract;
-use Magentor\Framework\Code\Template\Xml\XmlElement;
+use Magentor\Framework\Code\Template\Xml\ConfigElement;
 
-class Routes extends XmlAbstract
+class Routes extends ConfigElement
 {
     
-    /** @var string */
-    protected $schemaLocation = 'urn:magento:framework:App/etc/routes.xsd';
-    
-    /** @var XmlElement */
-    protected $routerXml = null;
-    
-    /** @var bool */
-    protected $isAdmin = false;
-    
-    /** @var string */
-    protected $id = null;
-    
-    /** @var string */
-    protected $frontName = null;
-    
-    /** @var array */
-    protected $sections = [];
-    
-    /** @var array */
-    protected $groups = [];
-    
-    
     /**
-     * Module constructor.
-     *
-     * @param string $module
-     * @param string $vendor
-     */
-    public function __construct(
-        string $module,
-        string $vendor,
-        string $id = null,
-        string $frontName = null,
-        bool $isAdmin = false
-    )
-    {
-        parent::__construct($module, $vendor);
-        
-        $this->isAdmin = (bool) $isAdmin;
-        $this->id = $id;
-        $this->frontName = $frontName;
-    }
-    
-    
-    /**
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        return true === $this->isAdmin;
-    }
-    
-    
-    /**
-     * @return string
-     */
-    public function getRouterId() : string
-    {
-        return $this->isAdmin() ? 'admin' : 'standard';
-    }
-    
-    
-    /**
-     * @return string
-     */
-    public function getRouteId() : string
-    {
-        if (!empty($this->id)) {
-            return $this->id;
-        }
-        
-        return strtolower($this->getModuleName());
-    }
-    
-    
-    /**
-     * @return string
-     */
-    public function getFrontName() : string
-    {
-        if (!empty($this->frontName)) {
-            return $this->frontName;
-        }
-        
-        return strtolower($this->getModuleName());
-    }
-    
-    
-    /**
-     * @param XmlElement $xml
+     * @param string $id
+     * @param string $frontName
      *
      * @return $this
      */
-    protected function prepare()
+    public function addRoute(string $module, string $routeId = null, string $frontName = null, bool $isAdmin = false)
     {
-        if (is_null($this->routerXml)) {
-            $this->routerXml = $this->getXml()->addChild('router');
-            $this->routerXml->addAttribute('id', $this->getRouterId());
+        if (empty($routeId)) {
+            $routeId = $module;
+        }
+        
+        if (empty($frontName)) {
+            $frontName = $module;
+        }
+        
+        $route = $this->router()->addChild('route');
+        $route->addAttribute('id', strtolower($routeId));
+        $route->addAttribute('frontName', strtolower($frontName));
+        
+        $routeModule = $route->addChild('module');
+        $routeModule->addAttribute('name', $module);
+        
+        if (true === $isAdmin) {
+            $routeModule->addAttribute('before', 'Magento_Backend');
+        }
+        
+        return $this;
+    }
     
-            $route = $this->routerXml->addChild('route');
-            $route->addAttribute('id', $this->getRouteId());
-            $route->addAttribute('frontName', $this->getFrontName());
-            
-            $module = $route->addChild('module');
-            $module->addAttribute('name', $this->getModuleName());
-            
-            if ($this->isAdmin()) {
-                $module->addAttribute('before', 'Magento_Backend');
-            }
+    
+    /**
+     * @param string $routerId
+     *
+     * @return $this
+     */
+    public function setRouterId(string $routerId)
+    {
+        $this->router()->addAttribute('id', $routerId);
+        return $this;
+    }
+    
+    
+    /**
+     * @return bool|ConfigElement
+     */
+    public function router()
+    {
+        $this->initialize();
+        return $this->node('router');
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    protected function initialize()
+    {
+        if (false === $this->node('router')) {
+            $this->addChild('router');
         }
         
         return $this;
