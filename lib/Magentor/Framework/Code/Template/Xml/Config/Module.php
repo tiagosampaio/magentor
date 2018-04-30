@@ -2,42 +2,33 @@
 
 namespace Magentor\Framework\Code\Template\Xml\Config;
 
-use Magentor\Framework\Code\Template\Xml\XmlAbstract;
-use Magentor\Framework\Code\Template\Xml\XmlElement;
+use Magentor\Framework\Code\Template\Xml\ConfigElement;
 
-class Module extends XmlAbstract
+class Module extends ConfigElement
 {
     
-    /** @var string */
-    protected $schemaLocation = 'urn:magento:framework:Module/etc/module.xsd';
-    
-    /** @var string */
-    protected $setupVersion = '0.1.0';
-    
-    /** @var XmlElement */
-    protected $moduleXml = null;
-    
-    /** @var XmlElement */
-    protected $sequenceXml = null;
-    
-    /** @var array */
-    protected $sequencesCache = [];
+    /**
+     * @return bool|\Magentor\Framework\SimpleXML\Element
+     */
+    public function module()
+    {
+        $this->initialize();
+        return $this->node('module');
+    }
     
     
     /**
-     * Module constructor.
-     *
-     * @param string      $module
-     * @param string      $vendor
-     * @param string|null $setupVersion
+     * @return bool|\Magentor\Framework\SimpleXML\Element|\SimpleXMLElement
      */
-    public function __construct(string $module, string $vendor, string $setupVersion = null)
+    public function getSequence()
     {
-        parent::__construct($module, $vendor);
+        $sequence = $this->module()->node('sequence');
         
-        if (!empty($setupVersion)) {
-            $this->setupVersion = $setupVersion;
+        if (false === $sequence) {
+            $sequence = $this->module()->addChild('sequence');
         }
+        
+        return $sequence;
     }
     
     
@@ -52,34 +43,43 @@ class Module extends XmlAbstract
             return $this;
         }
         
-        $this->prepare();
-        
-        if (isset($this->sequencesCache[$module])) {
-            return $this;
-        }
-        
-        if (!$this->sequenceXml) {
-            $this->sequenceXml = $this->moduleXml->addChild('sequence');
-        }
-    
-        $this->sequenceXml->addChild($module);
-        $this->sequencesCache[$module] = true;
+        $this->getSequence()->addChild($module);
         
         return $this;
     }
     
     
     /**
-     * @param XmlElement $xml
+     * @param string $name
      *
      * @return $this
      */
-    protected function prepare()
+    public function setModuleName(string $name)
     {
-        if (is_null($this->moduleXml)) {
-            $this->moduleXml = $this->getXml()->addChild('module');
-            $this->moduleXml->addAttribute('name', $this->getModuleName());
-            $this->moduleXml->addAttribute('setup_version', $this->setupVersion);
+        $this->node('module')->addAttribute('name', $name);
+        return $this;
+    }
+    
+    
+    /**
+     * @param string $setupVersion
+     *
+     * @return $this
+     */
+    public function setSetupVersion(string $setupVersion = null)
+    {
+        $this->node('module')->addAttribute('setup_version', $setupVersion);
+        return $this;
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    protected function initialize()
+    {
+        if (false === $this->node('module')) {
+            $this->addChild('module');
         }
         
         return $this;

@@ -14,19 +14,6 @@ class Config extends ConfigElement
     
     
     /**
-     * @return $this
-     */
-    protected function initialize()
-    {
-        if (false === $this->node('default')) {
-            $this->addChild('default');
-        }
-        
-        return $this;
-    }
-    
-    
-    /**
      * @param $name
      *
      * @return ConfigElement
@@ -107,6 +94,19 @@ class Config extends ConfigElement
     public function addField(string $sectionName, string $groupName, string $fieldName, string $value = null)
     {
         $this->getGroup($sectionName, $groupName)->addChild($fieldName, $value);
+        return $this;
+    }
+    
+    
+    /**
+     * @return $this
+     */
+    protected function initialize()
+    {
+        if (false === $this->node('default')) {
+            $this->addChild('default');
+        }
+        
         return $this;
     }
 }

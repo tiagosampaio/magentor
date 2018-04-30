@@ -23,8 +23,8 @@ class ModuleConfigTest extends XmlConfigAbstract
 </config>
 XML;
         
-        $template = $this->getTemplate();
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $template = $this->getTemplate('0.1.0');
+        $this->assertXmlStringEqualsXmlString($expected, (string) $template->toXml());
     }
     
     
@@ -41,7 +41,7 @@ XML;
 XML;
         
         $template = $this->getTemplate('3.2.1');
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -68,7 +68,7 @@ XML;
                  ->addSequence('Magento_Backend')
                  ->addSequence('Magento_Quote');
             
-        $this->assertXmlStringEqualsXmlString($expected, (string) $template);
+        $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
     
     
@@ -80,6 +80,14 @@ XML;
      */
     protected function getTemplate(string $setupVersion = null)
     {
-        return new ModuleTemplate($this->module, $this->vendor, $setupVersion);
+        $template = new ModuleTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
+        $template->setXsiUrl($this->xsiUrl)
+                 ->setSchemaLocation($this->schemaLocation);
+    
+        $template->build();
+        $template->setModuleName($this->vendor . '_' . $this->module);
+        $template->setSetupVersion($setupVersion);
+        
+        return $template;
     }
 }
