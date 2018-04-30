@@ -18,7 +18,7 @@ abstract class XmlConfigAbstract extends TestCase
     protected $xsiUrl = 'http://www.w3.org/2001/XMLSchema-instance';
     
     /** @var string */
-    protected $schemaLocation = 'urn:magento:framework:Module/etc/module.xsd';
+    protected $schemaLocation = null;
     
     
     /**

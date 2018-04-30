@@ -2,11 +2,14 @@
 
 namespace MagentorTest\Framework\Code\Template\Php\XmlConfig;
 
-use Magentor\Framework\Code\Generation\MagentoTwo\Module\XmlConfig\ModuleConfig;
 use Magentor\Framework\Code\Template\Xml\Config\Module as ModuleTemplate;
 
 class ModuleConfigTest extends XmlConfigAbstract
 {
+    
+    /** @var string */
+    protected $schemaLocation = 'urn:magento:framework:Module/etc/module.xsd';
+    
     
     /**
      * @test

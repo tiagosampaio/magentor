@@ -39,16 +39,24 @@ class Acl extends XmlAbstract
      * @param string|null $title
      * @param int         $sortOrder
      *
-     * @return \SimpleXMLElement
+     * @return $this
      */
     public function addResource(string $code, string $title = null, int $sortOrder = 10)
     {
-        /** @var \SimpleXMLElement $resource */
-        $resource = $this->resourcesXml->addChild($this->buildResourceCode($code));
+        $this->prepare();
+        
+        /** @var XmlElement $resource */
+        $resource = $this->resourcesXml->addChild('resource');
+        $resource->addAttribute('id', $this->buildResourceCode($code));
         $resource->addAttribute('title', $title ?: $code);
+        
+        if ($title) {
+            $resource->addAttribute('translate', 'title');
+        }
+        
         $resource->addAttribute('sortOrder', (int) $sortOrder);
         
-        return $resource;
+        return $this;
     }
     
     
@@ -60,7 +68,7 @@ class Acl extends XmlAbstract
     protected function buildResourceCode(string $code)
     {
         $moduleName = $this->getModuleName();
-        return $moduleName . ':'  . $code;
+        return $moduleName . '::'  . $code;
     }
     
     
@@ -69,10 +77,10 @@ class Acl extends XmlAbstract
      *
      * @return $this
      */
-    protected function prepare(XmlElement $xml)
+    protected function prepare()
     {
         if (is_null($this->aclXml)) {
-            $this->aclXml = $xml->addChild('acl');
+            $this->aclXml = $this->getXml()->addChild('acl');
             $this->resourcesXml = $this->aclXml->addChild('resources');
         }
         
