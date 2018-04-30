@@ -5,6 +5,7 @@ namespace Magentor\Framework\Magento\Module\Component;
 class Type
 {
     
+    const TYPE_REGISTRATION         = 'registration';
     const TYPE_MODEL                = 'model';
     const TYPE_RESOURCE_MODEL       = 'resource_model';
     const TYPE_RESOURCE_COLLECTION  = 'resource_collection';

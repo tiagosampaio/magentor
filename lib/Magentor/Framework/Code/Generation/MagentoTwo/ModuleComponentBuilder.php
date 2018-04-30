@@ -11,6 +11,7 @@ class ModuleComponentBuilder
  
     /** @var array */
     protected static $makers = [
+        Type::TYPE_REGISTRATION         => Module\Objects\Registration::class,
         Type::TYPE_CONTROLLER           => Module\Controller::class,
         Type::TYPE_HELPER               => Module\Helper::class,
         Type::TYPE_MODEL                => Module\Model::class,
@@ -158,6 +159,23 @@ class ModuleComponentBuilder
     {
         /** @var Module\ResourceCollection $component */
         $component = self::build(Type::TYPE_CONFIG_SOURCE, [$name, $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Registration
+     *
+     * @throws GenericException
+     */
+    public static function buildRegistration(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Registration $component */
+        $component = self::build(Type::TYPE_REGISTRATION, ['registration', $module, $vendor]);
         return $component;
     }
     

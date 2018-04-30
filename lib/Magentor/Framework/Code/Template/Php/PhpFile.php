@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Code\Template\Php;
 
-use Magentor\Framework\App\Version;
 use Magentor\Framework\Code\Template\Documentor;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile as PhpGeneratorFile;

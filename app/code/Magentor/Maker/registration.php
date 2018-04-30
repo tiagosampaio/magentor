@@ -10,5 +10,6 @@ ModuleRegistrar::register('Magentor_Maker', __DIR__, [
     \Magentor\Maker\Commands\MakeController::class,
     \Magentor\Maker\Commands\MakeConfigSource::class,
     \Magentor\Maker\Commands\MakeInstallSchema::class,
+    \Magentor\Maker\Commands\MakeRegistration::class,
     \Magentor\Maker\Commands\Config\MakeXmlModule::class,
 ]);

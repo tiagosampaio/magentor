@@ -5,17 +5,18 @@ namespace Magentor\Maker\Commands;
 use Magentor\Framework\Assembler\Module\Helper;
 use Magentor\Framework\Assembler\Module\SetupInstallSchema;
 use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
+use Magentor\Framework\Code\Generation\MagentoTwo\Module\Objects\Registration;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
 use Magentor\Framework\Magento\Module\Component\Type;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeInstallSchema extends CommandAbstract
+class MakeRegistration extends CommandAbstract
 {
     
-    protected $name        = 'make:setup:install-schema';
-    protected $description = 'Creates a Magento\'s InstallSchema for a given module.';
+    protected $name        = 'make:registration';
+    protected $description = 'Creates a Magento\'s registration file for a given module.';
     
     
     /**
@@ -42,11 +43,11 @@ class MakeInstallSchema extends CommandAbstract
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
     
-            /** @var SetupInstallSchema $assembler */
-            $assembler = ModuleAssemblerBuilder::build(Type::TYPE_SETUP_INSTALL_SCHEMA);
-            $assembler->create($vendor, $module)->write();
+            /** @var Registration $factory */
+            $builder = ModuleComponentBuilder::buildRegistration($module, $vendor);
+            $builder->write();
             
-            $output->writeln('Your helper was created!');
+            $output->writeln('Your registration file was created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;

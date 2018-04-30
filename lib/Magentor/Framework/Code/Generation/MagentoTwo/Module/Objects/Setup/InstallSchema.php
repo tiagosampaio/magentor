@@ -76,7 +76,7 @@ PHP;
     
     
     /**
-     * @return string
+     * @return array
      */
     protected function getInterfacesClasses()
     {
