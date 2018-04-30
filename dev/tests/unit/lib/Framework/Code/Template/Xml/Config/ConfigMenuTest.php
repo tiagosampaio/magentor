@@ -39,7 +39,7 @@ XML;
 <?xml version="1.0"?>
 <config xmlns:xsi="{$this->xsiUrl}" xsi:noNamespaceSchemaLocation="{$this->schemaLocation}">
     <menu>
-        <add id="{$this->getModuleName()}::test" resource="{$this->getModuleName()}::test" sortOrder="10" title="test" translate="title"/>
+        <add id="{$this->getModuleName()}::test" resource="{$this->getModuleName()}::test" sortOrder="10" title="Test" translate="title"/>
     </menu>
 </config>
 XML;
@@ -60,7 +60,7 @@ XML;
 <?xml version="1.0"?>
 <config xmlns:xsi="{$this->xsiUrl}" xsi:noNamespaceSchemaLocation="{$this->schemaLocation}">
     <menu>
-        <add id="{$this->getModuleName()}::test" resource="{$this->getModuleName()}::test" sortOrder="10" title="test" translate="title"/>
+        <add id="{$this->getModuleName()}::test" resource="{$this->getModuleName()}::test" sortOrder="10" title="Test" translate="title"/>
         <add id="{$this->getModuleName()}::second" resource="{$this->getModuleName()}::second" sortOrder="10" title="Second" translate="title" parent="{$this->getModuleName()}::test"/>
     </menu>
 </config>

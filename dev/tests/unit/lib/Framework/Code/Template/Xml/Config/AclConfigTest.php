@@ -72,7 +72,7 @@ XML;
         
         $template = $this->getTemplate();
         $template->addResource("{$this->getModuleName()}::test", 'Test');
-        $template->addResource("{$this->getModuleName()}::mytest", 'My Test', 90);
+        $template->addResource("{$this->getModuleName()}::myTest", 'My Test', 90);
         
         $this->assertXmlStringEqualsXmlString($expected, $template->toXml());
     }
