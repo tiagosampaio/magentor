@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MakeResourceModel extends MakeModel
 {
     
-    protected $name        = 'make:resource-model';
+    protected $name        = 'make:model:resource';
     protected $description = 'Creates a Magento resource model for a given module.';
     
     
