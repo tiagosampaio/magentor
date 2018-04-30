@@ -102,10 +102,10 @@ XML;
         $resource    = AclTemplate\Resource::newResource('MyVendorTest_MyModuleTest::test', 'Test');
         $resource->addSubResource('MyVendorTest_MyModuleTest::subTest', 'Sub Test')
                  ->addSubResource('MyVendorTest_MyModuleTest::subSubTest', 'Sub Sub Test');
-        
+    
         $template->appendResource($resource);
         $template->addResource('secondTest', 'Second Test', 20);
-        
+    
         $this->assertXmlStringEqualsXmlString($expected, (string) $template);
     }
     
