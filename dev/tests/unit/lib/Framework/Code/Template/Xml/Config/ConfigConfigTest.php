@@ -3,6 +3,7 @@
 namespace MagentorTest\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\Config\Config as ConfigTemplate;
+use Magentor\Framework\Code\Template\Xml\TemplateFactory;
 
 class ConfigConfigTest extends XmlConfigAbstract
 {
@@ -108,10 +109,7 @@ XML;
      */
     protected function getTemplate()
     {
-        $template = new ConfigTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
-        $template->setXsiUrl($this->xsiUrl)
-                 ->setSchemaLocation($this->schemaLocation);
-        
+        $template = TemplateFactory::buildConfigTemplate();
         $template->build();
         
         return $template;

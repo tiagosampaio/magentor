@@ -1,0 +1,94 @@
+<?php
+
+namespace Magentor\Framework\Code\Template\Xml;
+
+use Magentor\Framework\Code\Template\Xml\Config\Acl;
+use Magentor\Framework\Code\Template\Xml\Config\Config;
+use Magentor\Framework\Code\Template\Xml\Config\Module;
+use Magentor\Framework\Code\Template\Xml\Config\Routes;
+use Magentor\Framework\Magento\Module\Component\Type;
+
+class TemplateFactory
+{
+    
+    /** @var string */
+    protected static $parentNode = '<config/>';
+    
+    
+    protected static $xsiUrl = 'http://www.w3.org/2001/XMLSchema-instance';
+    
+    /** @var array */
+    protected static $types = [
+        Type::TYPE_XML_CONFIG_MODULE => Module::class,
+        Type::TYPE_XML_CONFIG_ACL    => Acl::class,
+        Type::TYPE_XML_CONFIG_CONFIG => Config::class,
+        Type::TYPE_XML_CONFIG_ROUTES => Routes::class,
+    ];
+    
+    protected static $schemaLocations = [
+        Type::TYPE_XML_CONFIG_MODULE => 'urn:magento:framework:Module/etc/module.xsd',
+        Type::TYPE_XML_CONFIG_ACL    => 'urn:magento:framework:acl/etc/acl.xsd',
+        Type::TYPE_XML_CONFIG_CONFIG => 'urn:magento:module:Magento_Store:etc/config.xsd',
+        Type::TYPE_XML_CONFIG_ROUTES => 'urn:magento:framework:App/etc/routes.xsd',
+    ];
+    
+    
+    /**
+     * @return Acl
+     */
+    public static function buildAclTemplate()
+    {
+        /** @var Acl $template */
+        $template = self::build(Type::TYPE_XML_CONFIG_ACL);
+        return $template;
+    }
+    
+    
+    /**
+     * @return Routes
+     */
+    public static function buildRoutesTemplate()
+    {
+        /** @var Routes $template */
+        $template = self::build(Type::TYPE_XML_CONFIG_ROUTES);
+        return $template;
+    }
+    
+    
+    /**
+     * @return Module
+     */
+    public static function buildModuleTemplate()
+    {
+        /** @var Module $template */
+        $template = self::build(Type::TYPE_XML_CONFIG_MODULE);
+        return $template;
+    }
+    
+    
+    /**
+     * @return Config
+     */
+    public static function buildConfigTemplate()
+    {
+        /** @var Config $template */
+        $template = self::build(Type::TYPE_XML_CONFIG_CONFIG);
+        return $template;
+    }
+    
+    
+    /**
+     * @param string $type
+     *
+     * @return ConfigElement
+     */
+    public static function build(string $type)
+    {
+        /** @var ConfigElement $template */
+        $template = new self::$types[$type](self::$parentNode, LIBXML_NOERROR, false, 'ws', true);
+        $template->setXsiUrl(self::$xsiUrl);
+        $template->setSchemaLocation(self::$schemaLocations[$type]);
+        
+        return $template;
+    }
+}

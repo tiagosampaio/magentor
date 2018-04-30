@@ -3,6 +3,7 @@
 namespace MagentorTest\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\Config\Routes as RoutesTemplate;
+use Magentor\Framework\Code\Template\Xml\TemplateFactory;
 
 class RoutesConfigTest extends XmlConfigAbstract
 {
@@ -87,9 +88,7 @@ XML;
         bool $isAdmin = false
     )
     {
-        $template = new RoutesTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
-        $template->setXsiUrl($this->xsiUrl)
-                 ->setSchemaLocation($this->schemaLocation);
+        $template = TemplateFactory::buildRoutesTemplate();
         
         $template->build();
         $template->setRouterId($use);

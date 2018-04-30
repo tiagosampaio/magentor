@@ -3,6 +3,7 @@
 namespace MagentorTest\Framework\Code\Template\Xml\Config;
 
 use Magentor\Framework\Code\Template\Xml\Config\Acl as AclTemplate;
+use Magentor\Framework\Code\Template\Xml\TemplateFactory;
 
 class AclConfigTest extends XmlConfigAbstract
 {
@@ -117,10 +118,7 @@ XML;
      */
     protected function getTemplate()
     {
-        $template = new AclTemplate('<config/>', LIBXML_NOERROR, false, 'ws', true);
-        $template->setXsiUrl($this->xsiUrl)
-                 ->setSchemaLocation($this->schemaLocation);
-    
+        $template = TemplateFactory::buildAclTemplate();
         $template->build();
     
         return $template;

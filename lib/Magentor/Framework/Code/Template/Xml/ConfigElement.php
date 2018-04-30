@@ -20,6 +20,10 @@ abstract class ConfigElement extends Element implements XmlInterface
      */
     public function setXsiUrl(string $xsiUrl = 'http://www.w3.org/2001/XMLSchema-instance')
     {
+        if ($this->getAttribute('xmlns:xsi')) {
+            return $this;
+        }
+        
         $this->addAttribute('xmlns:xmlns:xsi', $xsiUrl);
         return $this;
     }
@@ -32,6 +36,10 @@ abstract class ConfigElement extends Element implements XmlInterface
      */
     public function setSchemaLocation(string $schemaLocation)
     {
+        if ($this->getAttribute('xsi:noNamespaceSchemaLocation')) {
+            return $this;
+        }
+        
         $this->addAttribute('xmlns:xsi:noNamespaceSchemaLocation', $schemaLocation);
         return $this;
     }
