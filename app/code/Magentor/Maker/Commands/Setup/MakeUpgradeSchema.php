@@ -38,7 +38,7 @@ class MakeUpgradeSchema extends SetupCommandAbstract
             $builder = ModuleComponentBuilder::buildSetupUpgradeSchema($module, $vendor);
             $builder->write();
     
-            $io->success('Your helper was created!');
+            $io->success('Your UpgradeSchema file was successfully created!');
         } catch (\Exception $e) {
             $io->error($e->getMessage());
             return;

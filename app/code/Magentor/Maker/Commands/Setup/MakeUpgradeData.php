@@ -2,20 +2,17 @@
 
 namespace Magentor\Maker\Commands\Setup;
 
-use Magentor\Framework\Assembler\Module\Helper;
-use Magentor\Framework\Assembler\Module\SetupInstallSchema;
-use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
+use Magentor\Framework\Code\Generation\MagentoTwo\Module\Objects\Setup\UpgradeData;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
-use Magentor\Framework\Magento\Module\Component\Type;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeUpgradeData extends SetupCommandAbstract
 {
     
     protected $name        = 'make:setup:upgrade-data';
-    protected $description = 'Creates a Magento\'s UpgradeData for a given module.';
+    protected $description = 'Creates a Magento\'s setup UpgradeData for a given module.';
     
     
     /**
@@ -26,17 +23,19 @@ class MakeUpgradeData extends SetupCommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+        
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
     
-            /** @var SetupInstallSchema $assembler */
-            // $assembler = ModuleAssemblerBuilder::build(Type::TYPE_SETUP_INSTALL_SCHEMA);
-            // $assembler->create($vendor, $module)->write();
-            
-            $output->writeln('Your helper was created!');
+            /** @var UpgradeData $builder */
+            $builder = ModuleComponentBuilder::buildSetupUpgradeData($module, $vendor);
+            $builder->write();
+    
+            $io->success('Your UpgradeData file was successfully created!');
         } catch (\Exception $e) {
-            $output->writeln(['Error', $e->getMessage()]);
+            $io->error($e->getMessage());
             return;
         }
     }

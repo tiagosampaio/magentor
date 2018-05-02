@@ -3,7 +3,7 @@ namespace Magentor\Framework\Code\Generation\MagentoTwo\Module\Objects\Setup;
 
 use Magentor\Framework\Code\Generation\MagentoTwo\Module\AbstractModulePhp;
 
-class UpgradeSchema extends AbstractModulePhp
+class UpgradeData extends AbstractModulePhp
 {
     
     /** @var string */
@@ -27,20 +27,16 @@ class UpgradeSchema extends AbstractModulePhp
     public function buildDefaultMethods()
     {
         $template = $this->getTemplate();
-        
-        $upgradeSchema = 'Magento\Framework\Setup\UpgradeSchemaInterface';
-        $schemaSetup   = 'Magento\Framework\Setup\SchemaSetupInterface';
-        $moduleContext = 'Magento\Framework\Setup\ModuleContextInterface';
-        $adapter       = 'Magento\Framework\DB\Adapter\AdapterInterface';
     
-        $template->addUse($upgradeSchema);
-        $template->addUse($schemaSetup);
-        $template->addUse($moduleContext);
-        $template->addUse($adapter);
+        $setup    = 'Magento\Framework\Setup\ModuleDataSetupInterface';
+        $context  = 'Magento\Framework\Setup\ModuleContextInterface';
+    
+        $template->addUse($setup);
+        $template->addUse($context);
         
         $method = $this->getTemplate()->addMethod('upgrade');
-        $method->addParameter('setup')->setTypeHint($schemaSetup);
-        $method->addParameter('context')->setTypeHint($moduleContext);
+        $method->addParameter('setup')->setTypeHint($setup);
+        $method->addParameter('context')->setTypeHint($context);
     
         $method->addComment('@inheritdoc');
 
@@ -49,6 +45,12 @@ $body = <<<PHP
 \$installer->startSetup();
 
 if (version_compare(\$context->getVersion(), '2.0.0', '<')) {
+    /**
+     * @todo Add your logic right here...
+     */
+}
+
+if (version_compare(\$context->getVersion(), '2.1.0', '<')) {
     /**
      * @todo Add your logic right here...
      */
@@ -69,7 +71,7 @@ PHP;
     protected function getInterfacesClasses()
     {
         return [
-            "Magento\Framework\Setup\UpgradeSchemaInterface"
+            "Magento\Framework\Setup\UpgradeDataInterface"
         ];
     }
 }

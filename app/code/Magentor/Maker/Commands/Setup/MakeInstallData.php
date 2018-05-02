@@ -12,7 +12,7 @@ class MakeInstallData extends SetupCommandAbstract
 {
     
     protected $name        = 'make:setup:install-data';
-    protected $description = 'Creates a Magento\'s InstallSchema for a given module.';
+    protected $description = 'Creates a Magento\'s Setup InstallData for a given module.';
     
     
     /**

@@ -2,14 +2,11 @@
 
 namespace Magentor\Maker\Commands\Setup;
 
-use Magentor\Framework\Assembler\Module\Helper;
-use Magentor\Framework\Assembler\Module\SetupInstallSchema;
-use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
+use Magentor\Framework\Code\Generation\MagentoTwo\Module\Objects\Setup\InstallSchema;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
-use Magentor\Framework\Magento\Module\Component\Type;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeInstallSchema extends SetupCommandAbstract
 {
@@ -26,17 +23,19 @@ class MakeInstallSchema extends SetupCommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+        
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
     
-            /** @var SetupInstallSchema $assembler */
-            $assembler = ModuleAssemblerBuilder::build(Type::TYPE_SETUP_INSTALL_SCHEMA);
-            $assembler->create($vendor, $module)->write();
-            
-            $output->writeln('Your InstallSchema file was successfully created!');
+            /** @var InstallSchema $builder */
+            $builder = ModuleComponentBuilder::buildSetupInstallSchema($module, $vendor);
+            $builder->write();
+    
+            $io->success('Your InstallSchema file was successfully created!');
         } catch (\Exception $e) {
-            $output->writeln(['Error', $e->getMessage()]);
+            $io->error(['Error', $e->getMessage()]);
             return;
         }
     }
