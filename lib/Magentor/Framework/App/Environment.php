@@ -29,7 +29,7 @@ class Environment
      */
     public static function getCurrentMagentoModule()
     {
-        return defined('MAGENTO_CURRENT_MODULE') ? MAGENTO_CURRENT_VENDOR : null;
+        return defined('MAGENTO_CURRENT_MODULE') ? MAGENTO_CURRENT_MODULE : null;
     }
     
     
