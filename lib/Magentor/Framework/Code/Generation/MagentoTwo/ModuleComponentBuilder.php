@@ -19,6 +19,11 @@ class ModuleComponentBuilder
         Type::TYPE_RESOURCE_COLLECTION  => Module\ResourceCollection::class,
         Type::TYPE_CONFIG_SOURCE        => Module\ConfigSource::class,
         Type::TYPE_SETUP_INSTALL_SCHEMA => Module\Objects\Setup\InstallSchema::class,
+        Type::TYPE_SETUP_UPGRADE_SCHEMA => Module\Objects\Setup\UpgradeSchema::class,
+        Type::TYPE_SETUP_INSTALL_DATA   => Module\Objects\Setup\InstallData::class,
+        Type::TYPE_SETUP_UPGRADE_DATA   => Module\Objects\Setup\UpgradeData::class,
+        Type::TYPE_SETUP_RECURRING      => Module\Objects\Setup\Recurring::class,
+        Type::TYPE_SETUP_RECURRING_DATA => Module\Objects\Setup\RecurringData::class,
         Type::TYPE_XML_CONFIG_MODULE    => Module\XmlConfig\ModuleConfig::class,
     ];
     
@@ -53,6 +58,91 @@ class ModuleComponentBuilder
     {
         /** @var Module\Objects\Setup\InstallSchema $component */
         $component = self::build(Type::TYPE_SETUP_INSTALL_SCHEMA, ['InstallSchema', $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Setup\UpgradeSchema
+     *
+     * @throws GenericException
+     */
+    public static function buildSetupUpgradeSchema(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Setup\UpgradeSchema $component */
+        $component = self::build(Type::TYPE_SETUP_UPGRADE_SCHEMA, ['UpgradeSchema', $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Setup\InstallData
+     *
+     * @throws GenericException
+     */
+    public static function buildSetupInstallData(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Setup\InstallData $component */
+        $component = self::build(Type::TYPE_SETUP_INSTALL_DATA, ['InstallData', $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Setup\UpgradeData
+     *
+     * @throws GenericException
+     */
+    public static function buildSetupUpgradeData(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Setup\UpgradeData $component */
+        $component = self::build(Type::TYPE_SETUP_UPGRADE_DATA, ['UpgradeData', $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Setup\Recurring
+     *
+     * @throws GenericException
+     */
+    public static function buildSetupRecurring(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Setup\Recurring $component */
+        $component = self::build(Type::TYPE_SETUP_RECURRING, ['Recurring', $module, $vendor]);
+        return $component;
+    }
+    
+    
+    /**
+     * @param string $name
+     * @param string $module
+     * @param string $vendor
+     *
+     * @return Module\Objects\Setup\RecurringData
+     *
+     * @throws GenericException
+     */
+    public static function buildSetupRecurringData(string $module, string $vendor)
+    {
+        /** @var Module\Objects\Setup\RecurringData $component */
+        $component = self::build(Type::TYPE_SETUP_RECURRING, ['RecurringData', $module, $vendor]);
         return $component;
     }
     

@@ -2,14 +2,11 @@
 
 namespace Magentor\Maker\Commands\Setup;
 
-use Magentor\Framework\Assembler\Module\Helper;
-use Magentor\Framework\Assembler\Module\SetupInstallSchema;
-use Magentor\Framework\Assembler\ModuleAssemblerBuilder;
+use Magentor\Framework\Code\Generation\MagentoTwo\Module\Objects\Setup\InstallData;
 use Magentor\Framework\Code\Generation\MagentoTwo\ModuleComponentBuilder;
-use Magentor\Framework\Magento\Module\Component\Type;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeInstallData extends SetupCommandAbstract
 {
@@ -26,17 +23,19 @@ class MakeInstallData extends SetupCommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+        
         try {
             $vendor = $input->getArgument('vendor');
             $module = $input->getArgument('module');
     
-            /** @var SetupInstallSchema $assembler */
-            $assembler = ModuleAssemblerBuilder::build(Type::TYPE_SETUP_INSTALL_SCHEMA);
-            $assembler->create($vendor, $module)->write();
+            /** @var InstallData $builder */
+            $builder = ModuleComponentBuilder::buildSetupInstallData($module, $vendor);
+            $builder->write();
             
-            $output->writeln('Your helper was created!');
+            $io->success('Your InstallData model was successfully created!');
         } catch (\Exception $e) {
-            $output->writeln(['Error', $e->getMessage()]);
+            $io->error($e->getMessage());
             return;
         }
     }
