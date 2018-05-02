@@ -34,7 +34,7 @@ class MakeInstallSchema extends SetupCommandAbstract
             $assembler = ModuleAssemblerBuilder::build(Type::TYPE_SETUP_INSTALL_SCHEMA);
             $assembler->create($vendor, $module)->write();
             
-            $output->writeln('Your helper was created!');
+            $output->writeln('Your InstallSchema file was successfully created!');
         } catch (\Exception $e) {
             $output->writeln(['Error', $e->getMessage()]);
             return;
