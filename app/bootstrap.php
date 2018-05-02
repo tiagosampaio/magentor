@@ -11,4 +11,13 @@ require_once ROOT . '/app/autoload.php';
 \Magentor\Framework\Filesystem\DirectoryRegistrar::register(ROOT);
 
 $bootstrap = \Magentor\Framework\App\Bootstrap::create(ROOT, $_SERVER);
-$bootstrap->createApplication()->run();
+
+try {
+    $bootstrap->createApplication()->run();
+} catch (\Magentor\Framework\Exception\PhpVersionException $e) {
+    echo "{$e->getMessage()}\n";
+} catch (Exception $e) {
+    /**
+     * @todo Throw the error again.
+     */
+}

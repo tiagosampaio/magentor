@@ -2,8 +2,27 @@
 
 namespace Magentor\Framework\App;
 
+use Magentor\Framework\Exception\ExceptionContainer;
+
 class Environment
 {
+    
+    public static function initEnvironment()
+    {
+        self::checkPhpVersion();
+    }
+    
+    
+    /**
+     * Checks the PHP version.
+     */
+    protected static function checkPhpVersion()
+    {
+        if (version_compare(phpversion(), '7', '<')) {
+            ExceptionContainer::throwPhpVersionException('This application requires PHP 7 or greater.');
+        }
+    }
+    
     
     /**
      * @return mixed|null

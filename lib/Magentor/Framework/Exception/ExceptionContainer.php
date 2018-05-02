@@ -41,7 +41,16 @@ class ExceptionContainer
      */
     public static function throwFileOverwriteException($message)
     {
-        self::throwException(FileOverwrite::class, $message);
+        self::throwException(FileOverwriteException::class, $message);
+    }
+
+
+    /**
+     * @param $message
+     */
+    public static function throwPhpVersionException($message)
+    {
+        self::throwException(PhpVersionException::class, $message);
     }
 
 

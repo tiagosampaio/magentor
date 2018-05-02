@@ -50,6 +50,7 @@ class Application implements ApplicationInterface
     {
         $this->initMagento();
         $this->initModules();
+        Environment::initEnvironment();
         $this->initCommands();
 
         try {
