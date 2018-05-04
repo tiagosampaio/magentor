@@ -6,7 +6,7 @@ use Magentor\Framework\Code\Template\Xml\Config\CustomConfig\Schema;
 use Magentor\Framework\Code\Template\Xml\TemplateFactory;
 use MagentorTest\Framework\Code\Template\Xml\Config\XmlConfigAbstract;
 
-class ConfigXsdTest extends XmlConfigAbstract
+class SchemaTest extends XmlConfigAbstract
 {
     
     
