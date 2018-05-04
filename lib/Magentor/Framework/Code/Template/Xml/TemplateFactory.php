@@ -8,6 +8,7 @@ use Magentor\Framework\Code\Template\Xml\Config\Menu;
 use Magentor\Framework\Code\Template\Xml\Config\Module;
 use Magentor\Framework\Code\Template\Xml\Config\Routes;
 use Magentor\Framework\Code\Template\Xml\Config\CustomConfig\Config as CustomConfig;
+use Magentor\Framework\Code\Template\Xml\Config\CustomConfig\Schema as CustomSchema;
 use Magentor\Framework\Magento\Module\Component\Type;
 
 class TemplateFactory
@@ -21,12 +22,13 @@ class TemplateFactory
     
     /** @var array */
     protected static $types = [
-        Type::TYPE_XML_CONFIG_MODULE => Module::class,
-        Type::TYPE_XML_CONFIG_ACL    => Acl::class,
-        Type::TYPE_XML_CONFIG_CONFIG => Config::class,
-        Type::TYPE_XML_CONFIG_ROUTES => Routes::class,
-        Type::TYPE_XML_CONFIG_MENU   => Menu::class,
-        Type::TYPE_XML_CONFIG_CUSTOM => CustomConfig::class,
+        Type::TYPE_XML_CONFIG_MODULE        => Module::class,
+        Type::TYPE_XML_CONFIG_ACL           => Acl::class,
+        Type::TYPE_XML_CONFIG_CONFIG        => Config::class,
+        Type::TYPE_XML_CONFIG_ROUTES        => Routes::class,
+        Type::TYPE_XML_CONFIG_MENU          => Menu::class,
+        Type::TYPE_XML_CONFIG_CUSTOM        => CustomConfig::class,
+        Type::TYPE_XML_CONFIG_CUSTOM_SCHEMA => CustomSchema::class,
     ];
     
     /** @var array */
@@ -107,14 +109,31 @@ class TemplateFactory
     
     
     /**
+     * @return CustomSchema
+     */
+    public static function buildCustomSchemaTemplate()
+    {
+        /** @var CustomSchema $template */
+        $template = new CustomSchema();
+        $template->setXsUrl();
+        
+        return $template;
+    }
+    
+    
+    /**
      * @param string $type
      *
      * @return ConfigElement
      */
-    public static function build(string $type)
+    public static function build(string $type, string $parentNode = null)
     {
+        if (!$parentNode) {
+            $parentNode = self::$parentNode;
+        }
+        
         /** @var ConfigElement $template */
-        $template = new self::$types[$type](self::$parentNode, LIBXML_NOERROR, false, 'ws', true);
+        $template = new self::$types[$type]($parentNode, LIBXML_NOERROR, false, 'ws', true);
         $template->setXsiUrl(self::$xsiUrl);
         
         if (isset(self::$schemaLocations[$type]) && self::$schemaLocations[$type]) {

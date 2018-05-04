@@ -23,10 +23,11 @@ class Type
     /**
      * Config Options
      */
-    const TYPE_XML_CONFIG_MODULE   = 'xml_config_module';
-    const TYPE_XML_CONFIG_ROUTES   = 'xml_config_routes';
-    const TYPE_XML_CONFIG_ACL      = 'xml_config_acl';
-    const TYPE_XML_CONFIG_CONFIG   = 'xml_config_config';
-    const TYPE_XML_CONFIG_MENU     = 'xml_config_menu';
-    const TYPE_XML_CONFIG_CUSTOM   = 'xml_config_custom_config';
+    const TYPE_XML_CONFIG_MODULE        = 'xml_config_module';
+    const TYPE_XML_CONFIG_ROUTES        = 'xml_config_routes';
+    const TYPE_XML_CONFIG_ACL           = 'xml_config_acl';
+    const TYPE_XML_CONFIG_CONFIG        = 'xml_config_config';
+    const TYPE_XML_CONFIG_MENU          = 'xml_config_menu';
+    const TYPE_XML_CONFIG_CUSTOM        = 'xml_config_custom_config';
+    const TYPE_XML_CONFIG_CUSTOM_SCHEMA = 'xml_config_custom_schema';
 }
