@@ -20,7 +20,7 @@ class Registration extends AbstractModulePhp
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
     '{$this->getVendorName()}_{$this->getModuleName()}',
     __DIR__
-);
+)
 PHP;
         
         $this->template->setBody($body);
