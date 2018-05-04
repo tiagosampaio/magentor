@@ -18,15 +18,19 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     protected $traits     = [];
     protected $methods    = [];
     
+    /** @var bool */
+    protected $renderDoc  = true;
+    
     
     /**
      * PhpClassBuilder constructor.
      *
      * @param PhpClassResolver $resolver
      */
-    public function __construct(PhpClassResolver $resolver)
+    public function __construct(PhpClassResolver $resolver, bool $renderDoc = true)
     {
-        $this->resolver = $resolver;
+        $this->resolver  = $resolver;
+        $this->renderDoc = $renderDoc;
     }
     
     
@@ -56,6 +60,18 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     public function addUse(string $class)
     {
         $this->uses[$class] = $class;
+        return $this;
+    }
+    
+    
+    /**
+     * @param bool $flag
+     *
+     * @return $this
+     */
+    public function setRenderDoc(bool $flag = true)
+    {
+        $this->renderDoc = (bool) $flag;
         return $this;
     }
     
@@ -112,7 +128,7 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     public function build()
     {
         /** @var PhpClass $template */
-        $template = new PhpClass($this->getResolver());
+        $template = new PhpClass($this->getResolver(), $this->renderDoc);
         
         $this->buildNamespace($template);
         $this->buildClass($template);

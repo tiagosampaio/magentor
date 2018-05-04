@@ -32,6 +32,12 @@ abstract class AbstractModulePhp extends AbstractPhp
     /** @var string */
     protected $classDirectory;
     
+    /** @var bool */
+    protected $dirAutoCreation = true;
+    
+    /** @var bool */
+    protected $renderDoc = true;
+    
     
     /**
      * Model constructor.
@@ -69,6 +75,39 @@ abstract class AbstractModulePhp extends AbstractPhp
     
     
     /**
+     * @param bool $flag
+     *
+     * @return $this
+     */
+    public function setDirAutoCreation(bool $flag = true)
+    {
+        $this->dirAutoCreation = (bool) $flag;
+        return $this;
+    }
+    
+    
+    /**
+     * @return bool
+     */
+    public function isDirAutoCreationEnabled()
+    {
+        return (bool) $this->dirAutoCreation;
+    }
+    
+    
+    /**
+     * @param bool $flag
+     *
+     * @return $this
+     */
+    public function setRenderDoc(bool $flag = true)
+    {
+        $this->renderDoc = (bool) $flag;
+        return $this;
+    }
+    
+    
+    /**
      * @return PhpClass
      */
     public function build()
@@ -80,7 +119,7 @@ abstract class AbstractModulePhp extends AbstractPhp
             $builder->setExtends($this->getParentClass());
         }
         
-        foreach ($this->getInterfacesClasses() as $interface) {
+        foreach ((array) $this->getInterfacesClasses() as $interface) {
             $builder->addUse($interface);
             $builder->addImplements($interface);
         }
@@ -114,7 +153,7 @@ abstract class AbstractModulePhp extends AbstractPhp
      */
     protected function getTemplateBuilder()
     {
-        $builder = new PhpClassBuilder($this->classResolver());
+        $builder = new PhpClassBuilder($this->classResolver(), $this->renderDoc);
         return $builder;
     }
     
@@ -249,6 +288,8 @@ abstract class AbstractModulePhp extends AbstractPhp
     
     
     /**
+     * @param bool $createDir
+     *
      * @return $this
      */
     protected function initClassDir()
@@ -258,7 +299,9 @@ abstract class AbstractModulePhp extends AbstractPhp
                 $this->classResolver()->getRelativePath()
             );
             
-            \Magentor\Framework\Filesystem\Directory::mkDir($this->classDirectory);
+            if ($this->isDirAutoCreationEnabled()) {
+                \Magentor\Framework\Filesystem\Directory::mkDir($this->classDirectory);
+            }
         }
         
         return $this;
