@@ -37,7 +37,7 @@ interface PhpClassBuilderInterface
      *
      * @return $this
      */
-    public function addUse(string $class);
+    public function addUse(string $class, $alias = null, $aliasOut = null);
     
     
     /**

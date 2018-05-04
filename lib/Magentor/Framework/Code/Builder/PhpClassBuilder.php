@@ -57,9 +57,13 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     /**
      * @inheritdoc
      */
-    public function addUse(string $class)
+    public function addUse(string $class, $alias = null, $aliasOut = null)
     {
-        $this->uses[$class] = $class;
+        $this->uses[$class] = [
+            'class'     => $class,
+            'alias'     => $alias,
+            'alias_out' => $aliasOut,
+        ];
         return $this;
     }
     
@@ -154,7 +158,11 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     protected function buildNamespace(PhpClass $template)
     {
         foreach ((array) $this->uses as $use) {
-            $template->getNamespace()->addUse($use);
+            $class = $use['class'];
+            $alias = $use['alias'];
+            $aliasOut = $use['alias_out'];
+            
+            $template->getNamespace()->addUse($class, $alias, $aliasOut);
         }
         
         return $this;

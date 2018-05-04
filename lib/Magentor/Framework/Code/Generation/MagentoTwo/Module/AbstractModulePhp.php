@@ -114,9 +114,19 @@ abstract class AbstractModulePhp extends AbstractPhp
     {
         $builder = $this->getTemplateBuilder();
     
-        if ($this->getParentClass()) {
-            $builder->addUse($this->getParentClass());
-            $builder->setExtends($this->getParentClass());
+        /** @var string|array $parentClass */
+        if ($parentClass = $this->getParentClass()) {
+            $class = $parentClass;
+            $alias = null;
+            
+            if (is_array($parentClass)) {
+                reset($parentClass);
+                $class = key($parentClass);
+                $alias = $parentClass[$class];
+            }
+            
+            $builder->addUse($class, $alias);
+            $builder->setExtends($class);
         }
         
         foreach ((array) $this->getInterfacesClasses() as $interface) {
