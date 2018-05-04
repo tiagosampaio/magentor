@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Emanate HTML Template - Style Guide</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="A minimal and responsive HTML5 landing page built on lightweight, clean and customizable code." />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="apple-touch-icon-precomposed" href="media/favicon.png" />
+  <link rel="icon" href="media/favicon.png" />
+  <link rel="mask-icon" href="media/favicon.svg" color="rgb(36,38,58)" />
+  <link rel="shortcut icon" href="media/favicon.png" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="page page-style-guide preload">
+
+  <header class="header-main dark">
+    <nav>
+      <a href="index.html" class="logo" rel="home"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24"><path d="M6.648 7.762c-.077-.11-.106-.245-.083-.376.024-.132.1-.248.21-.323l1.164-.8c1.536-1.076 3.406-1.486 5.25-1.16 3.82.673 6.373 4.32 5.704 8.113-.668 3.793-4.316 6.347-8.134 5.674-1.845-.326-3.462-1.35-4.485-2.813l-3.11-4.445c-.16-.23-.45-.33-.717-.245-.267.084-.45.33-.45.61C2 11.998 2 12 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10S17.523 2 12 2C8.94 2 6.202 3.374 4.368 5.538c-.735.86-.794 2.11-.146 3.036 1.475 2.136 4.138 5.942 4.138 5.942.675.965 1.685 1.605 2.852 1.81 2.396.424 4.684-1.168 5.107-3.564.42-2.396-1.185-4.674-3.58-5.097-1.167-.205-2.335.05-3.36.77-.84.585-1.994.38-2.58-.458l-.152-.215z" fill="currentColor" /></svg><span>Emanate</span></a>
+      <div class="nav-toggle"></div>
+      <ul class="inline">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="style-guide.html">Style Guide</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="bg-image-03 center dark overlay padding">
+      <div class="margin-bottom margin-top max-width-m">
+        <h1>Style Guide</h1>
+        <p class="lead">This is the central location of all components.</p>
+      </div>
+    </section>
+
+    <div class="padding">
+      <div class="row max-width-l">
+        <div class="col-one-fifth">
+          <aside class="sidebar">
+            <h6 class="sidebar-header">Components</h6>
+            <ul class="blank">
+              <li><a href="#classes">Classes</a></li>
+              <li><a href="#grid">Grid</a></li>
+              <li><a href="#colors">Colors</a></li>
+              <li><a href="#icons">Icons</a></li>
+              <li><a href="#typography">Typography</a></li>
+              <li><a href="#buttons">Buttons</a></li>
+              <li><a href="#forms">Forms</a></li>
+              <li><a href="#alerts">Alerts</a></li>
+              <li><a href="#tables">Tables</a></li>
+              <li><a href="#cards">Cards</a></li>
+              <li><a href="#dark-mode">Dark Mode</a></li>
+            </ul>
+          </aside>
+        </div>
+        <div class="col-four-fifths">
+
+          <section id="classes">
+            <h4>Classes</h4>
+            <p class="paragraph">There are some core classes that defines the layout and design. They are global and not bound to any specific module.</p>
+            <div class="divider"></div>
+            <table>
+              <tr>
+                <th>Alignment</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>.center</td>
+                <td>Add this class to center content.</td>
+              </tr>
+              <tr>
+                <td>.center-mobile</td>
+                <td>Center content on mobile devices only.</td>
+              </tr>
+              <tr>
+                <td>.center-tablet</td>
+                <td>Center content on tablets and mobile devices.</td>
+              </tr>
+              <tr>
+                <td>.middle</td>
+                <td>Align content vertically when height is unknown.</td>
+              </tr>
+            </table>
+            <div class="divider"></div>
+            <table>
+              <tr>
+                <th>Backgrounds</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>.bg-dark</td>
+                <td>Solid background where "dark" can be replaced with "light", "primary"...</td>
+              </tr>
+              <tr>
+                <td>.bg-gradient-blue</td>
+                <td>Gradient background where "blue" can be replaced with "cyan", "green"...</td>
+              </tr>
+              <tr>
+                <td>.bg-image-01</td>
+                <td>Image-based backgrounds where "01" can be replaced with "02", "03"...</td>
+              </tr>
+              <tr>
+                <td>.bg-pattern-01</td>
+                <td>Pattern-based backgrounds with SVG where "01" can be replaced with "02", "03"...</td>
+              </tr>
+              <tr>
+                <td>.overlay</td>
+                <td>Adds an overlay with opacity on top of image-based backgrounds.</td>
+              </tr>
+            </table>
+            <div class="divider"></div>
+            <table>
+              <tr>
+                <th>Sizes</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>.full-screen</td>
+                <td>Adding this class will make sure the module goes full screen.</td>
+              </tr>
+              <tr>
+                <td>.full-width</td>
+                <td>This class will make sure the element goes full width.</td>
+              </tr>
+              <tr>
+                <td>.full-width-mobile</td>
+                <td>Useful if you'd like an element to go full width only on mobile.</td>
+              </tr>
+              <tr>
+                <td>.full-width-tablet</td>
+                <td>Useful if you'd like an element to go full width on tablets and mobile devices.</td>
+              </tr>
+              <tr>
+                <td>.max-width-s</td>
+                <td>Set a small maximum width of an element.</td>
+              </tr>
+              <tr>
+                <td>.max-width-m</td>
+                <td>Set a medium maximum width of an element.</td>
+              </tr>
+              <tr>
+                <td>.max-width-l</td>
+                <td>Set a large maximum width of an element.</td>
+              </tr>
+            </table>
+            <div class="divider"></div>
+            <table>
+              <tr>
+                <th>Spacing</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>.padding</td>
+                <td>This is the main inner spacing of a module.</td>
+              </tr>
+              <tr>
+                <td>.margin-bottom</td>
+                <td>Add spacing below an element inside a module.</td>
+              </tr>
+              <tr>
+                <td>.margin-top</td>
+                <td>Add spacing above an element inside a module.</td>
+              </tr>
+            </table>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="grid">
+            <h4>Grid</h4>
+            <p class="paragraph">The simple grid below is based on 5 columns. You can add "no-gutter" as a class to remove spacing between columns.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;div class="row"&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-one-third"&gt;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-one-third"&gt;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-one-third"&gt;&lt;/div&gt;<br>
+                &lt;/div&gt;
+              </code>
+            </div>
+            <p class="paragraph">You can also have unequal columns.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;div class="row"&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-two-thirds"&gt;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-one-third"&gt;&lt;/div&gt;<br>
+                &lt;/div&gt;
+              </code>
+            </div>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="colors">
+            <h4>Colors</h4>
+            <p class="paragraph">The color scheme aims to be simple without too many variations. Displayed in HEX and a production variable (VAR).</p>
+            <table>
+              <tr>
+                <th>Color</th>
+                <th>Hex</th>
+                <th>Var</th>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-primary"></span></td>
+                <td>#5966d2</td>
+                <td>$color-primary</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-green"></span></td>
+                <td>#63ce63</td>
+                <td>$color-green</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-orange"></span></td>
+                <td>#ffbf2f</td>
+                <td>$color-orange</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-red"></span></td>
+                <td>#e52b20</td>
+                <td>$color-red</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-text"></span></td>
+                <td>#24263a</td>
+                <td>$color-text</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-gray-light"></span></td>
+                <td>#f6f6f9</td>
+                <td>$color-gray-light</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-gray-medium"></span></td>
+                <td>#ececee</td>
+                <td>$color-gray-medium</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch color-gray-dark"></span></td>
+                <td>#ccced0</td>
+                <td>$color-gray-dark</td>
+              </tr>
+            </table>
+            <p class="paragraph">A collection of subtle gradients is also available.</p>
+            <table>
+              <tr>
+                <th>Gradient</th>
+                <th>Class</th>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-blue"></span></td>
+                <td>.bg-gradient-blue</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-cyan"></span></td>
+                <td>.bg-gradient-cyan</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-green"></span></td>
+                <td>.bg-gradient-green</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-indigo"></span></td>
+                <td>.bg-gradient-indigo</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-olive"></span></td>
+                <td>.bg-gradient-olive</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-pink"></span></td>
+                <td>.bg-gradient-pink</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-sienna"></span></td>
+                <td>.bg-gradient-sienna</td>
+              </tr>
+              <tr>
+                <td><span class="color-swatch bg-gradient-violet"></span></td>
+                <td>.bg-gradient-violet</td>
+              </tr>
+            </table>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="icons">
+            <h4>Icons</h4>
+            <p class="paragraph">The easy to use material icons by <a href="https://material.io/icons/" target="_blank">Google</a> are excellent for web projects. Based on the 8-point grid, they are preferably displayed at a multiple of 24px.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;i class="material-icons"&gt;<span>face</span>&lt;/i&gt;
+              </code>
+            </div>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="typography">
+            <h4>Typography</h4>
+            <p class="paragraph">We use <a href="https://fonts.google.com/specimen/Lato/" target="_blank">Lato</a> as primary typeface. Listed below are all default styles for headings.</p>
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+            <div class="divider"></div>
+            <h4>Lead</h4>
+            <p class="paragraph">The main purpose of the lead style is to support headings as a subtitle.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;p class="lead"&gt;&lt;/p&gt;
+              </code>
+            </div>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <div class="divider"></div>
+            <h4>Paragraph</h4>
+            <p class="paragraph">With an increased font-size and line-height, the paragraph style is great for readability.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;p class="paragraph"&gt;&lt;/p&gt;
+              </code>
+            </div>
+            <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <blockquote>"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</blockquote>
+            <p class="paragraph">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            <div class="divider"></div>
+            <h4>Lists</h4>
+            <p class="paragraph">Below is the default style for unordered lists.</p>
+            <ul>
+              <li>List item one.</li>
+              <li>List item two.</li>
+              <li>List item three.</li>
+            </ul>
+            <ol>
+              <li>List item one.</li>
+              <li>List item two.</li>
+              <li>List item three.</li>
+            </ol>
+            <p class="paragraph">You can also add class "inline" to make horizontal lists.</p>
+            <ul class="inline">
+              <li><a href="#">List item one.</a></li>
+              <li><a href="#">List item two.</a></li>
+              <li><a href="#">List item three.</a></li>
+            </ul>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="buttons">
+            <h4>Buttons</h4>
+            <p class="paragraph">Buttons are divided into types: primary, secondary and other states such as disabled.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;a href="#" class="button button-primary" role="button"&gt;<span>Primary</span>&lt;/a&gt;<br>
+                &lt;a href="#" class="button button-secondary" role="button"&gt;<span>Secondary</span>&lt;/a&gt;<br>
+                &lt;a href="#" class="button button-disabled" role="button"&gt;<span>Disabled</span>&lt;/a&gt;
+              </code>
+            </div>
+            <ul class="inline">
+              <li><a href="#" class="button button-primary" role="button">Primary</a></li>
+              <li><a href="#" class="button button-secondary" role="button">Secondary</a></li>
+              <li><a href="#" class="button button-disabled" role="button">Disabled</a></li>
+            </ul>
+            <p class="paragraph">To change the size, you can add class "button-l" for a large button. There are four pre-defined sizes: large, default, medium and small.</p>
+            <ul class="inline">
+              <li><a href="#" class="button button-primary button-l" role="button">Large</a></li>
+              <li><a href="#" class="button button-primary" role="button">Default</a></li>
+              <li><a href="#" class="button button-primary button-m" role="button">Medium</a></li>
+              <li><a href="#" class="button button-primary button-s" role="button">Small</a></li>
+            </ul>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="forms">
+            <h4>Forms</h4>
+            <p class="paragraph">Input fields are divided into types and states. Below code will create two columns with a label to the left and an input to the right.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;form&gt;<br>
+                &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="name"&gt;<span>Your Name:</span>&lt;/label&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;input id="name" type="text" name="name"&gt;<br>
+                &nbsp;&nbsp;&lt;/div&gt;<br>
+                &lt;/form&gt;
+              </code>
+            </div>
+            <form>
+              <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input id="name" type="text" name="name">
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input id="email" type="email" name="email">
+              </div>
+              <div class="form-group">
+                <label for="country">Country:</label>
+                <div class="select-wrapper">
+                  <select id="country" name="country">
+                    <option selected="" disabled="" value="">Choose country…</option>
+                    <option value="AT">Austria</option>
+                    <option value="BE">Belgium</option>
+                    <option value="BG">Bulgaria</option>
+                    <option value="HR">Croatia</option>
+                    <option value="CY">Republic of Cyprus</option>
+                    <option value="CZ">Czech Republic</option>
+                    <option value="DK">Denmark</option>
+                    <option value="EE">Estonia</option>
+                    <option value="FI">Finland</option>
+                    <option value="FR">France</option>
+                    <option value="DE">Germany</option>
+                    <option value="EL">Greece</option>
+                    <option value="HU">Hungary</option>
+                    <option value="IE">Ireland</option>
+                    <option value="IT">Italy</option>
+                    <option value="LV">Latvia</option>
+                    <option value="LT">Lithuania</option>
+                    <option value="LU">Luxembourg</option>
+                    <option value="MT">Malta</option>
+                    <option value="NL">Netherlands</option>
+                    <option value="PL">Poland</option>
+                    <option value="PT">Portugal</option>
+                    <option value="RO">Romania</option>
+                    <option value="SK">Slovak Republic</option>
+                    <option value="SI">Slovenia</option>
+                    <option value="ES">Spain</option>
+                    <option value="SE">Sweden</option>
+                    <option value="UK">United Kingdom</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Message:</label>
+                <textarea id="message" name="message"></textarea>
+                <span class="form-help">500 characters max.</span>
+              </div>
+              <div class="form-group">
+                <label>Switch:</label>
+                <input id="s1" class="switch" type="checkbox" checked>
+                <label for="s1" class="switch"></label>
+              </div>
+              <div class="form-group">
+                <label>Checkboxes:</label>
+                <input id="c1" type="checkbox" name="item-one">
+                <label for="c1" class="checkbox">Item one.</label>
+                <input id="c2" type="checkbox" name="item-two">
+                <label for="c2" class="checkbox">Item two.</label>
+                <input id="c3" type="checkbox" name="item-three">
+                <label for="c3" class="checkbox">Item three.</label>
+              </div>
+              <div class="form-group">
+                <label>Radio Buttons:</label>
+                <input id="r1" type="radio" name="item" checked>
+                <label for="r1" class="radio">Item one.</label>
+                <input id="r2" type="radio" name="item">
+                <label for="r2" class="radio">Item two.</label>
+                <input id="r3" type="radio" name="item">
+                <label for="r3" class="radio">Item three.</label>
+              </div>
+            </form>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="alerts">
+            <h4>Alerts</h4>
+            <p class="paragraph">Use alerts to give users quick feedback on performed tasks.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;div class="alert alert-success" role="alert"&gt;<span>Great! This is awesome.</span>&lt;/div&gt;
+              </code>
+            </div>
+            <div class="alert alert-default" role="alert">Not important, just to let you know. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+            <div class="alert alert-error" role="alert">Oh no! Something went wrong :(</div>
+            <div class="alert alert-success" role="alert">Great! This is awesome.</div>
+            <div class="alert alert-warning" role="alert">Hmm.. something is not right.</div>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="tables">
+            <h4>Tables</h4>
+            <p class="paragraph">Built with headers and rows, a table is useful to display many items or content with measurable data.</p>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Modified</th>
+                <th>Size</th>
+              </tr>
+              <tr>
+                <td>Documentation</td>
+                <td>Today</td>
+                <td>12.7 MB</td>
+              </tr>
+              <tr>
+                <td>Style Guide</td>
+                <td>Yesterday</td>
+                <td>2.4 MB</td>
+              </tr>
+              <tr>
+                <td>Templates</td>
+                <td>Yesterday</td>
+                <td>4.5 MB</td>
+              </tr>
+            </table>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="cards">
+            <h4>Cards</h4>
+            <p class="paragraph">A card is a great content container.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;div class="card card-content"&gt;<br>
+                &nbsp;&nbsp;&lt;h5&gt;<span>Card Title</span>&lt;/h5&gt;<br>
+                &nbsp;&nbsp;&lt;p class="paragraph"&gt;<span>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</span>&lt;/p&gt;<br>
+                &lt;/div&gt;
+              </code>
+            </div>
+            <div class="bg-light padding rounded">
+              <div class="card card-content max-width-s">
+                <h5>Card Title</h5>
+                <p class="paragraph">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+              </div>
+            </div>
+          </section>
+
+          <div class="divider"></div>
+
+          <section id="dark-mode">
+            <h4>Dark Mode</h4>
+            <p class="paragraph">If you want to turn a module dark, add class .dark to the section.</p>
+            <div class="code-markup">
+              <span class="code-header">Example:</span>
+              <code class="code-snippet">
+                &lt;section class="bg-dark dark"&gt;&lt;/section&gt;
+              </code>
+            </div>
+            <div class="bg-dark dark padding rounded">
+              <div class="card card-content max-width-s">
+                <h5>Card Title</h5>
+                <p class="paragraph">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer-main bg-light">
+    <div class="padding">
+      <div class="row max-width-l">
+        <div class="col-one-fifth">
+          <h6>Startup</h6>
+          <ul class="blank">
+            <li><a href="#">Getting Started</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Design</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="col-one-fifth">
+          <h6>Support</h6>
+          <ul class="blank">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Requirements</a></li>
+            <li><a href="#">License</a></li>
+            <li><a href="#">Updates</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-one-fifth">
+          <h6>Connect</h6>
+          <ul class="blank">
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Medium</a></li>
+          </ul>
+        </div>
+        <div class="col-two-fifths">
+          <h6>Join The Newsletter</h6>
+          <p>Get the latest news and resources right into your inbox every monday.</p>
+          <form class="row reduce-spacing">
+            <div class="col-two-thirds">
+              <input id="subscribe" type="email" name="email" placeholder="Your email...">
+            </div>
+            <div class="col-one-third">
+              <a href="#" class="button button-primary button-m full-width" role="button">Subscribe</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <p class="copyright"><span>HTML Template by </span><a href="https://uiuxassets.com/" target="_blank">UI/UX Assets</a><span> - © 2018, all rights reserved.</span></p>
+  </footer>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
