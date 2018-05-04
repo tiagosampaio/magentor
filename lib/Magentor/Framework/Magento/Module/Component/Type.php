@@ -28,4 +28,5 @@ class Type
     const TYPE_XML_CONFIG_ACL      = 'xml_config_acl';
     const TYPE_XML_CONFIG_CONFIG   = 'xml_config_config';
     const TYPE_XML_CONFIG_MENU     = 'xml_config_menu';
+    const TYPE_XML_CONFIG_CUSTOM   = 'xml_config_custom_config';
 }

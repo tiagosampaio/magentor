@@ -7,6 +7,7 @@ use Magentor\Framework\Code\Template\Xml\Config\Config;
 use Magentor\Framework\Code\Template\Xml\Config\Menu;
 use Magentor\Framework\Code\Template\Xml\Config\Module;
 use Magentor\Framework\Code\Template\Xml\Config\Routes;
+use Magentor\Framework\Code\Template\Xml\Config\CustomConfig\Config as CustomConfig;
 use Magentor\Framework\Magento\Module\Component\Type;
 
 class TemplateFactory
@@ -25,6 +26,7 @@ class TemplateFactory
         Type::TYPE_XML_CONFIG_CONFIG => Config::class,
         Type::TYPE_XML_CONFIG_ROUTES => Routes::class,
         Type::TYPE_XML_CONFIG_MENU   => Menu::class,
+        Type::TYPE_XML_CONFIG_CUSTOM => CustomConfig::class,
     ];
     
     /** @var array */
@@ -34,6 +36,7 @@ class TemplateFactory
         Type::TYPE_XML_CONFIG_CONFIG => 'urn:magento:module:Magento_Store:etc/config.xsd',
         Type::TYPE_XML_CONFIG_ROUTES => 'urn:magento:framework:App/etc/routes.xsd',
         Type::TYPE_XML_CONFIG_MENU   => 'urn:magento:module:Magento_Backend:etc/menu.xsd',
+        Type::TYPE_XML_CONFIG_CUSTOM => null,
     ];
     
     
@@ -93,6 +96,17 @@ class TemplateFactory
     
     
     /**
+     * @return CustomConfig
+     */
+    public static function buildCustomConfigTemplate()
+    {
+        /** @var CustomConfig $template */
+        $template = self::build(Type::TYPE_XML_CONFIG_CUSTOM);
+        return $template;
+    }
+    
+    
+    /**
      * @param string $type
      *
      * @return ConfigElement
@@ -102,7 +116,10 @@ class TemplateFactory
         /** @var ConfigElement $template */
         $template = new self::$types[$type](self::$parentNode, LIBXML_NOERROR, false, 'ws', true);
         $template->setXsiUrl(self::$xsiUrl);
-        $template->setSchemaLocation(self::$schemaLocations[$type]);
+        
+        if (isset(self::$schemaLocations[$type]) && self::$schemaLocations[$type]) {
+            $template->setSchemaLocation(self::$schemaLocations[$type]);
+        }
         
         return $template;
     }
