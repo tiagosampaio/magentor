@@ -15,7 +15,9 @@ $bootstrap = \Magentor\Framework\App\Bootstrap::create(ROOT, $_SERVER);
 try {
     $bootstrap->createApplication()->run();
 } catch (\Magentor\Framework\Exception\PhpVersionException $e) {
-    echo "{$e->getMessage()}\n";
+    $message = $e->getMessage();
+
+    echo escapeHtml($message) . "\n";
 } catch (Exception $e) {
     /**
      * @todo Throw the error again.
