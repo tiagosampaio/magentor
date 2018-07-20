@@ -6,5 +6,4 @@ interface ApplicationInterface
 {
 
     public function run();
-
 }

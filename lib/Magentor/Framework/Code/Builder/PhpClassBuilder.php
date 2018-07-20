@@ -86,12 +86,11 @@ class PhpClassBuilder implements PhpClassBuilderInterface
     public function addMethod(
         string $name,
         string $visibility = 'public',
-        string $body       = null,
-        bool   $static     = false,
-        bool   $abstract   = false,
-        bool   $final      = false
-    )
-    {
+        string $body = null,
+        bool   $static = false,
+        bool   $abstract = false,
+        bool   $final = false
+    ) {
         $this->methods[$name] = [
             'name'       => $name,
             'body'       => $body,
@@ -116,12 +115,11 @@ class PhpClassBuilder implements PhpClassBuilderInterface
      */
     public function addProtectedMethod(
         string $name,
-        string $body     = null,
-        bool   $static   = false,
+        string $body = null,
+        bool   $static = false,
         bool   $abstract = false,
-        bool   $final    = false
-    )
-    {
+        bool   $final = false
+    ) {
         return $this->addMethod($name, 'protected', $body, $static, $abstract, $final);
     }
     

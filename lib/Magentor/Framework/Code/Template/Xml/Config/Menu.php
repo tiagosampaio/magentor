@@ -28,8 +28,8 @@ class Menu extends ConfigElement
         string $title,
         string $resource = null,
         int $sortOrder = 10,
-        string $parent = null)
-    {
+        string $parent = null
+    ) {
         if (empty($module)) {
             return $this;
         }

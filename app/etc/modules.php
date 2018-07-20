@@ -5,7 +5,8 @@ $dirs    = scandir($codeDir);
 
 $modules = [];
 
-function validateDirname($dirName) {
+function validateDirname($dirName)
+{
     if ('.' == $dirName || '..' == $dirName) {
         return false;
     }

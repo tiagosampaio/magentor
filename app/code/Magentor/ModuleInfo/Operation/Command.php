@@ -2,7 +2,6 @@
 
 namespace Magentor\ModuleInfo\Operation;
 
-
 class Command extends \Magentor\Framework\Magento\Operation\CommandAbstract implements CommandInterface
 {
 

@@ -81,7 +81,8 @@ class Element extends \SimpleXMLElement
      *
      * @return string
      */
-    public function getAttribute($name){
+    public function getAttribute($name)
+    {
         $attributes = $this->attributes();
         return isset($attributes[$name]) ? (string) $attributes[$name] : null;
     }
@@ -94,7 +95,7 @@ class Element extends \SimpleXMLElement
      * @param int|boolean $level if false
      * @return string
      */
-    public function asNiceXml($filename='', $level=0)
+    public function asNiceXml($filename = '', $level = 0)
     {
         if (is_numeric($level)) {
             $pad = str_pad('', $level*3, ' ', STR_PAD_LEFT);
@@ -107,7 +108,7 @@ class Element extends \SimpleXMLElement
         $out = $pad.'<'.$this->getName();
         
         if ($attributes = $this->attributes()) {
-            foreach ($attributes as $key=>$value) {
+            foreach ($attributes as $key => $value) {
                 $out .= ' '.$key.'="'.str_replace('"', '\"', (string)$value).'"';
             }
         }
@@ -232,7 +233,7 @@ class Element extends \SimpleXMLElement
      * @param boolean $overwrite
      * @return Element
      */
-    public function extendChild($source, $overwrite=false)
+    public function extendChild($source, $overwrite = false)
     {
         // this will be our new target node
         $targetChild = null;
@@ -260,7 +261,7 @@ class Element extends \SimpleXMLElement
             /** @var Element $targetChild */
             $targetChild = $this->addChild($sourceName, $source->xmlEntities());
             $targetChild->setParent($this);
-            foreach ($source->attributes() as $key=>$value) {
+            foreach ($source->attributes() as $key => $value) {
                 $targetChild->addAttribute($key, $this->xmlEntities($value));
             }
             return $this;
@@ -274,13 +275,13 @@ class Element extends \SimpleXMLElement
             // if child target is not found create new and descend
             $targetChild = $this->addChild($sourceName);
             $targetChild->setParent($this);
-            foreach ($source->attributes() as $key=>$value) {
+            foreach ($source->attributes() as $key => $value) {
                 $targetChild->addAttribute($key, $this->xmlEntities($value));
             }
         }
         
         // finally add our source node children to resulting new target node
-        foreach ($sourceChildren as $childKey=>$childNode) {
+        foreach ($sourceChildren as $childKey => $childNode) {
             $targetChild->extendChild($childNode, $overwrite);
         }
         
@@ -300,12 +301,14 @@ class Element extends \SimpleXMLElement
         $arr1 = explode('/', $path);
         $arr = array();
         foreach ($arr1 as $v) {
-            if (!empty($v)) $arr[] = $v;
+            if (!empty($v)) {
+                $arr[] = $v;
+            }
         }
         $last = sizeof($arr)-1;
         $node = $this;
         
-        foreach ($arr as $i=>$nodeName) {
+        foreach ($arr as $i => $nodeName) {
             if ($last===$i) {
                 if (!isset($node->$nodeName) || $overwrite) {
                     // http://bugs.php.net/bug.php?id=36795
@@ -323,7 +326,6 @@ class Element extends \SimpleXMLElement
                     $node = $node->$nodeName;
                 }
             }
-            
         }
         return $this;
     }
@@ -346,7 +348,7 @@ class Element extends \SimpleXMLElement
      * @param string $name The name of the child element to add.
      * @param string $cdata_text The CDATA value of the child element.
      */
-    public function addChildCData($name,$cdata_text)
+    public function addChildCData($name, $cdata_text)
     {
         /** @var Element $child */
         $child = $this->addChild($name);
@@ -366,13 +368,13 @@ class Element extends \SimpleXMLElement
                 $xml = $this->addChild($append->getName());
                 
                 /** @var Element $child */
-                foreach($append->children() as $child) {
+                foreach ($append->children() as $child) {
                     $xml->append($child);
                 }
             } else {
                 $xml = $this->addChild($append->getName(), (string) $append);
             }
-            foreach($append->attributes() as $n => $v) {
+            foreach ($append->attributes() as $n => $v) {
                 $xml->addAttribute($n, $v);
             }
         }

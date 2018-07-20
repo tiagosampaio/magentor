@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Magento;
 
-
 use Magentor\Framework\Exception\ExceptionContainer;
 
 class Application implements ApplicationInterface
@@ -30,7 +29,8 @@ class Application implements ApplicationInterface
      * Keep unique instance of this.
      */
     protected function __construct()
-    {}
+    {
+    }
     
     
     /**

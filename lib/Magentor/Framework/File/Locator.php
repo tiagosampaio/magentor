@@ -32,6 +32,7 @@ class Locator extends Finder implements LocatorInterface
             }
 
             include $filePath;
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 }

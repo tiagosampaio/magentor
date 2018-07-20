@@ -35,6 +35,7 @@ class MagentoEdition extends CommandAbstract
     
         try {
             $command->run($input, $output);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 }

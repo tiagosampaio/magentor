@@ -86,8 +86,7 @@ XML;
         string $routeId = null,
         string $frontName = null,
         bool $isAdmin = false
-    )
-    {
+    ) {
         $template = TemplateFactory::buildRoutesTemplate();
         
         $template->build();

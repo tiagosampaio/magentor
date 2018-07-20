@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Code\Resolver;
 
-
 class PhpClassResolver implements PhpClassInterface
 {
 

@@ -30,9 +30,9 @@ class DirectoryRegistrar
             define('ROOT', $rootDirectory);
         }
 
-        define('DIR_LIB',  ROOT . '/lib');
-        define('DIR_APP',  ROOT . '/app');
-        define('DIR_ETC',  DIR_APP . '/etc');
+        define('DIR_LIB', ROOT . '/lib');
+        define('DIR_APP', ROOT . '/app');
+        define('DIR_ETC', DIR_APP . '/etc');
         define('DIR_CODE', DIR_APP . '/code');
     
         self::$dirs[self::DIR_TYPE_ROOT] = ROOT;
@@ -79,7 +79,7 @@ class DirectoryRegistrar
             }
     
             define('MAGENTO_ROOT', $magentoDir);
-            define('MAGENTO_APP',  MAGENTO_ROOT . DS . 'app');
+            define('MAGENTO_APP', MAGENTO_ROOT . DS . 'app');
             define('MAGENTO_CODE', MAGENTO_APP . DS . 'code');
     
             self::$dirs[self::DIR_TYPE_MAGENTO]      = MAGENTO_ROOT;

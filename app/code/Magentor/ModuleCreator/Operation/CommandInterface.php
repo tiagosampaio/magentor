@@ -2,7 +2,6 @@
 
 namespace Magentor\ModuleCreator\Operation;
 
-
 use Magentor\Framework\Exception\GenericException;
 
 interface CommandInterface

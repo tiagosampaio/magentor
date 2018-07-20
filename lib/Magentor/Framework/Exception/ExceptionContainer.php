@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Exception;
 
-
 class ExceptionContainer
 {
 
@@ -11,7 +10,8 @@ class ExceptionContainer
 
 
     protected function __construct()
-    {}
+    {
+    }
 
 
     /**

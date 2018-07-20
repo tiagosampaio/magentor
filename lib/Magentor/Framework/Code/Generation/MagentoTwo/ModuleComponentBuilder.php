@@ -228,8 +228,7 @@ class ModuleComponentBuilder
         string $vendor,
         string $setupVersion = null,
         array $sequence = []
-    )
-    {
+    ) {
         /** @var Module\XmlConfig\ModuleConfig $component */
         $component = self::build(Type::TYPE_XML_CONFIG_MODULE, [$module, $vendor, $setupVersion, $sequence]);
         return $component;

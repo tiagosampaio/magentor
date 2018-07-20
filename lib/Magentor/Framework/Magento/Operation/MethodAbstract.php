@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Magento\Operation;
 
-
 use Magentor\Framework\Magento\ApplicationInterface;
 
 abstract class MethodAbstract implements MethodInterface

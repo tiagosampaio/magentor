@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Magento\Info\Version;
 
-
 class MagentoOne extends InfoAbstract
 {
 

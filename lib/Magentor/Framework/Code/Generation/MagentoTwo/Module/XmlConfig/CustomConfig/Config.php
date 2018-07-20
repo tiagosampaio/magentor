@@ -34,7 +34,8 @@ class Config extends AbstractConfig
      * @inheritdoc
      */
     protected function postBuild()
-    {}
+    {
+    }
     
     
     /**

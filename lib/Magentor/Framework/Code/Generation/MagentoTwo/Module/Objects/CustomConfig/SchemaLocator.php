@@ -80,7 +80,7 @@ class SchemaLocator extends AbstractModulePhp
 \$this->schema        = \$configDir . DIRECTORY_SEPARATOR . self::CONFIG_FILE_SCHEMA;
 \$this->perFileSchema = \$configDir . DIRECTORY_SEPARATOR . self::CONFIG_FILE_SCHEMA;
 PHP
-);
+        );
         
         /** @var Method $method */
         $method = $template->addMethod('getSchema');

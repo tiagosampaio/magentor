@@ -44,7 +44,7 @@ class UpgradeSchema extends AbstractModulePhp
     
         $method->addComment('@inheritdoc');
 
-$body = <<<PHP
+        $body = <<<PHP
 \$installer = \$setup;
 \$installer->startSetup();
 

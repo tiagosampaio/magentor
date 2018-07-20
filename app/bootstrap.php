@@ -17,7 +17,7 @@ try {
 } catch (\Magentor\Framework\Exception\PhpVersionException $e) {
     $message = $e->getMessage();
 
-    echo escapeHtml($message) . "\n";
+    echo escapeHtml($message);
 } catch (Exception $e) {
     /**
      * @todo Throw the error again.

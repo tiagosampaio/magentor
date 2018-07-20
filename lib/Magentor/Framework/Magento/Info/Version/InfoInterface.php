@@ -2,7 +2,6 @@
 
 namespace Magentor\Framework\Magento\Info\Version;
 
-
 use Magentor\Framework\Magento\ApplicationInterface;
 use Magentor\Framework\Magento\Info\Version;
 

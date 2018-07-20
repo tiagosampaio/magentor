@@ -56,7 +56,6 @@ class Application implements ApplicationInterface
         try {
             $this->app->run();
         } catch (\Exception $e) {
-
         }
 
         return $this;

@@ -8,7 +8,6 @@
 
 namespace Magentor\Framework\Code\Resolver;
 
-
 interface PhpClassInterface
 {
     
